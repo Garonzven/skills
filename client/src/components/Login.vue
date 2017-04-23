@@ -1,33 +1,14 @@
 <template>
-    <div class="login">
-      <h2>Login</h2>
-      <form class="login-form">
-        <div class="form-group">
-          <label class="label-info">Username:</label>
-          <input class="input-info" type="text" v-model="user.userName" />
-        </div>
-        <div class="form-group">
-          <label class="label-info">Password:</label>
-          <input class="input-info" type="password" v-model="user.password" />
-        </div>
-        <div class="form-control">
-          <button class="button" type="reset">Reset</button>
-          <button class="button" type="submit" @click="login">Login</button>
-        </div>
-      </form>
-    </div>
-
     <div class="container">
     	<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<div class="panel panel-login">
 					<div class="panel-heading">
 						<div class="row">
-							<div class="col-xs-6">
+							<div class="">
 								<a href="#" class="active" id="login-form-link">Login</a>
 							</div>
 						</div>
-						<hr>http://bootsnipp.com/login
 					</div>
 					<div class="panel-body">
 						<div class="row">
@@ -80,7 +61,7 @@ export default {
         userName: '',
         password: ''
       },
-      apiUrl: 'http://localhost:8080/vuelogin'
+      apiUrl: 'http://localhost:9000/vuelogin'
     }
   },
   mounted() {
