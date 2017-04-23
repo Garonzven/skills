@@ -1,4 +1,21 @@
 <template>
+    <div class="login">
+      <h2>Login</h2>
+      <form class="login-form">
+        <div class="form-group">
+          <label class="label-info">Username:</label>
+          <input class="input-info" type="text" v-model="user.userName" />
+        </div>
+        <div class="form-group">
+          <label class="label-info">Password:</label>
+          <input class="input-info" type="password" v-model="user.password" />
+        </div>
+        <div class="form-control">
+          <button class="button" type="reset">Reset</button>
+          <button class="button" type="submit" @click="login">Login</button>
+        </div>
+      </form>
+    </div>
 
     <div class="container">
     	<div class="row">
@@ -6,18 +23,18 @@
 				<div class="panel panel-login">
 					<div class="panel-heading">
 						<div class="row">
-							<div>
-								<a>Login</a>
+							<div class="col-xs-6">
+								<a href="#" class="active" id="login-form-link">Login</a>
 							</div>
 						</div>
-						<hr>
+						<hr>http://bootsnipp.com/login
 					</div>
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
 								<form id="login-form" action="http://phpoll.com/login/process" method="post" role="form" style="display: block;">
 									<div class="form-group">
-										<input type="text" name="username" tabindex="1" class="form-control" placeholder="Username" v-model="user.userName">
+										<input type="text" name="username" tabindex="1" class="form-control" placeholder="Username" value="" v-model="user.userName">
 									</div>
 									<div class="form-group">
 										<input type="password" name="password" tabindex="2" class="form-control" placeholder="Password" v-model="user.password">
