@@ -1,0 +1,24 @@
+Jsons
+// People  -- Tambien contiene Rol
+
+{"email":"lorena.portillo@garonz.com",
+"fotolink":"fotoLink",
+"idpeople":1,
+	"idrol":{"idrol":2,
+	"name":"Admin"},
+"indate":"2017-12-01T00:00:00-04:00",
+"ischangepassword":"T",
+"jobtitle":"Licenciada",
+"lastname":"Portillo",
+"name":"Lorena",
+"pasword":"MD5"}
+
+// Skill
+
+{"idskill":1,"name":"php"}
+
+// Rol
+{"idrol":1,"name":"SuperAdmin"}
+
+//SkillPeople
+{"idskill":1,"idpeople":1,"level":1}
