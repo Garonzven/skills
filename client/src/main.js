@@ -5,7 +5,6 @@ import App from './App'
 import Router from './router'
 import Vuetify from 'vuetify'
 import VeeValidate from 'vee-validate';
-
 import VueResource from 'vue-resource'
 
 Vue.use(VueResource);

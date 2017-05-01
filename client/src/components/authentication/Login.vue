@@ -1,66 +1,59 @@
 <template lang="html">
+<div class="">
+  <video class="bgvideo" ref="videoRef" src="" id="video-container" width="100%" playsinline autoplay muted loop>
+  </video>
 
-  <div class="container ">
-      	<div class="row">
-  			<div class="col-md-6 col-md-offset-3">
-  				<div class="panel panel-login">
-  					<div class="panel-heading" style="background-color: rgba(0, 0, 0, 0.4);">
-  						<div class="row">
-  							<div class="">
-  								<h3>SKILLS FINDER</h3>
-  							</div>
-  						</div>
-  					</div>
-  					<div class="panel-body" style="background-color: rgba(0, 0, 0, 0.4);">
-  						<div class="row">
-  							<div class="col-lg-12">
-  								<form @submit.prevent="login" class="columns column is-multiline is-12" role="form" style="display: block;">
-  									<div class="form-group" style="text-align:center;">
-                      <p class="control has-icon has-icon-right">
-                        <input input name="email" v-validate="'required|email'" :class="{'input': true, 'is-danger': errors.has('email') }" type="text"  placeholder="Email" v-model="user.email">
-                        <i v-show="errors.has('email')" class="fa fa-warning"></i>
-                        <span v-show="errors.has('email')" class="help-block alert alert-danger">{{ errors.first('email') }}</span>
-                      </p>
-                    </div>
-  									<div class="form-group" style="text-align:center;">
-                      <p class="control has-icon has-icon-right">
-                        <input name="password" v-validate="'required|min:6'" :class="{'input': true, 'is-danger': errors.has('password') }" type="password" placeholder="Password" v-model="user.password">
-                        <i v-show="errors.has('password')" class="fa fa-warning"></i>
-                        <span v-show="errors.has('password')" class="help-block alert alert-danger">{{ errors.first('password') }}</span>
-                      </p>
-  									</div>
-  									<div class="form-group">
-  										<div class="row">
-  											<div class="col-sm-6 col-sm-offset-3">
-  												<input type="submit" tabindex="4" class="form-control btn btn-login" value="Log In">
-  											</div>
-  										</div>
-  									</div>
-  									<div class="form-group">
-  										<div class="row">
-  											<div class="col-lg-12">
-  												<div class="text-center">
-  													<a href="#" tabindex="5" class="forgot-password">Forgot Password?</a>
-  												</div>
-  											</div>
-  										</div>
-  									</div>
-  								</form>
-  							</div>
-  						</div>
-  					</div>
-  				</div>
-  			</div>
-  		</div>
+  <div class="container-fluid" id="polina">
+	  <div class="row">
+		  <div class="col-md-12">
+        <div class="panel-heading">
+            <div class="row-fluid user-row">
+                <h1 class="img-responsive" alt="Conxole Admin" style="text-align: center;">Skill Finder</h1>
+            </div>
+        </div>
+        <form @submit.prevent="login" class="columns column is-multiline is-12" role="form" style="display: block;">
+          <div class="form-group" style="text-align:center;">
+            <p class="control has-icon has-icon-right">
+              <input input name="email" v-validate="'required|email'" :class="{'input': true, 'is-danger': errors.has('email') }" type="text" class="form-control" placeholder="Email" v-model="user.email">
+              <i v-show="errors.has('email')" class="fa fa-warning"></i>
+              <span v-show="errors.has('email')" class="help-block alert alert-danger">{{ errors.first('email') }}</span>
+            </p>
+          </div>
+          <div class="form-group" style="text-align:center;">
+            <p class="control has-icon has-icon-right">
+              <input name="password" v-validate="'required|min:6'" :class="{'input': true, 'is-danger': errors.has('password') }" type="password" class="form-control" placeholder="Password" v-model="user.password">
+              <i v-show="errors.has('password')" class="fa fa-warning"></i>
+              <span v-show="errors.has('password')" class="help-block alert alert-danger">{{ errors.first('password') }}</span>
+            </p>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <input type="submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="text-center">
+                  <a href="#" tabindex="5" class="forgot-password">Forgot Password?</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+		  </div>
+	  </div>
+  </div>
 
-      <pre>
-        {{ $data.user }}
-      </pre>
-  	</div>
+
+</div>
 </template>
 
 <script>
 export default {
+
   data() {
     return {
       user: {
@@ -70,9 +63,10 @@ export default {
       apiUrl: 'http://localhost:9000/vuelogin'
     }
   },
-  mounted() {
-
-  },
+  mounted: function() {
+   this.$refs.videoRef.src = "static/video/VORTEX.mp4";
+   this.$refs.videoRef.play();
+ },
   name: 'scopes-example',
   methods: {
     login() {
@@ -92,7 +86,35 @@ export default {
 <style lang="css">
 body {
     padding-top: 90px;
+}
+.bgvideo{
+  position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+   background-size: cover;
+  transition: 1s opacity;
+}
 
+#polina {
+
+  font-weight:100;
+  background: rgba(0,0,0,0.3);
+  color: white;
+  padding: 2rem;
+  width: 33%;
+  margin: auto;
+  height: 50%;
+  font-size: 16px;
+}
+
+.boxx{
+  max-width: 900px;
 }
 .panel-login {
 	border-color: #ccc;
@@ -160,7 +182,7 @@ body {
 .btn-login:hover,
 .btn-login:focus {
 	color: #fff;
-	background-color: #ffb366;
+	background-color: #f07020;
 	border-color: #ffb366;
 }
 .forgot-password {
