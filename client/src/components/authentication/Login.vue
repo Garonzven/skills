@@ -3,18 +3,18 @@
   <video class="bgvideo" ref="videoRef" src="" id="video-container" width="100%" playsinline autoplay muted loop>
   </video>
 
-  <div class="container-fluid" id="polina">
-	  <div class="row">
-		  <div class="col-md-12">
+  <div class="container" id="polina">
+	  <div class="row vertical-offset-100">
+		  <div class="">
         <div class="panel-heading">
             <div class="row-fluid user-row">
-                <h1 class="img-responsive" alt="Conxole Admin" style="text-align: center;">Skill Finder</h1>
+                <h3 class="img-responsive" alt="Conxole Admin" style="text-align: center;">SKILL FINDER</h3>
             </div>
         </div>
-        <form @submit.prevent="login" class="columns column is-multiline is-12" role="form" style="display: block;">
+        <form @submit.prevent="login" class="columns column is-multiline is-12 col-md-6 col-md-offset-3" role="form" style="display: block;">
           <div class="form-group" style="text-align:center;">
             <p class="control has-icon has-icon-right">
-              <input input name="email" v-validate="'required|email'" :class="{'input': true, 'is-danger': errors.has('email') }" type="text" class="form-control" placeholder="Email" v-model="user.email">
+              <input input name="email" v-validate="'required|email'" :class="{'input': true, 'is-danger': errors.has('email') }" type="text" class="form-control " style="max-width: 600px;" placeholder="Email" v-model="user.email">
               <i v-show="errors.has('email')" class="fa fa-warning"></i>
               <span v-show="errors.has('email')" class="help-block alert alert-danger">{{ errors.first('email') }}</span>
             </p>
@@ -28,8 +28,8 @@
           </div>
           <div class="form-group">
             <div class="row">
-              <div class="col-sm-6 col-sm-offset-3">
-                <input type="submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+              <div class="col-md-12">
+                <input type="submit" tabindex="4" class="form-control btn btn-login" value="Log In" style="padding: 6px 12px;">
               </div>
             </div>
           </div>
@@ -111,6 +111,8 @@ body {
   margin: auto;
   height: 50%;
   font-size: 16px;
+  border-radius: 4px;
+  border: 0.5px solid #444444;
 }
 
 .boxx{
@@ -212,4 +214,5 @@ body {
 	background-color: #1CA347;
 	border-color: #1CA347;
 }
+
 </style>
