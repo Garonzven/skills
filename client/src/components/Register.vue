@@ -20,15 +20,22 @@
         <button class="button" type="submit" @click="register">register</button>
       </div>
     </form>
+	  
+	<div>
+		<v-select v-model="selected" :options="['foo','bar']"></v-select>
+	</div>  
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script >
 export default {
   name: 'register',
   data () {
+	  
+	  
     return {
       password: '',
+	  selected:'',
       user: {
         userName: '',
         password: '',

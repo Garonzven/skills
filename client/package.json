@@ -10,9 +10,13 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "fabric": "^1.7.11",
+    "vee-validate": "^2.0.0-rc.3",
     "vue": "^2.2.1",
     "vue-resource": "^1.2.1",
-    "vue-router": "^2.2.0"
+    "vue-router": "^2.2.0",
+    "vue-select": "^2.2.0",
+    "vue-slider-component": "^2.2.7"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
