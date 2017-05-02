@@ -7,21 +7,21 @@
 	  <div class="row vertical-offset-100">
 		  <div class="">
         <div class="panel-heading">
-            <div class="row-fluid user-row">
+            <div class="row-fluid people-row">
                 <h3 class="img-responsive" alt="Conxole Admin" style="text-align: center;">SKILL FINDER</h3>
             </div>
         </div>
         <form @submit.prevent="login" class="columns column is-multiline is-12 col-md-6 col-md-offset-3" role="form" style="display: block;">
           <div class="form-group" style="text-align:center;">
             <p class="control has-icon has-icon-right">
-              <input input name="email" v-validate="'required|email'" :class="{'input': true, 'is-danger': errors.has('email') }" type="text" class="form-control " style="max-width: 600px;" placeholder="Email" v-model="user.email">
+              <input input name="email" v-validate="'required|email'" :class="{'input': true, 'is-danger': errors.has('email') }" type="text" class="form-control " style="max-width: 600px;" placeholder="Email" v-model="people.email">
               <i v-show="errors.has('email')" class="fa fa-warning"></i>
               <span v-show="errors.has('email')" class="help-block alert alert-danger">{{ errors.first('email') }}</span>
             </p>
           </div>
           <div class="form-group" style="text-align:center;">
             <p class="control has-icon has-icon-right">
-              <input name="password" v-validate="'required|min:6'" :class="{'input': true, 'is-danger': errors.has('password') }" type="password" class="form-control" placeholder="Password" v-model="user.password">
+              <input name="password" v-validate="'required|min:6'" :class="{'input': true, 'is-danger': errors.has('password') }" type="password" class="form-control" placeholder="Password" v-model="people.password">
               <i v-show="errors.has('password')" class="fa fa-warning"></i>
               <span v-show="errors.has('password')" class="help-block alert alert-danger">{{ errors.first('password') }}</span>
             </p>
@@ -56,7 +56,7 @@ export default {
 
   data() {
     return {
-      user: {
+      people: {
         email: '',
         password: ''
       },
@@ -72,11 +72,10 @@ export default {
     login() {
       this.$validator.validateAll().then(() => {
               // eslint-disable-next-line
-              console.log("user: " + this.user);
-              this.$http.post(this.apiUrl + '/user/login', this.user).then((response) => {
+              console.log("people: " + this.people);
+              this.$http.post(this.apiUrl + '/entis.people/login', this.people).then((response) => {
                 console.log("login: " + response);
               });
-
       });
     }
   }

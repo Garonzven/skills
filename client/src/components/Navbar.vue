@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -13,5 +13,5 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style>
 </style>
