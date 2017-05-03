@@ -9,45 +9,49 @@
 				<form>
 					<div class="column is-12 form-group">
 						<p class="control has-icon has-icon-right">
-							<input name="names" v-model="newUser.names" v-validate:names.initial="'required|alpha'" :class="{'input': true, 'is-danger': errors.has('names') }" type="text" placeholder="Name" class="input-style form-control"> <i v-show="errors.has('names')" class="fa fa-warning"></i> <span v-show="errors.has('names')" class="help-block alert alert-danger">{{ errors.first('names') }}</span> </p>
+							<input name="name" v-model="newUser.name" v-validate:name.initial="'required|alpha'" :class="{'input': true, 'is-danger': errors.has('name') }" type="text" placeholder="Name" class="input-style form-control"> <i v-show="errors.has('name')" class="fa fa-warning"></i> <span v-show="errors.has('name')" class="help-block alert alert-danger">{{ errors.first('name') }}</span> </p>
 					</div>
 					<div class="column is-12 form-group">
 						<p class="control has-icon has-icon-right">
-							<input name="last_name" v-model="newUser.last_names" v-validate:last_names.initial="'required|alpha'" :class="{'input': true, 'is-danger': errors.has('last_name') }" type="text" placeholder="Last Name" class="input-style"> <i v-show="errors.has('last_name')" class="fa fa-warning"></i> <span v-show="errors.has('last_name')" class="help-block alert alert-danger">{{ errors.first('last_name') }}</span> </p>
+							<input name="lastname" v-model="newUser.lastname" v-validate:lastname.initial="'required|alpha'" :class="{'input': true, 'is-danger': errors.has('lastname') }" type="text" placeholder="Last Name" class="input-style form-control"> <i v-show="errors.has('lastname')" class="fa fa-warning"></i> <span v-show="errors.has('lastname')" class="help-block alert alert-danger">{{ errors.first('lastname') }}</span> </p>
 					</div>
 					<div class="column is-12 form-group">
 						<p class="control has-icon has-icon-right">
-							<input name="job_title" v-model="newUser.job_title" v-validate:job_title.initial="'required|alpha'" :class="{'input': true, 'is-danger': errors.has('job_title') }" type="text" placeholder="Job Title" class="input-style"> <i v-show="errors.has('job_title')" class="fa fa-warning"></i> <span v-show="errors.has('job_title')" class="help-block alert alert-danger">{{ errors.first('job_title') }}</span> </p>
+							<input name="password" v-model="newUser.password" v-validate="'required|min:6'" :class="{'input': true, 'is-danger': errors.has('password') }" type="password" placeholder="Password" class="input-style form-control"> <i v-show="errors.has('password')" class="fa fa-warning"></i> <span v-show="errors.has('password')" class="help-block alert alert-danger">{{ errors.first('password') }}</span> </p>
 					</div>
 					<div class="column is-12 form-group">
+						<p class="control has-icon has-icon-right">
+							<input name="jobtitle" v-model="newUser.jobtitle" v-validate:jobtitle.initial="'required|alpha'" :class="{'input': true, 'is-danger': errors.has('jobtitle') }" type="text" placeholder="Job Title" class="input-style form-control"> <i v-show="errors.has('jobtitle')" class="fa fa-warning"></i> <span v-show="errors.has('jobtitle')" class="help-block alert alert-danger">{{ errors.first('jobtitle') }}</span> </p>
+					</div>
+					<!--div class="column is-12 form-group">
 						<v-select :options="['Ven','Us','Eu']" v-model="newUser.nationality" placeholder="Nationality"></v-select>
-					</div>
+					</div-->
 					<div class="column is-12 form-group">
-						<v-select :options="['Super Admin','Admin','Watcher', 'User']" v-model="newUser.rol" placeholder="Rol"></v-select>
+						<v-select :options="options" v-model="newUser.idrol" placeholder="Rol"></v-select>
 					</div>
 					<div class="column is-12 form-group">
 						<p class="control has-icon has-icon-right">
-							<input name="email" v-model="newUser.email" v-validate:email.initial="'required|email'" :class="{'input': true, 'is-danger': errors.has('email') }" type="text" placeholder="Email" class="input-style"> <i v-show="errors.has('email')" class="fa fa-warning"></i> <span v-show="errors.has('email')" class="help-block alert alert-danger">{{ errors.first('email') }}</span> </p>
+							<input name="email" v-model="newUser.email" v-validate:email.initial="'required|email'" :class="{'input': true, 'is-danger': errors.has('email') }" type="text" placeholder="Email" class="input-style form-control"> <i v-show="errors.has('email')" class="fa fa-warning"></i> <span v-show="errors.has('email')" class="help-block alert alert-danger">{{ errors.first('email') }}</span> </p>
 					</div>
-					<div class="column is-12 form-group">
+					<!--div class="column is-12 form-group">
 						<p class="control has-icon has-icon-right">
 							<input name="phone" v-model="newUser.phone" v-validate:phone.initial="'required|numeric'" :class="{'input': true, 'is-danger': errors.has('phone') }" type="text" placeholder="Phone" class="input-style"> <i v-show="errors.has('phone')" class="fa fa-warning"></i> <span v-show="errors.has('phone')" class="help-block alert alert-danger">{{ errors.first('phone') }}</span> </p>
-					</div>
-					<div class="column is-12 form-group">
+					</div-->
+					<!--div class="column is-12 form-group">
 						<p class="control has-icon has-icon-right">
 							<input name="identification" v-model="newUser.identification" v-validate:identification.initial="'required|numeric'" :class="{'input': true, 'is-danger': errors.has('identification') }" type="text" placeholder="Identification" class="input-style"> <i v-show="errors.has('phone')" class="fa fa-warning"></i> <span v-show="errors.has('identification')" class="help-block alert alert-danger">{{ errors.first('identification') }}</span> </p>
-					</div>
-					<div class="column is-12 form-group" id="iSearch">
+					</div-->
+					<!--div class="column is-12 form-group" id="iSearch">
 						<v-select :options="skillList" :on-change="addSkill" multiple :value.sync="selected" v-model="newUser.skills" placeholder="Skills"></v-select>
-					</div>
-					<div class="column is-12">
+					</div-->
+					<!--div class="column is-12">
 						<ul class="list-group" id="skill-range">
 							<li class="list-group-item clearfix" v-for="(skill, index) in skill_sliders">
 								<div class="skill-title"> {{skill.name}}</div>
-								<div class="level-range"><vue-slider  ref="slider" v-bind="skill" v-model="skill.value"></vue-slider></div>
+								<div class="level-range"><vue-slider ref="slider" v-bind="skill" v-model="skill.value"></vue-slider></div>
 							</li>
 						</ul>
-					</div>
+					</div-->
 					<div class="column is-12 pull-left ">
 						<p class="control has-icon has-icon-right">
 							<input name="file" id="file" @change="onFileChange" v-validate.reject="'mimes:image/*'" :class="{ 'is-danger': errors.has('file') }" type="file" style="display:none"> <i v-show="errors.has('file')" class="fa fa-warning"></i> <span v-show="errors.has('file')" class="help-block alert alert-danger">{{ errors.first('file') }}</span> </p>
@@ -67,9 +71,13 @@
 
 <script>
 import vueSlider from 'vue-slider-component';
-const newUser = function () {
+/*const newUser = function () {
 	this.names = "", this.last_names = "", this.email = "", this.nationality = "", this.identification = "", this.skills = [], this.phone = "", this.photo = "", this.job_title = "", this.rol = ""
-}
+};*/
+	
+const newUser = function () {
+	this.name = "", this.lastname = "", this.email = "", this.password = "", this.jobtitle = "", this.fotolink = "", this.foto = null, this.idrol = 0
+};
 
 var lazySlider = function () {
 	this.value = 1;
@@ -94,7 +102,8 @@ var lazySlider = function () {
 		"backgroundColor": "#ff8000"
 		, "borderColor": "#000000"
 	};
-}
+};
+	
 export default {
 	name: 'createUser'
 	, components: {
@@ -104,6 +113,7 @@ export default {
 		return {
 			selected: null
 			, skill_sliders: []
+			, options : [{label: 'Super User', value: 0},{label: 'Admin', value: 1},{label: 'Watcher', value: 2}, {label: 'User', value: 3}]
 			, skillList: ['Loren ipsum']
 			, newUser: new newUser()
 			, show: false
@@ -120,35 +130,51 @@ export default {
 			var reader = new FileReader();
 			var vm = this;
 			reader.onload = (e) => {
-				vm.newUser.photo = e.target.result;
-				var photo = document.getElementById("preview").src = vm.newUser.photo;
+				vm.newUser.fotolink = e.target.result;
+				var photo = document.getElementById("preview").src = vm.newUser.fotolink;
 			};
 			reader.readAsDataURL(file);
-		}, validateBeforeSubmit() {
-			if (this.newUser.nationality && this.newUser.rol) {
+		} /*validateBeforeSubmit() {
+			console.log(this.$validator);
 				this.$validator.validateAll().then(() => {
 					// eslint-disable-next-line
 					let user = JSON.stringify(this.newUser);
-					let level = this.skill_sliders;
 					user = JSON.parse(user);
-					console.log(user, level);
-					/*for(let i = 0; i < user.newUser.skills.length; i++) {
-						user.newUser.skills[i] = {
-							nombre: user.newUser.skills[i]
-							,nivel: level.
-						}
-					}*/
-					//dataBank.push(JSON.parse(user));
+					user.idrol = idrol.value;
+					console.log(user)
+					/*this.$http.post('http://localhost:8080/WebSkillsGW7/webresources/entis.people/', user, {
+   						headers: {
+       						'Content-Type': 'application/json;charset=UTF-8'
+   							}
+						})
+					dataBank.push(user);
 					alert('From Submitted!');
 				}).catch(() => {
 					// eslint-disable-next-line
 					alert('Correct them errors!');
 				});
-			}
-			else {
-				alert('Correct them errors!');
-			}
-		}, resetState: function () {
+		},*/
+		
+		,validateBeforeSubmit() {
+            this.$validator.validateAll().then(() => {
+				let user = JSON.stringify(this.newUser);
+				user = JSON.parse(user);
+				user.idrol = user.idrol.value;
+				dataBank.push(user);
+                // eslint-disable-next-line
+				this.$http.post('http://localhost:8080/WebSkillsGW7/webresources/entis.people/', user, {
+   						headers: {
+       						'Content-Type': 'application/json;charset=UTF-8'
+   							}
+						})
+                alert('From Submitted!');
+            }).catch(() => {
+                // eslint-disable-next-line
+                alert('Correct them errors!');
+            });
+        }
+		
+		,resetState: function () {
 			this.newUser.names = "";
 			this.newUser.last_names = "";
 			this.newUser.email = "";
@@ -168,11 +194,14 @@ export default {
 					this.skill_sliders.push(slider)
 				}
 				console.log(this.skill_sliders);
+			}else{
+				this.skill_sliders = [];
 			}
 		}
 	}
-	, mounted() {
+	, /*mounted() {
 		var iSearch = document.getElementById("iSearch");
+		
 		var currentSkill = this.newUser.skills;
 		var sL = this.skillList;
 		iSearch.childNodes[0].childNodes[0].childNodes[1].addEventListener('keypress', function (e) {
@@ -191,7 +220,7 @@ export default {
 				}
 			}
 		});
-	}
+	}*/
 }
 </script>
 
