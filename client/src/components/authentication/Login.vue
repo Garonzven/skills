@@ -21,7 +21,7 @@
           </div>
           <div class="form-group" style="text-align:center;">
             <p class="control has-icon has-icon-right">
-              <input name="pasword" v-validate="'required|min:6'" :class="{'input': true, 'is-danger': errors.has('pasword') }" type="password" class="form-control" placeholder="Password" v-model="people.pasword">
+              <input name="pasword" v-validate="'required|min:3'" :class="{'input': true, 'is-danger': errors.has('pasword') }" type="password" class="form-control" placeholder="Password" v-model="people.pasword">
               <i v-show="errors.has('pasword')" class="fa fa-warning"></i>
               <span v-show="errors.has('pasword')" class="help-block alert alert-danger">{{ errors.first('pasword') }}</span>
             </p>
