@@ -1,0 +1,8 @@
+ALTER TABLE skill 
+    ADD  COLUMN level  varchar(100),
+    ADD  COLUMN createdate  timestamp without time zone;
+    ADD  COLUMN updatedate  timestamp without time zone;
+
+ALTER TABLE people
+    ADD  COLUMN location  character varying,
+    ADD  COLUMN phone  character varying;
