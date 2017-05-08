@@ -44,6 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "People.findByEmail", query = "SELECT p FROM People p WHERE p.email = :email")
     , @NamedQuery(name = "People.findByPhone", query = "SELECT p FROM People p WHERE p.phone = :phone")
     , @NamedQuery(name = "People.findByLocation", query = "SELECT p FROM People p WHERE p.location = :location")
+    , @NamedQuery(name = "People.findBySkillAndLevel", query = "SELECT p FROM People p WHERE p.skillandlevel = :skillandlevel")
     , @NamedQuery(name = "People.findByIndate", query = "SELECT p FROM People p WHERE p.indate = :indate")
     , @NamedQuery(name = "People.findByPasword", query = "SELECT p FROM People p WHERE p.pasword = :pasword")
     , @NamedQuery(name = "People.findByJobtitle", query = "SELECT p FROM People p WHERE p.jobtitle = :jobtitle")
@@ -73,6 +74,9 @@ public class People implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "location")
     private String location;
+    @Size(max = 2147483647)
+    @Column(name = "skillandlevel")
+    private String skillandlevel;
     @Column(name = "indate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date indate;
@@ -149,8 +153,14 @@ public class People implements Serializable {
 
     public void setLocation(String location) {
         this.location =location ;
+    } //skillandlevel
+    public String getSkillandlevel() {
+        return skillandlevel;
     }
 
+    public void setSkillandlevel(String skillandlevel) {
+        this.skillandlevel =skillandlevel ;
+    }
     public Date getIndate() {
         return indate;
     }
