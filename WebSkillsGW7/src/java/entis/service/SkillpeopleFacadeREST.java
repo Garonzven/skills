@@ -5,9 +5,12 @@
  */
 package entis.service;
 
+import entis.Log;
+import entis.People;
 import entis.Skillpeople;
 import entis.SkillpeoplePK;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -60,17 +63,36 @@ public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
         super(Skillpeople.class);
     }
 
+    public void registrar(People entity, String accion){
+        Log registro = new Log();
+        registro.setIdpeople(entity);
+        registro.setDatetimelog(new Date(System.currentTimeMillis()));
+        registro.setActionlog(accion);
+        em.persist(registro);
+        
+    }
     @POST
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(Skillpeople entity) {
-        super.create(entity);
+       People p =null;
+       super.create(entity);
+       /*Query query = em.createQuery(
+            "SELECT p.people FROM Skillpeople p WHERE  p.skillpeoplePK.idpeople  = "+entity.getSkillpeoplePK().getIdpeople() +" AND p.skillpeoplePK.idskill="+entity.getSkillpeoplePK().getIdskill()+"");
+       List<People> results = query.getResultList();
+       for (People c : results) {
+            p = c;
+            registrar(entity.getPeople(), "Create Skills-People user: "+ p.getName()+ " " + p.getLastname()+ " skill: "+ entity.getSkill().getName() + " level: "+ entity.getSkill().getLevel() );
+        }
+      */
+      
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void edit(Skillpeople entity) {
         super.edit(entity);
+        //registrar(entity.getPeople(), "Update Skills-People user: "+ entity.getPeople().getName()+ " " + entity.getPeople().getLastname()+ " skill: "+ entity.getSkill().getName() + " level: "+ entity.getSkill().getLevel() );
     }
 
     @DELETE
@@ -115,6 +137,13 @@ public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
             
         }
        return results;
+    }
+    
+    @GET
+    @Path("findtotal")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public List<Skillpeople> findtotal() {
+         return super.findAll();
     }
 
     @GET
