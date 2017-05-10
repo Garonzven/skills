@@ -5,4 +5,5 @@ ALTER TABLE skill
 
 ALTER TABLE people
     ADD  COLUMN location  character varying,
-    ADD  COLUMN phone  character varying;
+    ADD  COLUMN phone  character varying,
+    ADD  COLUMN skillandlevel  character varying;
