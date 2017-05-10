@@ -11,7 +11,7 @@ const state = {
       name: 'Users',
       path: '/dashboard',
       meta: {
-        icon: 'fa-tachometer',
+        icon: 'icon-gz-users',
         link: 'dashboard/index.vue'
       },
       component: lazyLoading('dashboard', true)
@@ -20,7 +20,7 @@ const state = {
       name: 'Skills',
       path: '/user',
       meta: {
-        icon: 'fa-tachometer',
+        icon: 'icon-gz-skills',
         link: 'users/index.vue'
       },
       component: lazyLoading('users', true)
@@ -29,7 +29,7 @@ const state = {
       name: 'Reports',
       path: '/reports',
       meta: {
-        icon: 'fa-tachometer',
+        icon: 'icon-gz-reports',
         link: 'skills/index.vue'
       },
       component: lazyLoading('skills', true)
@@ -38,7 +38,7 @@ const state = {
       name: 'My Skills',
       path: '/userProfile',
       meta: {
-        icon: 'fa-tachometer',
+        icon: 'icon-gz-myskills',
         link: 'userProfile/index.vue'
       },
       component: lazyLoading('userProfile', true)

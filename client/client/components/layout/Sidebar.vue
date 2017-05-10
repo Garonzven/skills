@@ -1,13 +1,13 @@
 <template>
   <aside class="menu app-sidebar animated" :class="{ slideInLeft: show, slideOutLeft: !show }">
     <div class="userData">
-      <div class="profile-userpic col-md-5">
+      <div class="profile-userpic">
         <img src="https://pbs.twimg.com/profile_images/784477860497063936/kH8KiYXU.jpg" class="img-responsive" alt="">
 
       </div>
       <!-- END SIDEBAR USERPIC -->
       <!-- SIDEBAR USER TITLE -->
-      <div class="profile-usertitle col-md-7">
+      <div class="profile-usertitle">
         <div class="profile-usertitle-name">
           Carlos Garcia
         </div>
@@ -16,10 +16,6 @@
         </div>
       </div>
       <!-- END SIDEBAR USER TITLE -->
-      <!-- SIDEBAR BUTTONS -->
-      <div class="profile-userbuttons">
-        <button type="button" class="button is-danger">Follow</button>
-      </div>
     </div>
     <ul class="menu-list">
       <li v-for="(item, index) in menu">
@@ -174,8 +170,8 @@ export default {
 .profile-userpic img {
   float: none;
   margin: 0 auto;
-  width: 100%;
-  height: 100%;
+  width: 50%;
+  height: 50%;
   -webkit-border-radius: 50% !important;
   -moz-border-radius: 50% !important;
   border-radius: 50% !important;
@@ -223,6 +219,10 @@ export default {
   margin: 0 10px 0 15px;
 }
 
+.menu-list a {
+  color: #e6e6e6;
+}
+
 .menu-list a:hover {
   color: #f36523;
 }
@@ -241,7 +241,7 @@ export default {
 }
 
 .profile-usertitle-name {
-  color: #5a7391;
+  color: #e6e6e6;
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 7px;
@@ -249,7 +249,7 @@ export default {
 
 .profile-usertitle-job {
   text-transform: uppercase;
-  color: #5b9bd1;
+  color: #e6e6e6;
   font-size: 12px;
   font-weight: 600;
   margin-bottom: 15px;
