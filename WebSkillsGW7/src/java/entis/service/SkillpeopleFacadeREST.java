@@ -5,6 +5,7 @@
  */
 package entis.service;
 
+import entis.Listado;
 import entis.Log;
 import entis.People;
 import entis.Skillpeople;
@@ -16,6 +17,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -75,16 +77,17 @@ public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(Skillpeople entity) {
-       People p =null;
+
        super.create(entity);
-       /*Query query = em.createQuery(
-            "SELECT p.people FROM Skillpeople p WHERE  p.skillpeoplePK.idpeople  = "+entity.getSkillpeoplePK().getIdpeople() +" AND p.skillpeoplePK.idskill="+entity.getSkillpeoplePK().getIdskill()+"");
-       List<People> results = query.getResultList();
-       for (People c : results) {
-            p = c;
-            registrar(entity.getPeople(), "Create Skills-People user: "+ p.getName()+ " " + p.getLastname()+ " skill: "+ entity.getSkill().getName() + " level: "+ entity.getSkill().getLevel() );
-        }
-      */
+      /* Query query = em.createQuery(
+            "SELECT p FROM Skillpeople p left join FETCH p.people  WHERE  p.skillpeoplePK.idpeople  = "+entity.getSkillpeoplePK().getIdpeople() +" AND p.skillpeoplePK.idskill="+entity.getSkillpeoplePK().getIdskill()+"");
+       List<Skillpeople> results = query.getResultList();
+       for (Skillpeople p : results) {
+            registrar(p.getPeople(), "Create Skills-People user: "+ p.getPeople().getName()+ " " + p.getPeople().getLastname()+ " "); 
+//skill: "+ p.getSkill().getName() + " level: "+ p.getSkill().getLevel() );*/
+       //super.getEntityManager().
+      // }
+      
       
     }
 
@@ -138,6 +141,24 @@ public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
         }
        return results;
     }
+    
+    @GET
+    @Path("listfindBy")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public List<Listado> findBy() {
+        Skillpeople p=null;
+        List rs = null;
+        Object[] ale;
+        List<Listado> result = new ArrayList();
+        String consulta = "SELECT p.people.name, p.skill.name,p.updatedate FROM Skillpeople p ";
+        Query query = em.createQuery(consulta , Listado.class);
+        rs = query.getResultList(); 
+        for (Object obj : rs) {
+            ale = (Object[])obj; 
+            result.add(new Listado((String)ale[0], (String)ale[1], (Date)ale[2]));
+        }
+        return result;
+     }
     
     @GET
     @Path("findtotal")

@@ -5,7 +5,9 @@
  */
 package entis.service;
 
+import entis.Log;
 import entis.People;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -20,6 +22,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import utils.Utils;
 
 /**
  *
@@ -35,12 +38,24 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     public PeopleFacadeREST() {
         super(People.class);
     }
+    public void registrar(People entity, String accion){
+        Log registro = new Log();
+        registro.setIdpeople(entity);
+        registro.setDatetimelog(new Date(System.currentTimeMillis()));
+        registro.setActionlog(accion);
+        em.persist(registro);
+        
+    }
 
     @POST
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(People entity) {
         super.create(entity);
+        registrar(entity, "Create User "+ entity.getName()+ " " + entity.getLastname()+ " by SuperAdmin");
+        Utils util = new Utils();
+        util.enviarCorreo(entity, 1);   
+      
     }
 
     @POST
@@ -48,7 +63,6 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public People login(People p) {
-       // return "{\"email\":\"Pedro\",\"pasword\":\"sddsds\"}";
        Query query = em.createQuery(
             "SELECT p FROM People p WHERE  p.email  = '"+p.getEmail()+"' AND p.pasword='"+p.getPasword()+"'");
        List<People> results = query.getResultList();
@@ -60,11 +74,23 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
         return p;
     }
     
+    
     @PUT
    // @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void edit(People entity) {
         super.edit(entity);
+       
+    }
+    
+    @PUT
+    @Path("recovery")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void recovery(People entity) {
+        entity.setPasword("Adfvcbg");
+        super.edit(entity);
+         Utils util = new Utils();
+         util.enviarCorreo(entity, 2);
         
     }
 

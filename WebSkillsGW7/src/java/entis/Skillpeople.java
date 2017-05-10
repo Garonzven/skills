@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Skillpeople.findAll", query = "SELECT s FROM Skillpeople s")
     , @NamedQuery(name = "Skillpeople.findByIdpeople", query = "SELECT s FROM Skillpeople s WHERE s.skillpeoplePK.idpeople = :idpeople")
+    , @NamedQuery(name = "Skillpeople.findByIds", query = "SELECT s FROM Skillpeople s WHERE s.skillpeoplePK.idpeople = :idpeople  AND s.skillpeoplePK.idskill = :idskill")       
     , @NamedQuery(name = "Skillpeople.findByIdskill", query = "SELECT s FROM Skillpeople s WHERE s.skillpeoplePK.idskill = :idskill")
     , @NamedQuery(name = "Skillpeople.findByLevel", query = "SELECT s FROM Skillpeople s WHERE s.level = :level")
     , @NamedQuery(name = "Skillpeople.findByUpdatedate", query = "SELECT s FROM Skillpeople s WHERE s.updatedate = :updatedate")})
@@ -48,10 +49,10 @@ public class Skillpeople implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedate;
     @JoinColumn(name = "idpeople", referencedColumnName = "idpeople", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private People people;
     @JoinColumn(name = "idskill", referencedColumnName = "idskill", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Skill skill;
 
     public Skillpeople() {

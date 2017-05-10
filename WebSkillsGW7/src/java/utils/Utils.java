@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package utils;
+import entis.People;
 import java.util.Properties;
  
 import javax.mail.Message;
@@ -20,7 +21,7 @@ import javax.mail.internet.MimeMultipart;
  */
 public class Utils {
     
-  public void enviarCorreo(String destinatrio) {
+  public void enviarCorreo(People destinatario, int opcion) {
   // El correo gmail de envío
   String correoEnvia = "lorenaportilloaguilar@gmail.com";
   String claveCorreo = "lamfaabp";
@@ -42,25 +43,32 @@ public class Utils {
    MimeMessage mimeMessage = new MimeMessage(session);
  
    // Agregar quien envía el correo
-   mimeMessage.setFrom(new InternetAddress(correoEnvia, "Dato Java"));
+   mimeMessage.setFrom(new InternetAddress(correoEnvia, "Skills Finder"));
     
    // Los destinatarios
+  /* InternetAddress[] internetAddresses = {
+     new InternetAddress(destinatario.getEmail()) }; //Aqui el destinatrio*/
+   
    InternetAddress[] internetAddresses = {
-     new InternetAddress(destinatrio) }; //Aqui el destinatrio
+     new InternetAddress(correoEnvia) }; //Aqui el destinatrio
  
    // Agregar los destinatarios al mensaje
    mimeMessage.setRecipients(Message.RecipientType.TO,
      internetAddresses);
  
    // Agregar el asunto al correo
-   mimeMessage.setSubject("Dato Java Enviando Correo.");
+   if (opcion ==1){
+        mimeMessage.setSubject("Skills Finder. New User");
+   }
+   else    mimeMessage.setSubject("Skills Finder. Recovery Password");
+        
  
    // Creo la parte del mensaje
    MimeBodyPart text = new MimeBodyPart( ) ; 
-            text.setContent("<html>n" 
-                    + "<h2><font color='ff0000'>Bienvenido a Garonz</font></h2>n" 
-                    + "<p>Usuario Nuevo:</p>n" + destinatrio + " "
-                    + "<p>Password temporal : MD5</p>n"
+            text.setContent("<html>" 
+                    + "<h1><font color='ff0000'>Welcome Skills Finder</font></h1><br>" 
+                    + "<p><h3>New User           :" + destinatario.getEmail() + "</h3></p> "
+                    + "<p><h3>Generated Password :" + destinatario.getPasword() + "</h3></p> "
                     + "</html>", "text/html" ); 
    
  
@@ -89,4 +97,3 @@ public class Utils {
    
  }*/
 }
-
