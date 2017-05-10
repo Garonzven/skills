@@ -1,4 +1,5 @@
 <template>
+
 <div class="content has-text-centered">
   <h1 class="is-title is-bold">Login</h1>
 

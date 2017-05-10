@@ -11,11 +11,13 @@ import * as filters from './filters'
 import VeeValidate from 'vee-validate'
 import { TOGGLE_SIDEBAR } from 'vuex-store/mutation-types'
 import vSelect from 'vue-select'
+import VideoBg from 'vue-videobg'
 
+Vue.component('video-bg', VideoBg)
 Vue.router = router
 Vue.use(VueAxios, axios)
 Vue.component('v-select', vSelect)
-Vue.use(VeeValidate)
+Vue.use(VeeValidate, {fieldsBagName: 'formFields'})
 
 Vue.use(VueAuth, {
   auth: {

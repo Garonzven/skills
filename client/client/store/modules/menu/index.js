@@ -1,9 +1,5 @@
 import * as types from '../../mutation-types'
 import lazyLoading from './lazyLoading'
-import charts from './charts'
-import uifeatures from './uifeatures'
-import components from './components'
-import tables from './tables'
 
 // show: meta.label -> name
 // name: component name
@@ -12,7 +8,7 @@ import tables from './tables'
 const state = {
   items: [
     {
-      name: 'Skills',
+      name: 'Users',
       path: '/dashboard',
       meta: {
         icon: 'fa-tachometer',
@@ -21,7 +17,7 @@ const state = {
       component: lazyLoading('dashboard', true)
     },
     {
-      name: 'Users',
+      name: 'Skills',
       path: '/user',
       meta: {
         icon: 'fa-tachometer',
@@ -30,19 +26,23 @@ const state = {
       component: lazyLoading('users', true)
     },
     {
-      name: 'Axios',
-      path: '/axiosDemo',
+      name: 'Reports',
+      path: '/reports',
       meta: {
-        auth: true,
-        icon: 'fa-rocket',
-        link: 'axios/index.vue'
+        icon: 'fa-tachometer',
+        link: 'skills/index.vue'
       },
-      component: lazyLoading('axios', true)
+      component: lazyLoading('skills', true)
     },
-    charts,
-    uifeatures,
-    components,
-    tables
+    {
+      name: 'My Skills',
+      path: '/userProfile',
+      meta: {
+        icon: 'fa-tachometer',
+        link: 'userProfile/index.vue'
+      },
+      component: lazyLoading('userProfile', true)
+    }
   ]
 }
 

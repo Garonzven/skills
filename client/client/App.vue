@@ -1,11 +1,15 @@
 <template>
-  <div id="app">
+<!--video-bg :sources="['http://thenewcode.com/assets/videos/polina.mp4']" img=""-->
+	  <div id="app">
     <nprogress-container></nprogress-container>
     <navbar :show="true"></navbar>
     <sidebar :show="sidebar.opened && !sidebar.hidden"></sidebar>
     <app-main></app-main>
     <footer-bar></footer-bar>
-  </div>
+  </div>			
+	
+<!--/video-bg-->
+
 </template>
 
 <script>
