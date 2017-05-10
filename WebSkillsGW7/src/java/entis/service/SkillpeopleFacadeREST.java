@@ -5,14 +5,19 @@
  */
 package entis.service;
 
+import entis.Listado;
+import entis.Log;
+import entis.People;
 import entis.Skillpeople;
 import entis.SkillpeoplePK;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -60,17 +65,37 @@ public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
         super(Skillpeople.class);
     }
 
+    public void registrar(People entity, String accion){
+        Log registro = new Log();
+        registro.setIdpeople(entity);
+        registro.setDatetimelog(new Date(System.currentTimeMillis()));
+        registro.setActionlog(accion);
+        em.persist(registro);
+        
+    }
     @POST
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(Skillpeople entity) {
-        super.create(entity);
+
+       super.create(entity);
+      /* Query query = em.createQuery(
+            "SELECT p FROM Skillpeople p left join FETCH p.people  WHERE  p.skillpeoplePK.idpeople  = "+entity.getSkillpeoplePK().getIdpeople() +" AND p.skillpeoplePK.idskill="+entity.getSkillpeoplePK().getIdskill()+"");
+       List<Skillpeople> results = query.getResultList();
+       for (Skillpeople p : results) {
+            registrar(p.getPeople(), "Create Skills-People user: "+ p.getPeople().getName()+ " " + p.getPeople().getLastname()+ " "); 
+//skill: "+ p.getSkill().getName() + " level: "+ p.getSkill().getLevel() );*/
+       //super.getEntityManager().
+      // }
+      
+      
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void edit(Skillpeople entity) {
         super.edit(entity);
+        //registrar(entity.getPeople(), "Update Skills-People user: "+ entity.getPeople().getName()+ " " + entity.getPeople().getLastname()+ " skill: "+ entity.getSkill().getName() + " level: "+ entity.getSkill().getLevel() );
     }
 
     @DELETE
@@ -115,6 +140,31 @@ public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
             
         }
        return results;
+    }
+    
+    @GET
+    @Path("listfindBy")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public List<Listado> findBy() {
+        Skillpeople p=null;
+        List rs = null;
+        Object[] ale;
+        List<Listado> result = new ArrayList();
+        String consulta = "SELECT p.people.name, p.skill.name,p.updatedate FROM Skillpeople p ";
+        Query query = em.createQuery(consulta , Listado.class);
+        rs = query.getResultList(); 
+        for (Object obj : rs) {
+            ale = (Object[])obj; 
+            result.add(new Listado((String)ale[0], (String)ale[1], (Date)ale[2]));
+        }
+        return result;
+     }
+    
+    @GET
+    @Path("findtotal")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public List<Skillpeople> findtotal() {
+         return super.findAll();
     }
 
     @GET
