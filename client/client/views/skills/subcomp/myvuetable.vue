@@ -2,7 +2,7 @@
 
 <template>
   <vuetable ref="vuetable"
-    api-url="http://localhost:8080/WebSkillsGW7/webresources/entis.skillpeople/findtotal"
+    api-url="http://localhost:8080/WebSkillsGW7/webresources/entis.skillpeople/listfindBy/"
     :fields="fields"
 		pagination-path=""
 		data-path=""
@@ -19,16 +19,16 @@
 		data () {
 			return {
 				fields: [{
-						name: 'people.name',
+						name: 'dato2',
 						title: 'Title'
 					},
 					{
-						name: 'people.email',
-						title: 'Levels'
+						name: 'dato1',
+						title: 'Created By'
 					},
 					{
-						name: 'level',
-						title: 'Since'
+						name: 'datetime',
+						title: 'Last Updated'
 					}
 				]
 			}

@@ -56,7 +56,7 @@
 						</p>
 					</div>
 				</form>
-				<!--pre>{{$data.newUser}}</pre-->
+				<pre>{{$store.state.session}}</pre>
 			</div>
 		</div>
 	</div>
