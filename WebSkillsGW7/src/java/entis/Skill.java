@@ -91,7 +91,7 @@ public class Skill implements Serializable {
         return level;
     }
 
-    public void Level(String level) {
+    public void setLevel(String level) {
         this.level = level;
     }
     

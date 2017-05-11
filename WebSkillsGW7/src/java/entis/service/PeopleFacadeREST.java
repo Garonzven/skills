@@ -70,7 +70,6 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
             p=c;
             break; 
         }
-       // p=super.find(new Integer(id));
         return p;
     }
     
@@ -87,10 +86,18 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     @Path("recovery")
     @Consumes(MediaType.APPLICATION_JSON)
     public void recovery(People entity) {
-        entity.setPasword("Adfvcbg");
-        super.edit(entity);
-         Utils util = new Utils();
-         util.enviarCorreo(entity, 2);
+        Query query = em.createQuery(
+                "SELECT s FROM People s WHERE s.email = '" + entity.getEmail()+ "'");
+        List<People> results = query.getResultList();
+        for (People c : results) {
+              entity = c;
+              entity.setPasword(Utils.getCadenaAlfanumAleatoria(6));
+              //em.persist(entity);
+              edit(entity);
+              Utils util = new Utils();
+              util.enviarCorreo(entity, 2);
+              break; 
+        }
         
     }
 
