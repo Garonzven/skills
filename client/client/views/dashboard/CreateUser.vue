@@ -10,7 +10,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<form v-on:submit.prevent="validateBeforeSubmit">
+				<form @submit.prevent="validateBeforeSubmit">
 					<div class="column is-12 form-group">
 						<p class="control has-icon has-icon-right">
               <input name="name" v-model="newUser.name" v-validate:name.initial="'required|alpha'" :class="{'input': true, 'is-danger': errors.has('name') }" type="text" placeholder="Name" class="input-style form-control">
@@ -52,7 +52,10 @@
 					<div class="column is-12 pull-right">
 						<p class="control">
 							<!--button type="submit" class="btn btn-primary">Submit</button-->
-							<a type="button" @click="validateBeforeSubmit" class="btn btn-primary" value="Submit">Save</a>
+							<router-link class="btn btn-primary" :to="{path: '/dashboard'}">
+								<a type="button" value="Submit">Save</a>
+							</router-link>
+							<router-link class="btn btn-default" :to="{path: '/dashboard'}">Cancel</router-link>
 						</p>
 					</div>
 				</form>

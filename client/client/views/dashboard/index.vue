@@ -5,7 +5,6 @@
         <span class="glyphicon glyphicon-plus"></span>
         Add User
       </router-link>
-
     </div>
     <div class="filters row">
       <div class="form-group col-sm-3">
