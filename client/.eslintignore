@@ -3,3 +3,4 @@ client/views/users/index.vue
 client/views/userProfile/index.vue
 client/views/skills/index.vue
 client/views/skills/subcomp/myvuetable.vue
+client/views/dashboard/CreateUser.vue

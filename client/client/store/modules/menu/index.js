@@ -18,7 +18,7 @@ const state = {
     },
     {
       name: 'Skills',
-      path: '/user',
+      path: '/users',
       meta: {
         icon: 'icon-gz-skills',
         link: 'users/index.vue'

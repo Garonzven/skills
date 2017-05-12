@@ -18,6 +18,11 @@ export default new Router({
       path: '/',
       component: require('../views/auth/Login')
     },
+    {
+      name: 'Create User',
+      path: '/dashboard/createUser',
+      component: require('../views/dashboard/CreateUser')
+    },
     ...generateRoutesFromMenu(menuModule.state.items),
     {
       path: '*',

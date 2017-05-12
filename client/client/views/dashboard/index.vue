@@ -1,155 +1,169 @@
 <template>
-  <div>
-    <div class="tile is-ancestor">
-      <div class="tile is-parent">
-        <article class="tile is-child box">
-          <p class="title">One</p>
-          <p class="subtitle">Subtitle</p>
-        </article>
-      </div>
-      <div class="tile is-parent">
-        <article class="tile is-child box">
-          <p class="title">Two</p>
-          <p class="subtitle">Subtitle</p>
-        </article>
-      </div>
-      <div class="tile is-parent">
-        <article class="tile is-child box">
-          <p class="title">Three</p>
-          <p class="subtitle">Subtitle</p>
-        </article>
-      </div>
-      <div class="tile is-parent">
-        <article class="tile is-child box">
-          <p class="title">Four</p>
-          <p class="subtitle">Subtitle</p>
-        </article>
+  <section>
+    <div class="actions">
+      <router-link class="btn btn-default" :to="{path: '/dashboard/createUser'}">
+        <span class="glyphicon glyphicon-plus"></span>
+        Add User
+      </router-link>
+
+    </div>
+    <div class="filters row">
+      <div class="form-group col-sm-3">
+        <input class="form-control" id="search-element" placeholder="Search" requred/>
       </div>
     </div>
+    <div class="no-padding lib-item" data-category="view">
+                <div class="lib-panel col-lg-6" v-for="user in users">
+                    <div class="row box-shadow">
+                        <div class="col-md-4">
+                            <img class="lib-img-show" src="http://lorempixel.com/850/850/?random=123">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="lib-row lib-header">
+                                {{ user.name + " " + user.lastname}}
+                            <div class="lib-header-seperator"></div>
+                            </div>
+                            <div class="lib-row lib-desc">
+                              <p>
+                                {{ user.email }}
+                              </p>
+                            </div>
+                            <h3>
+                              <i class="fa fa-pencil" value="edit"></i>
 
-    <div class="tile is-ancestor">
-      <div class="tile is-parent is-6">
-        <article class="tile is-child box">
-          <h4 class="title">Five</h4>
-          <div class="content">
-            <chart :type="'doughnut'" :data="chartData"></chart>
-          </div>
-        </article>
-      </div>
-      <div class="tile is-parent is-6">
-        <article class="tile is-child box">
-          <h4 class="title">Six</h4>
-          <div class="content">
-            <chart :type="'pie'" :data="chartData"></chart>
-          </div>
-        </article>
-      </div>
-    </div>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      <!--div class="row">
+        <div class="col-lg-6" v-for="user in users">
+          <div class="card">
+            <div class="card-divider">
+              {{ user.name + " " + user.lastname}}
+            </div>
 
-    <div class="tile is-ancestor">
-      <div class="tile is-vertical is-9">
-        <div class="tile">
-          <div class="tile is-parent">
-            <article class="tile is-child box">
-              <p class="title">Seven</p>
-              <p class="subtitle">Subtitle</p>
-              <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-              </div>
-            </article>
-          </div>
-          <div class="tile is-8 is-parent">
-            <article class="tile is-child box">
-              <p class="title">Eight</p>
-              <p class="subtitle">Subtitle</p>
-              <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-              </div>
-            </article>
-          </div>
-        </div>
-        <div class="tile">
-          <div class="tile is-8 is-parent">
-            <article class="tile is-child box">
-              <p class="title">Nine</p>
-              <p class="subtitle">Subtitle</p>
-              <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-              </div>
-            </article>
-          </div>
-          <div class="tile is-parent">
-            <article class="tile is-child box">
-              <p class="title">Ten</p>
-              <p class="subtitle">Subtitle</p>
-              <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </div>
-      <div class="tile is-parent">
-        <article class="tile is-child box">
-          <div class="content">
-            <p class="title">Eleven</p>
-            <p class="subtitle">Subtitle</p>
-            <div class="content">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus diam, consequat gravida libero rhoncus ut. Morbi maximus, leo sit amet vehicula eleifend, nunc dui porta orci, quis semper odio felis ut quam.</p>
-              <p>Integer sollicitudin, tortor a mattis commodo, velit urna rhoncus erat, vitae congue lectus dolor consequat libero. Donec leo ligula, maximus et pellentesque sed, gravida a metus. Cras ullamcorper a nunc ac porta. Aliquam ut aliquet lacus, quis faucibus libero. Quisque non semper leo.</p>
+            <div class="card-section">
+              <p>{{ user.email }}</p>
             </div>
           </div>
-        </article>
+        </div>
+      </div-->
+  </section>
+  <!--section>
+    <div class="card">
+      <div class="card-block">
+        <div v-for="user in users">
+          <p><strong>{{user.name}}</strong></p>
+          <p>{{user.email}}</p>
+        </div>
+        <h3>
+          <router-link class="btn btn-warning btn-xs" :to="{name: 'product-edit', params: {product_id: product.id}}">Edit</router-link>
+          <router-link class="btn btn-danger btn-xs" :to="{name: 'product-delete', params: {product_id: product.id}}">Delete</router-link>
+        </h3>
       </div>
     </div>
-  </div>
+  </section-->
 </template>
 
 <script>
-import Chart from 'vue-bulma-chartjs'
+import axios from 'axios'
+/* var users = []
 
+    $.ajax({
+      url: 'http://localhost:8080/WebSkillsGW7/webresources/entis.people/',
+      type: 'GET',
+      success: function (data) {
+        users = data
+        console.log(users)
+      },
+      dataType: 'json'
+    }) */
 export default {
-  components: {
-    Chart
-  },
+  data: () => ({
+    users: []
+  }),
 
-  data () {
-    return {
-      data: [300, 50, 100]
-    }
-  },
+  // Fetches posts when the component is created.
+  created () {
+    axios.get(`http://localhost:8080/WebSkillsGW7/webresources/entis.people/`)
+    .then(response => {
+      // JSON responses are automatically parsed.
+      this.users = response.data
+    })
+    /* .catch(e => {
+      this.errors.push(e)
+    }) */
 
-  computed: {
-    chartData () {
-      return {
-        labels: [
-          'Red',
-          'Blue',
-          'Yellow'
-        ],
-        datasets: [{
-          data: this.data,
-          backgroundColor: [
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56'
-          ]
-        }]
-      }
-    }
-  },
-
-  mounted () {
-    setInterval(() => {
-      // https://github.com/vuejs/vue/issues/2873
-      // Array.prototype.$set/$remove deprecated (use Vue.set or Array.prototype.splice instead)
-      this.data.forEach((item, i) => {
-        this.data.splice(i, 1, Math.ceil(Math.random() * 1000))
-      })
-    }, 1024)
+    // async / await version (created() becomes async created())
+    //
+    // try {
+    //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+    //   this.posts = response.data
+    // } catch (e) {
+    //   this.errors.push(e)
+    // }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style>
+.lib-panel {
+    margin-bottom: 20Px;
+    padding: 20px
+}
+.lib-panel img {
+    width: 100%;
+    background-color: transparent;
+}
+
+.lib-panel .row,
+.lib-panel .col-md-6 {
+    padding: 0;
+    background-color: #FFFFFF;
+}
+
+
+.lib-panel .lib-row {
+    padding: 0 20px 0 20px;
+}
+
+.lib-panel .lib-row.lib-header {
+    background-color: #FFFFFF;
+    font-size: 20px;
+    padding: 10px 20px 0 20px;
+}
+
+.lib-panel .lib-row.lib-header .lib-header-seperator {
+    height: 2px;
+    width: 26px;
+    background-color: #d9d9d9;
+    margin: 7px 0 7px 0;
+}
+
+.lib-panel .lib-row.lib-desc {
+    position: relative;
+    height: 100%;
+    display: block;
+    font-size: 13px;
+}
+.lib-panel .lib-row.lib-desc a{
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+    left: 20px;
+}
+
+.row-margin-bottom {
+    margin-bottom: 20px;
+}
+
+.box-shadow {
+    -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.10);
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.10);
+}
+
+.no-padding {
+    padding: 0;
+}
 </style>
