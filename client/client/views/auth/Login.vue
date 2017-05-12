@@ -10,11 +10,11 @@
         <form v-on:submit.prevent="login">
           <label class="label">Email</label>
           <p class="control">
-            <input v-model="data.body.username" class="input" type="text" placeholder="email@example.org">
+            <input v-model="data.body.email" class="input" type="text" placeholder="email@example.org">
           </p>
           <label class="label">Password</label>
           <p class="control">
-            <input v-model="data.body.password" class="input" type="password" placeholder="password">
+            <input v-model="data.body.pasword" class="input" type="password" placeholder="password">
           </p>
 
           <p class="control">
@@ -43,8 +43,8 @@ export default {
     return {
       data: {
         body: {
-          username: null,
-          password: null
+          email: null,
+          pasword: null
         },
         rememberMe: false
       },
@@ -68,9 +68,11 @@ export default {
         rememberMe: this.data.rememberMe,
         redirect: {name: redirect ? redirect.from.name : 'Home'},
         success (res) {
+          console.log(this.$store.state.session)
           console.log('Auth Success')
-          // console.log('Token: ' + this.$auth.token())
-          // console.log(res)
+          console.log('Token: ' + this.$auth.token())
+          console.log(res)
+          this.$store.state.session = res
         },
         error (err) {
           if (err.response) {
