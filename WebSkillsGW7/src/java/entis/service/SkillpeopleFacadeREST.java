@@ -8,6 +8,7 @@ package entis.service;
 import entis.Listado;
 import entis.Log;
 import entis.People;
+import entis.Skill;
 import entis.Skillpeople;
 import entis.SkillpeoplePK;
 import java.util.ArrayList;
@@ -77,18 +78,38 @@ public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(Skillpeople entity) {
-
-       super.create(entity);
-      /* Query query = em.createQuery(
-            "SELECT p FROM Skillpeople p left join FETCH p.people  WHERE  p.skillpeoplePK.idpeople  = "+entity.getSkillpeoplePK().getIdpeople() +" AND p.skillpeoplePK.idskill="+entity.getSkillpeoplePK().getIdskill()+"");
-       List<Skillpeople> results = query.getResultList();
-       for (Skillpeople p : results) {
-            registrar(p.getPeople(), "Create Skills-People user: "+ p.getPeople().getName()+ " " + p.getPeople().getLastname()+ " "); 
-//skill: "+ p.getSkill().getName() + " level: "+ p.getSkill().getLevel() );*/
-       //super.getEntityManager().
-      // }
-      
-      
+      try {
+        /*  
+          UserTransaction transaction = (UserTransaction)new InitialContext().lookup("java:comp/UserTransaction");
+            transaction.begin();
+            EntityManager em = getEntityManager();
+            Employee employee = em.find(Employee.class, id);
+            employee.setSalary(employee.getSalary() + 1000);
+            transaction.commit();
+        */
+        //em.getTransaction().begin();
+        int idp = entity.getSkill().getIdskill();
+        if (idp == 0){
+            Skill skill = new Skill();
+            skill.setName(entity.getSkill().getName());
+            skill.setUpdatedate(entity.getSkill().getUpdatedate());
+            skill.setCreatedate(entity.getSkill().getCreatedate());
+            skill.setLevel(entity.getSkill().getLevel());
+            em.persist(skill); 
+            Query query = em.createQuery(
+                "SELECT s FROM Skill s WHERE s.name = '" + skill.getName()+ "'");
+            List<Skill> results = query.getResultList();
+            for (Skill c : results) {
+                 skill = c;
+                break; 
+            }
+            entity.getSkillpeoplePK().setIdskill(skill.getIdskill());
+            entity.setSkill(skill);
+            em.persist(entity); 
+        }
+       } catch (Exception e) {
+             e.printStackTrace();
+       }
     }
 
     @PUT
