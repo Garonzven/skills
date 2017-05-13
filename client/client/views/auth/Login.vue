@@ -66,13 +66,13 @@ export default {
         },
         data: this.data.body,
         rememberMe: this.data.rememberMe,
-        redirect: {name: redirect ? redirect.from.name : 'Home'},
+        redirect: {name: redirect ? redirect.from.name : 'My Skills'},
         success (res) {
-          console.log(this.$store.state.session)
           console.log('Auth Success')
           console.log('Token: ' + this.$auth.token())
           console.log(res)
-          this.$store.state.session = res
+          this.$store.state.session = res.data
+          console.log(this.$store.state.session)
         },
         error (err) {
           if (err.response) {

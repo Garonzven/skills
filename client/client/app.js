@@ -19,6 +19,8 @@ Vue.use(VueAxios, axios)
 Vue.component('v-select', vSelect)
 Vue.use(VeeValidate, {fieldsBagName: 'formFields'})
 
+axios.defaults.baseURL = 'http://localhost:8080/WebSkillsGW7/webresources/'
+
 Vue.use(VueAuth, {
   auth: {
     request: function (req, token) {
@@ -31,7 +33,7 @@ Vue.use(VueAuth, {
   },
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
-  loginData: { url: 'http://localhost:8080/WebSkillsGW7/webresources/entis.people/login', fetchUser: false },
+  loginData: { url: 'entis.people/login', fetchUser: false },
   refreshData: { enabled: false }
 })
 
