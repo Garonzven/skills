@@ -22,71 +22,83 @@
 </template>
 
 <script>
-import Tooltip from 'vue-bulma-tooltip'
-import { mapGetters, mapActions } from 'vuex'
+  import Tooltip from 'vue-bulma-tooltip'
+  import {
+    mapGetters,
+    mapActions
+  } from 'vuex'
 
-export default {
+  export default {
 
-  components: {
-    Tooltip
-  },
+    components: {
+      Tooltip
+    },
 
-  props: {
-    show: Boolean
-  },
+    props: {
+      show: Boolean
+    },
 
-  computed: mapGetters({
-    pkginfo: 'pkg',
-    sidebar: 'sidebar'
-  }),
+    computed: mapGetters({
+      pkginfo: 'pkg',
+      sidebar: 'sidebar'
+    }),
 
-  methods: {
-    ...mapActions([
-      'toggleSidebar'
-    ]),
-    logout () {
-      this.$auth.logout({
-        redirect: 'Login',
-        makeRequest: false
-        // params: {},
-        // success: function () {},
-        // error: function () {},
-        // etc...
-      })
+    methods: {
+      ...mapActions([
+        'toggleSidebar'
+      ]),
+      logout () {
+        this.$auth.logout({
+          redirect: 'Login',
+          makeRequest: false,
+          // params: {},
+          success: function () {
+            console.log('something logout')
+            this.$store.commit('TOGGLE_SIDEBAR', false)
+          }
+          // error: function () {},
+          // etc...
+        })
+      }
     }
   }
-}
+
 </script>
 
 <style>
-.app-navbar {
-  position: fixed;
-  min-width: 100%;
-  z-index: 1024;
-  box-shadow: 0 2px 3px rgba(17, 17, 17, 0.1), 0 0 0 1px rgba(17, 17, 17, 0.1);
-  background-color: black;
-}
-.app-navbar .container {
-  margin: auto 10px;
-}
-.app-navbar .nav-right {
-  align-items: stretch;
-  align-items: stretch;
-  flex: 1;
-  justify-content: flex-end;
-  overflow: hidden;
-  overflow-x: auto;
-  white-space: nowrap;
-}
+  .app-navbar {
+    position: fixed;
+    min-width: 100%;
+    z-index: 1024;
+    box-shadow: 0 2px 3px rgba(17, 17, 17, 0.1), 0 0 0 1px rgba(17, 17, 17, 0.1);
+    background-color: black;
+  }
+  
+  .app-navbar .container {
+    margin: auto 10px;
+  }
+  
+  .app-navbar .nav-right {
+    align-items: stretch;
+    align-items: stretch;
+    flex: 1;
+    justify-content: flex-end;
+    overflow: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .hero-brand .vue {
+    margin-left: 10px;
+    color: #36AC70;
+  }
+  
+  .hero-brand .admin {
+    color: #28374B;
+  }
+  
+  .nav-item img {
+    max-height: 2.75rem;
+  }
 
-.hero-brand .vue {
-  margin-left: 10px;
-  color: #36AC70;
-}
-.hero-brand .admin {
-  color: #28374B;
-}
-.nav-item img {
-  max-height: 2.75rem;
-}
 </style>

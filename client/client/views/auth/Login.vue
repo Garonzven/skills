@@ -66,13 +66,16 @@ export default {
         },
         data: this.data.body,
         rememberMe: this.data.rememberMe,
-        redirect: {name: redirect ? redirect.from.name : 'Home'},
+        redirect: {name: redirect ? redirect.from.name : 'My Skills'},
         success (res) {
-          console.log(this.$store.state.session)
           console.log('Auth Success')
-          console.log('Token: ' + this.$auth.token())
-          console.log(res)
-          this.$store.state.session = res
+//          console.log('Token: ' + this.$auth.token())
+//          this.$store.state.loggedUser.userName = `${res.data.name} ${res.data.lastname}`
+          console.log(this.$store)
+          this.$store.commit('changeUserName', `${res.data.name} ${res.data.lastname}`)
+          this.$auth.user(res.data)
+          console.log(this.$auth.user())
+          this.$store.commit('TOGGLE_SIDEBAR', true)
         },
         error (err) {
           if (err.response) {

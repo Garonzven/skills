@@ -24,7 +24,11 @@ const mutations = {
     if (state.device.isMobile) {
       state.sidebar.opened = opened
     } else {
-      state.sidebar.opened = true
+      if (opened === true) {
+        state.sidebar.opened = true
+      } else {
+        state.sidebar.opened = false
+      }
     }
   },
 
