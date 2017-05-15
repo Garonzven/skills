@@ -11,7 +11,6 @@ const state = {
       name: 'Users',
       path: '/dashboard',
       meta: {
-        auth: ['Super User', 'Admin'],
         icon: 'icon-gz-users',
         link: 'dashboard/index.vue'
       },
@@ -21,6 +20,7 @@ const state = {
       name: 'Skills',
       path: '/users',
       meta: {
+        // auth: ['Super User', 'Admin'],
         icon: 'icon-gz-skills',
         link: 'users/index.vue'
       },

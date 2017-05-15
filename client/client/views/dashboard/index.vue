@@ -12,57 +12,29 @@
       </div>
     </div>
     <div class="no-padding lib-item" data-category="view">
-                <div class="lib-panel col-lg-6" v-for="user in users">
-                    <div class="row box-shadow">
-                        <div class="col-md-4">
-                            <img class="lib-img-show" src="http://lorempixel.com/850/850/?random=123">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="lib-row lib-header">
-                                {{ user.name + " " + user.lastname}}
-                            <div class="lib-header-seperator"></div>
-                            </div>
-                            <div class="lib-row lib-desc">
-                              <p>
-                                {{ user.email }}
-                              </p>
-                            </div>
-                            <h3>
-                              <i class="fa fa-pencil" value="edit"></i>
-
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-      <!--div class="row">
-        <div class="col-lg-6" v-for="user in users">
-          <div class="card">
-            <div class="card-divider">
+      <div class="lib-panel col-lg-6" v-for="user in users">
+        <div class="row box-shadow">
+          <div class="col-md-4">
+            <img class="lib-img-show" src="http://lorempixel.com/850/850/?random=123">
+          </div>
+          <div class="col-md-8">
+            <div class="lib-row lib-header">
               {{ user.name + " " + user.lastname}}
+              <div class="lib-header-seperator"></div>
             </div>
-
-            <div class="card-section">
-              <p>{{ user.email }}</p>
+            <div class="lib-row lib-desc">
+              <p>
+                {{ user.email }}
+              </p>
             </div>
+            <h3>
+              <i class="fa fa-pencil" value="edit"></i>
+            </h3>
           </div>
         </div>
-      </div-->
-  </section>
-  <!--section>
-    <div class="card">
-      <div class="card-block">
-        <div v-for="user in users">
-          <p><strong>{{user.name}}</strong></p>
-          <p>{{user.email}}</p>
-        </div>
-        <h3>
-          <router-link class="btn btn-warning btn-xs" :to="{name: 'product-edit', params: {product_id: product.id}}">Edit</router-link>
-          <router-link class="btn btn-danger btn-xs" :to="{name: 'product-delete', params: {product_id: product.id}}">Delete</router-link>
-        </h3>
       </div>
     </div>
-  </section-->
+  </section>
 </template>
 
 <script>

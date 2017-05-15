@@ -3,7 +3,7 @@
     <div class="level-left">
       <div class="level-item">
         <h3 class="subtitle is-5 org">
-          <strong>{{ name }}</strong>
+          <strong style="color: #f36523;">{{ name }}</strong>
         </h3>
       </div>
       <div class="level-item" v-if="!!codelink">
@@ -61,7 +61,7 @@ export default {
       let matched = this.$route.matched.filter(item => item.name)
       let first = matched[0]
       if (first && (first.name !== 'Home' || first.path !== '')) {
-        matched = [{ name: 'Home', path: '/' }].concat(matched)
+        matched = [{ name: 'Home', path: '/home' }].concat(matched)
       }
       this.list = matched
     }
@@ -76,6 +76,10 @@ export default {
 </script>
 
 <style>
+a {
+  color: #f36523;
+}
+
 .breadcrumb a.is-active{
   color: #f36523;
 }
