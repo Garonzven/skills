@@ -53,7 +53,7 @@
 						<p class="control">
 							<!--button type="submit" class="btn btn-primary">Submit</button-->
 							<router-link class="btn btn-primary" :to="{path: '/dashboard'}">
-								<a type="button" value="Submit">Save</a>
+								<a type="button" @click="validateBeforeSubmit" value="Submit">Save</a>
 							</router-link>
 							<router-link class="btn btn-default" :to="{path: '/dashboard'}">Cancel</router-link>
 						</p>
