@@ -17,7 +17,7 @@
           <div class="col-md-4">
             <img class="lib-img-show" src="http://lorempixel.com/850/850/?random=123">
           </div>
-          <div class="col-md-8">
+          <div class="col-md-6">
             <div class="lib-row lib-header">
               {{ user.name + " " + user.lastname}}
               <div class="lib-header-seperator"></div>
@@ -27,10 +27,14 @@
                 {{ user.email }}
               </p>
             </div>
-            <h3>
-              <i class="fa fa-pencil" value="edit"></i>
-            </h3>
+
           </div>
+          <a class="col-md">
+            <i class="fa fa-pencil" value="edit"></i>
+          </a>
+          <a class="col-md" href="#">
+            <i class="icon-trash"></i>
+          </a>
         </div>
       </div>
     </div>
