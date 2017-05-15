@@ -6,10 +6,8 @@
         Add User
       </router-link>
     </div>
-    <div class="filters row">
-      <div class="form-group col-sm-3">
-        <input class="form-control" id="search-element" placeholder="Search" requred/>
-      </div>
+    <div class="column is-12 form-group" id="iSearch">
+      <v-select :options="skillList" :value.sync="selected" :on-change="search" :debounce="250" multiple placeholder="Search Skills"></v-select>
     </div>
     <div class="no-padding lib-item" data-category="view">
                 <div class="lib-panel col-lg-6" v-for="user in users">
@@ -66,103 +64,134 @@
 </template>
 
 <script>
-import axios from 'axios'
-/* var users = []
+  import axios from 'axios'
 
-    $.ajax({
-      url: 'http://localhost:8080/WebSkillsGW7/webresources/entis.people/',
-      type: 'GET',
-      success: function (data) {
-        users = data
-        console.log(users)
-      },
-      dataType: 'json'
-    }) */
-export default {
-  data: () => ({
-    users: []
-  }),
+  const skillList = []
 
-  // Fetches posts when the component is created.
-  created () {
-    axios.get(`http://localhost:8080/WebSkillsGW7/webresources/entis.people/`)
+  axios.get('http://localhost:8080/WebSkillsGW7/webresources/entis.skill/')
     .then(response => {
       // JSON responses are automatically parsed.
-      this.users = response.data
+      for (let i = 0; i < response.data.length; i++) {
+        skillList.push(response.data[i].name)
+      }
+      console.log('Data Loaded: ', skillList)
     })
-    /* .catch(e => {
-      this.errors.push(e)
-    }) */
+  /* var users = []
 
-    // async / await version (created() becomes async created())
-    //
-    // try {
-    //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
-    //   this.posts = response.data
-    // } catch (e) {
-    //   this.errors.push(e)
-    // }
+      $.ajax({
+        url: 'http://localhost:8080/WebSkillsGW7/webresources/entis.people/',
+        type: 'GET',
+        success: function (data) {
+          users = data
+          console.log(users)
+        },
+        dataType: 'json'
+      }) */
+  export default {
+    data: () => ({
+      selected: [],
+      users: [],
+      skillList: skillList
+    }),
+
+    // Fetches posts when the component is created.
+    created () {
+      axios.get(`http://localhost:8080/WebSkillsGW7/webresources/entis.people/`)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.users = response.data
+        })
+      /* .catch(e => {
+        this.errors.push(e)
+      }) */
+
+      // async / await version (created() becomes async created())
+      //
+      // try {
+      //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+      //   this.posts = response.data
+      // } catch (e) {
+      //   this.errors.push(e)
+      // }
+    },
+    methods: {
+      search () {
+        console.log('search for:', this.selected)
+        if (this.selected.length === 0) {
+          axios.get(`http://localhost:8080/WebSkillsGW7/webresources/entis.people/`)
+            .then(response => {
+              // JSON responses are automatically parsed.
+              this.users = response.data
+            })
+        } else {
+          console.log('search for:', this.users)
+          this.users = []
+        }
+      }
+    }
   }
-}
+
 </script>
 
 <style>
-.lib-panel {
+  .lib-panel {
     margin-bottom: 20Px;
     padding: 20px
-}
-.lib-panel img {
+  }
+  
+  .lib-panel img {
     width: 100%;
     background-color: transparent;
-}
-
-.lib-panel .row,
-.lib-panel .col-md-6 {
+  }
+  
+  .lib-panel .row,
+  .lib-panel .col-md-6 {
     padding: 0;
     background-color: #FFFFFF;
-}
-
-
-.lib-panel .lib-row {
+  }
+  
+  .lib-panel .lib-row {
     padding: 0 20px 0 20px;
-}
-
-.lib-panel .lib-row.lib-header {
+  }
+  
+  .lib-panel .lib-row.lib-header {
     background-color: #FFFFFF;
     font-size: 20px;
     padding: 10px 20px 0 20px;
-}
-
-.lib-panel .lib-row.lib-header .lib-header-seperator {
+  }
+  
+  .lib-panel .lib-row.lib-header .lib-header-seperator {
     height: 2px;
     width: 26px;
     background-color: #d9d9d9;
     margin: 7px 0 7px 0;
-}
-
-.lib-panel .lib-row.lib-desc {
+  }
+  
+  .lib-panel .lib-row.lib-desc {
     position: relative;
     height: 100%;
     display: block;
     font-size: 13px;
-}
-.lib-panel .lib-row.lib-desc a{
+  }
+  
+  .lib-panel .lib-row.lib-desc a {
     position: absolute;
     width: 100%;
     bottom: 10px;
     left: 20px;
-}
-
-.row-margin-bottom {
+  }
+  
+  .row-margin-bottom {
     margin-bottom: 20px;
-}
-
-.box-shadow {
-    -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.10);
-    box-shadow: 0 0 10px 0 rgba(0,0,0,.10);
-}
-
-.no-padding {
+  }
+  
+  .box-shadow {
+    -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .10);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, .10);
+  }
+  
+  .no-padding {
     padding: 0;
-}
+  }
+
 </style>

@@ -10,7 +10,7 @@ import menu from './modules/menu'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  strict: true,  // process.env.NODE_ENV !== 'production',
+  strict: true, // process.env.NODE_ENV !== 'production',
   actions,
   getters,
   modules: {
@@ -21,6 +21,10 @@ const store = new Vuex.Store({
     pkg
   },
   mutations: {
+    changeUserName (state, currentName) {
+      // mutate state
+      state.loggedUser.userName = currentName
+    }
   }
 })
 

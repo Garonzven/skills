@@ -69,10 +69,13 @@ export default {
         redirect: {name: redirect ? redirect.from.name : 'My Skills'},
         success (res) {
           console.log('Auth Success')
-          console.log('Token: ' + this.$auth.token())
-          console.log(res)
-          this.$store.state.session = res.data
-          console.log(this.$store.state.session)
+//          console.log('Token: ' + this.$auth.token())
+//          this.$store.state.loggedUser.userName = `${res.data.name} ${res.data.lastname}`
+          console.log(this.$store)
+          this.$store.commit('changeUserName', `${res.data.name} ${res.data.lastname}`)
+          this.$auth.user(res.data)
+          console.log(this.$auth.user())
+          this.$store.commit('TOGGLE_SIDEBAR', true)
         },
         error (err) {
           if (err.response) {

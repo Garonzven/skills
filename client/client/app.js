@@ -33,7 +33,7 @@ Vue.use(VueAuth, {
   },
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
-  loginData: { url: 'entis.people/login', fetchUser: false },
+  loginData: { url: 'entis.people/login', method: 'POST', redirect: '/My Skills', fetchUser: false },
   refreshData: { enabled: false }
 })
 

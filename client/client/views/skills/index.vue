@@ -1,5 +1,5 @@
 <template>
-   <div class="container-fluid" style="background-color: lightgrey">
+   <!--div class="container-fluid" style="background-color: lightgrey">
 		<div class="row">
 			<div class="col-md-12">
 				<form role="form" class="form-inline">
@@ -19,14 +19,6 @@
 							<v-select :options="['Junior','Senior','Master']" multiple placeholder="Level"></v-select>
 						</div>
 					</div>
-					<!--div class="form-group input-format">
-						<div class="row">
-							<label>Since</label>
-						</div>
-						<div class="row">
-							<input type="date" min="2017-01-01" placeholder="Since" class="form-control" />
-						</div>
-					</div-->
 					<div class="form-group input-format">
 						<div class="row">
 							<label>Created By</label>
@@ -45,10 +37,11 @@
 					</div>
 					<a type="button" class="btn btn-primary"  value="Save">Add new skill</a>
 				</form>
-					<my-vuetable></my-vuetable>
+					
 			</div>
 		</div>
-	</div> 
+	</div--> 
+  <my-vuetable></my-vuetable>
 </template>
 
 <script>

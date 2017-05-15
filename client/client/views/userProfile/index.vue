@@ -10,7 +10,9 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<form>
+				<form >
+                  <a disabled v-if="newUser.idrol.name == 'Watcher' || newUser.idrol.name == 'User'"> {{newUser.idrol}} </a>
+                  <!--fieldset disabled v-if="newUser.idrol.idrol != 1 || newUser.idrol.idrol != 2"-->
 					<div class="column is-12 form-group">
 						<p class="control has-icon has-icon-right">
 				<input name="name" v-model="newUser.name" v-validate:name.initial="'required|alpha'" :class="{'input': true, 'is-danger': errors.has('name') }" type="text" placeholder="Name" class="input-style form-control" readonly> 
@@ -28,7 +30,7 @@
 						</div-->
 					<div class="column is-12 form-group">
 						<p class="control has-icon has-icon-right">
-							<input name="jobtitle" v-model="newUser.jobtitle" v-validate:jobtitle.initial="'required|alpha'" :class="{'input': true, 'is-danger': errors.has('jobtitle') }" type="text" placeholder="Job Title" class="input-style form-control" readonly> <i v-show="errors.has('jobtitle')" class="fa fa-warning"></i> <span v-show="errors.has('jobtitle')" class="help-block alert alert-danger">{{ errors.first('jobtitle') }}</span>
+							<input name="jobtitle" v-model="newUser.jobtitle" v-validate:jobtitle.initial="'required'" :class="{'input': true, 'is-danger': errors.has('jobtitle') }" type="text" placeholder="Job Title" class="input-style form-control"> <i v-show="errors.has('jobtitle')" class="fa fa-warning"></i> <span v-show="errors.has('jobtitle')" class="help-block alert alert-danger">{{ errors.first('jobtitle') }}</span>
                         </p>
 					</div>
 					<!--div class="column is-12 form-group">
@@ -75,8 +77,9 @@
 							<!--button type="submit" class="btn btn-primary">Submit</button-->
 							<a type="button" @click="validateBeforeSubmit" class="btn btn-primary" value="Save">Save</a></p>
 					</div>
+                    <!--/fieldset-->
 				</form>
-				<!--pre>{{$data.newUser}}</pre-->
+				<pre>{{$data.newUser}}</pre>
 				
 			</div>
 		</div>
@@ -92,8 +95,6 @@
   const newUser = function() {
     this.name = "", this.lastname = "", this.email = "", this.pasword = "", this.jobtitle = "", this.fotolink = "", this.foto = null, this.idrol = 0, this.skills = []
   }
-
-  const userSkillList = {}
 
   var users = []
 
@@ -175,7 +176,7 @@
           value: 4
         }],
         skillList: skillList,
-        newUser: testUser,
+        newUser: this.$auth.user(),
         show: false,
         apiUrl: 'http://localhost:8080/WebSkillsGW7/webresources/'
       }
