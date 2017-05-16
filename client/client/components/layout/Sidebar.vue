@@ -2,7 +2,8 @@
   <aside class="menu app-sidebar animated" :class="{ slideInLeft: show, slideOutLeft: !show }">
     <div class="userData">
       <div class="profile-userpic">
-        <img src="https://pbs.twimg.com/profile_images/784477860497063936/kH8KiYXU.jpg" class="img-responsive" alt="">
+        <img src="https://pbs.twimg.com/profile_images/784477860497063936/kH8KiYXU.jpg" 
+             class="img-responsive" alt="">
       </div>
       <!-- END SIDEBAR USERPIC -->
       <!-- SIDEBAR USER TITLE -->

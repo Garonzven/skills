@@ -73,6 +73,7 @@ export default {
 //          this.$store.state.loggedUser.userName = `${res.data.name} ${res.data.lastname}`
           console.log(this.$store)
           this.$store.commit('changeUserName', `${res.data.name} ${res.data.lastname}`)
+          this.$store.commit('changeEmail', `${res.data.email}`)
           this.$auth.user(res.data)
           console.log(this.$auth.user())
           this.$store.commit('TOGGLE_SIDEBAR', true)

@@ -11,7 +11,7 @@ const state = {
       name: 'Users',
       path: '/dashboard',
       meta: {
-        auth: ['Super Admin', 'Admin'],
+        auth: true,
         icon: 'icon-gz-users',
         link: 'dashboard/index.vue'
       },

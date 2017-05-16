@@ -11,18 +11,18 @@
 		<div class="row">
 			<div class="col-md-12">
 				<form >
-                  <a disabled v-if="newUser.idrol.name == 'Watcher' || newUser.idrol.name == 'User'"> {{newUser.idrol}} </a>
+                  <a disabled v-if="newUser.idrol.name != 'SuperAdmin'"> {{newUser.idrol}} </a>
                   <!--fieldset disabled v-if="newUser.idrol.idrol != 1 || newUser.idrol.idrol != 2"-->
 					<div class="column is-12 form-group">
 						<p class="control has-icon has-icon-right">
-				<input name="name" v-model="newUser.name" v-validate:name.initial="'required|alpha'" :class="{'input': true, 'is-danger': errors.has('name') }" type="text" placeholder="Name" class="input-style form-control" readonly> 
+				<input name="name" v-model="newUser.name" v-validate:name.initial="'required|alpha'" :class="{'input': true, 'is-danger': errors.has('name') }" type="text" placeholder="Name" class="input-style form-control"> 
                             <i v-show="errors.has('name')" class="fa fa-warning"></i> 
                             <span v-show="errors.has('name')" class="help-block alert alert-danger">{{ errors.first('name') }}</span>
     </p>
 					</div>
 					<div class="column is-12 form-group">
 						<p class="control has-icon has-icon-right">
-							<input name="lastname" v-model="newUser.lastname" v-validate:lastname.initial="'required|alpha'" :class="{'input': true, 'is-danger': errors.has('lastname') }" type="text" placeholder="Last Name" class="input-style form-control" readonly> <i v-show="errors.has('lastname')" class="fa fa-warning"></i> <span v-show="errors.has('lastname')" class="help-block alert alert-danger">{{ errors.first('lastname') }}</span> </p>
+							<input name="lastname" v-model="newUser.lastname" v-validate:lastname.initial="'required|alpha'" :class="{'input': true, 'is-danger': errors.has('lastname') }" type="text" placeholder="Last Name" class="input-style form-control" > <i v-show="errors.has('lastname')" class="fa fa-warning"></i> <span v-show="errors.has('lastname')" class="help-block alert alert-danger">{{ errors.first('lastname') }}</span> </p>
 					</div>
 					<!--div class="column is-12 form-group">
 							<p class="control has-icon has-icon-right">
@@ -262,7 +262,12 @@
       const iSearch = document.getElementById("iSearch")
       const current = this.newUser
       const sL = this.skillList
-
+      
+      /*const preview = document.getElementById("preview")
+      
+      if(this.newUser.fotolink) {
+        preview.setAttribute('src', this.newUser.fotolink)
+      }*/
       iSearch.childNodes[0].childNodes[0].childNodes[1].addEventListener('keypress', function(e) {
         //console.log(currentSkill.length)
         if (current.skills.length === 0) {
@@ -294,8 +299,6 @@
           }
         }
       })
-
-
     }
   }
 

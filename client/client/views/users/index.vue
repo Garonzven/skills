@@ -154,13 +154,14 @@
 						console.log(response)
 					})*/
 					$.ajax({
-						type: "GET",
-						url: this.apiUrl + 'entis.people',
+						type: "POST",
+						url: 'http://localhost:8080/WebSkillsGW7/webresources/entis.people',
 						data: user,
 						contentType:"application/json; odata=verbose",
 						dataType: 'json',
 						success: function () {
 							console.log('success')
+							console.log(user)
 						}
 					})
 					alert('From Submitted!')

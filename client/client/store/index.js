@@ -24,6 +24,9 @@ const store = new Vuex.Store({
     changeUserName (state, currentName) {
       // mutate state
       state.loggedUser.userName = currentName
+    },
+    changeEmail (state, currentEmail) {
+      state.loggedUser.email = currentEmail
     }
   }
 })
