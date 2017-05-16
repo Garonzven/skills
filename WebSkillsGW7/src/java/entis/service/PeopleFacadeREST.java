@@ -7,6 +7,8 @@ package entis.service;
 
 import entis.Log;
 import entis.People;
+import entis.Skillpeople;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -64,9 +66,17 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     @Produces({MediaType.APPLICATION_JSON})
     public People login(People p) {
        Query query = em.createQuery(
-            "SELECT p FROM People p WHERE  p.email  = '"+p.getEmail()+"' AND p.pasword='"+p.getPasword()+"'");
-       List<People> results = query.getResultList();
-       for (People c : results) {
+            "SELECT p FROM People p JOIN FETCH p.skillpeopleCollection i WHERE  p.email  = '"+p.getEmail()+"' AND p.pasword='"+p.getPasword()+"'");
+    
+       List<People> lista=query.getResultList();
+ 
+        for (People c: lista) {
+
+       // System.out.println(e.getNombre());
+            Collection<Skillpeople> skillpeopleCollection= c.getSkillpeopleCollection();
+           /* for (Skillpeople i :skillpeopleCollection) {
+                 System.out.println(i.getLevel());
+            }*/
             p=c;
             break; 
         }

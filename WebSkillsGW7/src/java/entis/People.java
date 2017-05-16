@@ -94,7 +94,7 @@ public class People implements Serializable {
     private byte[] foto;
     @Column(name = "ischangepassword")
     private Character ischangepassword;
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "people", fetch = FetchType.LAZY)
+    @OneToMany(cascade=CascadeType.PERSIST, mappedBy = "people", fetch = FetchType.EAGER)
     private Collection<Skillpeople> skillpeopleCollection;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "idpeople", fetch = FetchType.LAZY)
     private Collection<Log> logCollection;
