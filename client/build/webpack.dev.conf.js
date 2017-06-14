@@ -1,23 +1,22 @@
-'use strict'
-
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const baseWebpackConfig = require('./webpack.base.conf')
-const config = require('../config')
-const utils = require('./utils')
+var utils = require('./utils')
+var webpack = require('webpack')
+var config = require('../config')
+var merge = require('webpack-merge')
+var baseWebpackConfig = require('./webpack.base.conf')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 // add hot-reload related code to entry chunks
-Object.keys(baseWebpackConfig.entry).forEach(name => {
+Object.keys(baseWebpackConfig.entry).forEach(function (name) {
   baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
 })
 
 module.exports = merge(baseWebpackConfig, {
   module: {
-    loaders: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
+    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
   },
-  // eval-source-map is faster for development
-  devtool: '#eval-source-map',
+  // cheap-module-eval-source-map is faster for development
+  devtool: '#cheap-module-eval-source-map',
   plugins: [
     new webpack.DefinePlugin({
       'process.env': config.dev.env
@@ -25,18 +24,12 @@ module.exports = merge(baseWebpackConfig, {
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    // extract vendor chunks for better caching
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor.js'
-    }),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      title: 'Skills Finder',
       filename: 'index.html',
       template: 'index.html',
-      inject: true,
-      favicon: 'client/assets/img/16x16.png'
-    })
+      inject: true
+    }),
+    new FriendlyErrorsPlugin()
   ]
 })
