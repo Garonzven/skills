@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Skills Finder</title>
+
+  <!-- Bootstrap Core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- MetisMenu CSS -->
+  <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+
+  <!-- Morris Charts CSS -->
+  <link href="vendor/morrisjs/morris.css" rel="stylesheet">
+
+  <!-- Custom Fonts -->
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+  <link rel="stylesheet" href="css/vueTableStyle.css" />
+
+  <link href="https://file.myfontastic.com/uXhHYFNHfQXdBTbURX3Vf9/icons.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <link rel="stylesheet" href="css/stylesCards.css" />
+
+</head>
+
+<body>
+
+  <div id="wrapper" style="background-color: #1d1d1f;">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+        <a class="navbar-brand" href="index.html">Skills Finder</a>
+      </div>
+
+      <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+          <ul class="nav" id="side-menu" style="background-color: #1d1d1f;">
+            <li class="sidebar-search">
+              <div class="input-group custom-search-form">
+                <div class="user-panel col-md-12">
+                  <div class="pull-left image">
+                    <img src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAIKAAAAJDU5MTUwNzAwLTJhOGItNDk0OC04MjdhLTBmZDU0MDE4MmE0YQ.jpg" class="img-circle" alt="User Image" style="width: 100%; max-width: 118px; height: auto; margin-left: -34px;">
+                  </div>
+                  <div class="pull-left info">
+                    <p style="width: 90px; color: #d2d2d4;">Pedro Bracho</p>
+                    <p style="width: 90px; color: #d2d2d4;">Scrum Master</p>
+                    <button class="btn btn-danger" type="button" name="button">Logout</button>
+                  </div>
+                </div>
+              </div>
+              <!-- /input-group -->
+            </li>
+            <li>
+              <a  id="User" onclick="reply_click(this.id)">
+                <span><i class="icon-gz-users pull-right icon-pt"></i></span>
+                <span class="smlr">user</span>
+              </a>
+            </li>
+            <li>
+              <a  id="SkillsList" onclick="reply_click(this.id)">
+                <i class="icon-gz-skills pull-right icon-pt"></i>
+                <span class="smlr">skills</span>
+              </a>
+            </li>
+            <li>
+              <a   id="Reports" onclick="reply_click(this.id)">
+                <i class="icon-gz-reports pull-right icon-pt"></i>
+                <span class="smlr">reports</span>
+              </a>
+            </li>
+            <li>
+              <a  id="MyProfile" onclick="reply_click(this.id)">
+                <span><i class="icon-gz-myskills pull-right icon-pt"></i></span>
+                <span class="smlr">my skills</span>
+              </a>
+            </li>
+            <div>
+              <!--img src="assets/menuBar.png" class="img-sidebar" alt="" style="width: 100%; max-width: 300px; height: auto;"-->
+            </div>
+          </ul>
+        </div>
+        <!-- /.sidebar-collapse -->
+      </div>
+      <!-- /.navbar-static-side -->
+    </nav>
+
+    <div id="page-wrapper">
+      <div style="display:block;" class="container" id="MySkills">
+        <div class="row">
+          <div class="col-md-12" style="width:100%; max-width: 900px;">
+            <div style="background-color: lightgrey" class="panel panel-info">
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-3 col-lg-3 " align="center">
+                    <img alt="User Pic" height="180px" width="180px" id="User_Pic" src="https://javascriptair.com/resources/panelists/mzabriskie.png" class="img-rounded img-responsive">
+                    <label style="margin-top: 10px" class="btn btn-default" for="file">Add Photo</label>
+                  </div>
+                  <div class=" col-md-9 col-lg-9 ">
+                    <table class="table table-user-information table form-horizontal" style="margin-top:130px">
+                      <tbody>
+                        <tr>
+                          <td class="form-group"><input name="name" v-model=newUser.name type="text" placeholder="NAME LASTNAME" class="form-control"></td>
+                        </tr>
+                        <tr>
+                          <td class="form-group"><input name="job_title" v-model="newUser.jobtitle" type="text" placeholder="JOB TITLE" class="form-control">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="form-group"><input name="location" v-model="newUser.location" type="text" placeholder="LOCATION" class="form-control">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="form-group"><input name="email" v-model="newUser.email" type="text" placeholder="EMAIL" class="form-control">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="form-group"><input name="phone" v-model="newUser.phone" type="text" placeholder="PHONE" class="form-control">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="form-group">
+                            <v-select :options="['Super User','Admin','Watcher','User']" v-model="newUser.idrol.name" placeholder="ROLE"></v-select>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="form-group"><input name="rol" v-model="newUser.skillandlevel" type="text" placeholder="SKILL & LEVEL" class="form-control">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="form-group"><input name="rol" v-model="newUser.indate" type="text" placeholder="SINCE DATE" class="form-control">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="form-group">
+                            <div id="iSearch">
+                              <v-select :options="skillList" :debounce="250" multiple :value.sync="selected" v-model="newUser.skills" placeholder="SKILLS"></v-select>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="form-group">
+                            <p class="control has-icon has-icon-right">
+                              <input name="file" id="file" @change="onFileChange" v-validate.reject="'mimes:image/*'" :class="{ 'is-danger': errors.has('file') }" type="file" style="display:none"> <i v-show="errors.has('file')" class="fa fa-warning"></i> <span v-show="errors.has('file')" class="help-block alert alert-danger">{{ errors.first('file') }}</span></p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a v-on:click="post" class="btn btn-primary submit_buttom">Save</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:none;" class="container" id="newUser">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+            <div style="background-color: lightgrey" class="panel panel-info">
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" id="User_Pic" src="https://javascriptair.com/resources/panelists/mzabriskie.png" class="img-rounded	 img-responsive">
+                    <label style="margin-top: 10px" class="btn btn-default" for="file">Add Photo</label>
+                  </div>
+                  <div class=" col-md-9 col-lg-9 ">
+                    <table class="table table-user-information table form-horizontal" style="margin-top:130px">
+                      <tbody>
+                        <tr>
+                          <td class="form-group"><input name="name" v-model=newUser.name type="text" placeholder="NAME LASTNAME" class="form-control"></td>
+                        </tr>
+                        <tr>
+                          <td class="form-group"><input name="job_title" v-model="newUser.jobtitle" type="text" placeholder="JOB TITLE" class="form-control">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="form-group"><input name="location" v-model="newUser.location" type="text" placeholder="LOCATION" class="form-control">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="form-group"><input name="email" v-model="newUser.email" type="text" placeholder="EMAIL" class="form-control">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="form-group"><input name="phone" v-model="newUser.phone" type="text" placeholder="PHONE" class="form-control">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="form-group">
+                            <v-select :options="['Super User','Admin','Watcher','User']" v-model="newUser.idrol.name" placeholder="ROLE"></v-select>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="form-group"><input name="rol" v-model="newUser.skillandlevel" type="text" placeholder="SKILL & LEVEL" class="form-control">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="form-group"><input name="rol" v-model="newUser.indate" type="text" placeholder="SINCE DATE" class="form-control">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="form-group">
+                            <p class="control has-icon has-icon-right">
+                              <input name="file" id="file" @change="onFileChange" v-validate.reject="'mimes:image/*'" :class="{ 'is-danger': errors.has('file') }" type="file" style="display:none"> <i v-show="errors.has('file')" class="fa fa-warning"></i> <span v-show="errors.has('file')" class="help-block alert alert-danger">{{ errors.first('file') }}</span></p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a v-on:click="post" class="btn btn-primary submit_buttom">Save</a>
+          </div>
+        </div>
+      </div>
+
+      <section style="display:none" id="app">
+        <div class="actions">
+          <button class="btn btn-default">
+        <span class="glyphicon glyphicon-plus"></span>
+        Add User
+      </button>
+        </div>
+        <div class="column is-12 form-group" id="iSearch">
+          <v-select :options="skillList" :value.sync="selected" :on-change="search" :debounce="250" multiple placeholder="Search Skills"></v-select>
+        </div>
+        <div class="no-padding lib-item" data-category="view">
+          <div class="lib-panel col-lg-6" v-for="user in users">
+            <div class="row box-shadow">
+              <div class="col-md-4">
+                <img class="lib-img-show" src="http://lorempixel.com/850/850/?random=123">
+              </div>
+              <div class="col-md-6">
+                <div class="lib-row lib-header">
+                  {{ user.name + " " + user.lastname}}
+                  <div class="lib-header-seperator"></div>
+                </div>
+                <div class="lib-row lib-desc">
+                  <p>
+                    {{ user.email }}
+                  </p>
+                </div>
+
+              </div>
+              <div class="col-md-2 tagy">
+                <a>
+                  <i class="fa fa-pencil" value="edit"></i>
+                </a>
+                <a href="#">
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div id="Skills" style="display:none;">
+        <div class="ui container">
+          <vuetable ref="vuetable" api-url="https://vuetable.ratiw.net/api/users" :fields="fields" pagination-path="" @vuetable:pagination-data="onPaginationData">
+            <template slot="actions" scope="props">
+              <div class="table-button-container">
+                  <button class="ui button" @click="editRow(props.rowData)"><i class="fa fa-edit"></i> Edit</button>&nbsp;&nbsp;
+                  <button class="ui basic red button" @click="deleteRow(props.rowData)"><i class="fa fa-remove"></i> Delete</button>&nbsp;&nbsp;
+              </div>
+            </template>
+          </vuetable>
+          <vuetable-pagination ref="pagination" @vuetable-pagination:change-page="onChangePage"></vuetable-pagination>
+        </div>
+      </div>
+    </div>
+    <!-- /#page-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- jQuery -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+
+  <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/vue-select@latest"></script>
+  <script src="https://cdn.jsdelivr.net/vee-validate/2.0.0-rc.3/vee-validate.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/vuetable-2@1.6.0"></script>
+  <script src="js/Initialize.js"></script>
+  <script src="js/Skills.js"></script>
+  <script src="js/MySkills.js"></script>
+  <script src="js/UserCreation.js"></script>
+  <script src="js/Users.js"></script>
+
+
+  <!-- Bootstrap Core JavaScript -->
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+  <!-- Metis Menu Plugin JavaScript -->
+  <script src="vendor/metisMenu/metisMenu.min.js"></script>
+
+  <!-- Morris Charts JavaScript -->
+  <!--
+  <script src="vendor/raphael/raphael.min.js"></script>
+  <script src="vendor/morrisjs/morris.min.js"></script>
+  <script src="data/morris-data.js"></script>
+-->
+
+  <!-- Custom Theme JavaScript -->
+  <script src="dist/js/sb-admin-2.js"></script>
+
+</body>
+
+</html>

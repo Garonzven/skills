@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Page Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <div class="container" id="newUser">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+        <div style="background-color: lightgrey" class="panel panel-info">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" id="User_Pic" src="https://javascriptair.com/resources/panelists/mzabriskie.png" class="img-rounded	 img-responsive">
+                <label style="margin-top: 10px" class="btn btn-default" for="file">Add Photo</label>
+              </div>
+              <div class=" col-md-9 col-lg-9 ">
+                <table class="table table-user-information table form-horizontal" style="margin-top:130px">
+                  <tbody>
+                    <tr>
+                      <td class="form-group"><input name="name" v-model=newUser.name type="text" placeholder="NAME LASTNAME" class="form-control"></td>
+                    </tr>
+                    <tr>
+                      <td class="form-group"><input name="job_title" v-model="newUser.jobtitle" type="text" placeholder="JOB TITLE" class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="form-group"><input name="location" v-model="newUser.location" type="text" placeholder="LOCATION" class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="form-group"><input name="email" v-model="newUser.email" type="text" placeholder="EMAIL" class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="form-group"><input name="phone" v-model="newUser.phone" type="text" placeholder="PHONE" class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="form-group">
+                        <v-select :options="['Super User','Admin','Watcher','User']" v-model="newUser.idrol.name" placeholder="ROLE"></v-select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="form-group"><input name="rol" v-model="newUser.skillandlevel" type="text" placeholder="SKILL & LEVEL" class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="form-group"><input name="rol" v-model="newUser.indate" type="text" placeholder="SINCE DATE" class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="form-group">
+                        <p class="control has-icon has-icon-right">
+                          <input name="file" id="file" @change="onFileChange" v-validate.reject="'mimes:image/*'" :class="{ 'is-danger': errors.has('file') }" type="file" style="display:none"> <i v-show="errors.has('file')" class="fa fa-warning"></i> <span v-show="errors.has('file')" class="help-block alert alert-danger">{{ errors.first('file') }}</span></p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a v-on:click="post" class="btn btn-primary submit_buttom">Save</a>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/vue-select@latest"></script>
+<script src="https://cdn.jsdelivr.net/vee-validate/2.0.0-rc.3/vee-validate.min.js"></script>
+<script src="js/UserCreation.js"></script>
+
+</html>

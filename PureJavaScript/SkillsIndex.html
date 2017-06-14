@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Page Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css" />
+  <link rel="stylesheet" href="css/vueTableStyle.css" />
+</head>
+
+<body>
+  <div id="Skills">
+    <div class="ui container">
+      <vuetable ref="vuetable" api-url="https://vuetable.ratiw.net/api/users" :fields="fields" pagination-path="" @vuetable:pagination-data="onPaginationData">
+        <template slot="actions" scope="props">
+    <div class="table-button-container">
+        <button class="ui button" @click="editRow(props.rowData)"><i class="fa fa-edit"></i> Edit</button>&nbsp;&nbsp;
+        <button class="ui basic red button" @click="deleteRow(props.rowData)"><i class="fa fa-remove"></i> Delete</button>&nbsp;&nbsp;
+    </div>
+        </template>
+      </vuetable>
+      <vuetable-pagination ref="pagination" @vuetable-pagination:change-page="onChangePage"></vuetable-pagination>
+    </div>
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/vue-select@latest"></script>
+<script src="https://cdn.jsdelivr.net/vee-validate/2.0.0-rc.3/vee-validate.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/vuetable-2@1.6.0"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css"></script>
+<script src="js/Skills.js"></script>
+
+</html>
