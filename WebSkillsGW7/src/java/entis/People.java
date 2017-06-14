@@ -92,14 +92,18 @@ public class People implements Serializable {
     @Lob
     @Column(name = "foto")
     private byte[] foto;
-    @Column(name = "ischangepassword")
+    @Column(name = "ischangepassword") 
     private Character ischangepassword;
+
     @OneToMany(cascade=CascadeType.PERSIST, mappedBy = "people", fetch = FetchType.EAGER)
+   
     private Collection<Skillpeople> skillpeopleCollection;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "idpeople", fetch = FetchType.LAZY)
+   
     private Collection<Log> logCollection;
+   
     @JoinColumn(name = "idrol", referencedColumnName = "idrol")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Roltipo idrol;
 
     public People() {
