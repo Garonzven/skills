@@ -15,18 +15,18 @@
         <form method="post" class="columns column is-multiline is-12 col-md-6 col-md-offset-3" id="login-form" role="form" style="display: block;">
           <div class="form-group" style="text-align:center;">
             <p class="control has-icon has-icon-right">
-              <input name="email" type="text" class="form-control " style="max-width: 600px;" placeholder="email@garonz.com" v-model="email">
+              <input name="email" type="text" class="form-control " style="max-width: 600px;" placeholder="email@garonz.com" v-model="people.email">
             </p>
           </div>
           <div class="form-group" style="text-align:center;">
             <p class="control has-icon has-icon-right">
-              <input name="password" type="password" class="form-control" placeholder="Password" v-model="password">
+              <input name="password" type="password" class="form-control" placeholder="Password" v-model="people.password">
             </p>
           </div>
           <div class="form-group">
             <div class="row">
               <div class="col-md-12">
-                <input @click="login" type="submit" class="form-control btn btn-login" value="Log In" style="padding: 6px 12px;">
+                <input @click="login" class="form-control btn btn-login" value="Log In" style="padding: 6px 12px;">
               </div>
             </div>
           </div>
@@ -51,21 +51,16 @@
   export default {
     data() {
       return {
-        email: '',
-        password: ''
+        people: {
+          email: '',
+          password: ''
+        }
       };
     },
     methods:{
       login () {
-        var data = {
-          client_id: 2,
-          client_secret: 'w34e5r67t',
-          grant_type: 'password',
-          username: this.email,
-          password: this.password
-        }
-
-        this.$http.post("http://13.92.199.15:38967/WebSkillsGW7/webresources/entis.people/")
+        var data = JSON.stringify(this.people)
+        this.$http.post("https://13.92.199.15:45734/WebSkillsGW7/webresources/entis.people/login", data)
           .then(response => {
             console.log(response)
             this.$auth.setToken(response.body.access_token, response.body.expires_in + Date.now())

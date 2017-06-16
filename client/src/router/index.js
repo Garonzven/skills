@@ -11,17 +11,17 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login,
-      /*meta: {
+      meta: {
         forVisitors: true
-      }*/
+      }
     },
     {
       path: '/',
       name: 'Home',
       component: Home,
-      /*meta: {
+      meta: {
         forAuth: true
-      }*/
+      }
     },
   ],
 });
