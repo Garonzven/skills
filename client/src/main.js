@@ -4,16 +4,16 @@ import Resource from 'vue-resource';
 import App from './App';
 import router from './router';
 
-//import Auth from './packages/auth/Auth.js';
+import Auth from './packages/auth/Auth.js';
 
 Vue.use(Vuex);
 Vue.use(Resource);
-//Vue.use(Auth);
+Vue.use(Auth);
 
 
 //Vue.http.options.root = 'http://13.92.199.15:38967/WebSkillsGW7/webresources/'
 
-/*router.beforeEach(
+router.beforeEach(
   (to, from, next) => {
     if(to.matched.some(record => record.meta.forVisitors)) {
       if(Vue.auth.isAuthenticated()) {
@@ -31,7 +31,7 @@ Vue.use(Resource);
     }
     else next()
   }
-)*/
+)
 
 Vue.config.productionTip = false;
 
