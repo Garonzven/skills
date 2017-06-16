@@ -115,6 +115,7 @@ public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void edit(Skillpeople entity) {
+        entity.getSkill().setUpdatedate(new Date(System.currentTimeMillis()));
         super.edit(entity);
         //registrar(entity.getPeople(), "Update Skills-People user: "+ entity.getPeople().getName()+ " " + entity.getPeople().getLastname()+ " skill: "+ entity.getSkill().getName() + " level: "+ entity.getSkill().getLevel() );
     }

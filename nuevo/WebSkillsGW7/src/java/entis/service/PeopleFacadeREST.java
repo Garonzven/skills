@@ -5,9 +5,10 @@
  */
 package entis.service;
 
-import entis.Credencials;
+import entis.Credentials;
 import entis.Log;
 import entis.People;
+import entis.Roltipo;
 import entis.Skillpeople;
 import java.util.Collection;
 import java.util.Date;
@@ -27,9 +28,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import utils.Utils;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import java.util.Iterator;
+import javax.ws.rs.core.Context;
+import javax.servlet.http.HttpServletRequest;
+import com.nimbusds.jose.JOSEException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.util.logging.Logger;
+import utils.AuthUtils;
+import utils.Token;
 
 /**
  *
@@ -39,6 +45,12 @@ import java.util.Iterator;
 @Path("entis.people")
 public class PeopleFacadeREST extends AbstractFacade<People> {
 
+    public static final String CLIENT_ID_KEY = "client_id", REDIRECT_URI_KEY = "redirect_uri",
+            CLIENT_SECRET = "client_secret", CODE_KEY = "code", GRANT_TYPE_KEY = "grant_type",
+            AUTH_CODE = "authorization_code";
+
+    public static final String NOT_FOUND_MSG = "User not found", LOGING_ERROR_MSG = "Wrong email and/or password";
+    
     @PersistenceContext(unitName = "WebSkillsGW7PU")
     private EntityManager em;
 
@@ -65,74 +77,55 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
         util.enviarCorreo(entity, 1);   
       
     }
+
     @POST
     @Path("login")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response authenticateUser(Credencials credencials){
+    public Response login(Credentials user , @Context final HttpServletRequest request) throws JOSEException {
+        Response respuesta = null;
+        People foundUser = null;
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        String rol = "";
+        Roltipo roltipo;
+        String info="" ;
+        Logger logger = Logger.getLogger(getClass().getName());
+        try{            
+            if (user!=null) {
+                foundUser = findByEmail(user);
+                rol = foundUser.getIdrol().getName();
+            }
+            else info = "not user input";
+        }
+        catch (Exception e) {
+            logger.severe("not user input");
+            return Response.status(Response.Status.UNAUTHORIZED).entity(gson.toJson(LOGING_ERROR_MSG)).build();
+        }
+        if (foundUser == null) {
+           logger.severe("not user found");
+           respuesta= Response.status(Response.Status.UNAUTHORIZED).entity(gson.toJson(NOT_FOUND_MSG)).build();
 
-        String username = credencials.getUsername();
-        String password = credencials.getPassword();
-
-        try {
-
-            // Authenticate the user using the credentials provided
-            authenticate(username, password);
-
-            // Issue a token for the user
-            String token = createJWT(username);
-
-            // Return the token on the response
-            return Response.ok(token).build();
-
-        } catch (Exception e) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }      
+        } else {
+           final Token token = AuthUtils.createToken(request.getRemoteHost(), foundUser, rol);          
+           respuesta =  Response.ok().entity(gson.toJson(token)).build();
+        }
+        return respuesta;
     }
-    
-    
-    private void authenticate(String username, String password) throws Exception {
-        // Authenticate against a database, LDAP, file or whatever
-        // Throw an Exception if the credentials are invalid
+
+    private People findByEmail(Credentials user) throws Exception {
+        Logger logger = Logger.getLogger(getClass().getName());
        Query query = em.createQuery(
-            "SELECT p FROM People p WHERE  p.email  = '"+username+"' AND p.pasword='"+ password +"'");
+            "SELECT p FROM People p WHERE  p.email  = '"+user.getEmail()+"' AND p.pasword='"+ user.getPassword() +"'");
        
        List<People> lista=query.getResultList();
-  
        if (lista.isEmpty()) {
            throw new Exception();
        }
+       else {
+           return lista.get(0); 
+       }
     }
-    private String createJWT(String id, String issuer, String subject, long ttlMillis) {
- 
-    //The JWT signature algorithm we will be using to sign the token
-    SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
- 
-    long nowMillis = System.currentTimeMillis();
-    Date now = new Date(nowMillis);
- 
-    //We will sign our JWT with our ApiKey secret
-    byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(apiKey.getSecret());
-    Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
- 
-    //Let's set the JWT Claims
-    JwtBuilder builder = Jwts.builder().setId(id)
-                                .setIssuedAt(now)
-                                .setSubject(subject)
-                                .setIssuer(issuer)
-                                .signWith(signatureAlgorithm, signingKey);
- 
-    //if it has been specified, let's add the expiration
-    if (ttlMillis >= 0) {
-    long expMillis = nowMillis + ttlMillis;
-        Date exp = new Date(expMillis);
-        builder.setExpiration(exp);
-    }
- 
-    //Builds the JWT and serializes it to a compact, URL-safe string
-    return builder.compact();
-}
-    
     
     @POST
     @Path("login2")
@@ -145,12 +138,7 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
        List<People> lista=query.getResultList();
  
         for (People c: lista) {
-
-       // System.out.println(e.getNombre());
             Collection<Skillpeople> skillpeopleCollection= c.getSkillpeopleCollection();
-           /* for (Skillpeople i :skillpeopleCollection) {
-                 System.out.println(i.getLevel());
-            }*/
             p=c;
             break; 
         }
@@ -201,14 +189,15 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     }
 
     @GET
-    @Secured
     @Override
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
     public List<People> findAll() {
         return super.findAll();
     }
 
     @GET
+    @Secured
     @Path("{from}/{to}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<People> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
@@ -216,6 +205,7 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     }
 
     @GET
+    @Secured
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
