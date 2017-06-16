@@ -13,7 +13,7 @@
         <a class="navbar-brand" href="index.html">Skills Finder</a>
       </div>
 
-      <div class="navbar-default sidebar" role="navigation">
+      <aside class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
           <ul class="nav" id="side-menu" style="background-color: #1d1d1f;">
             <li class="sidebar-search">
@@ -32,6 +32,10 @@
               <!-- /input-group -->
             </li>
             <li>
+              <!--router-link to="/mySkills">
+                <span><i class="icon-icon-gz-skills pull-right icon-pt"></i></span>
+                <span class="smlr">user</span>
+              </router-link-->
               <a href="#">
                 <span><i class="icon-icon-gz-skills pull-right icon-pt"></i></span>
                 <span class="smlr">user</span>
@@ -50,25 +54,29 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <router-link to="/mySkills">
                 <span><i class="icon-icon-gz-myskills pull-right icon-pt"></i></span>
                 <span class="smlr">my skills</span>
-              </a>
+              </router-link>
             </li>
             <div>
-              <img src="assets/menuBar.png" alt="" style="width: 100%; max-width: 300px; height: auto;">
+              <img src="../assets/menuBar.png" alt="" style="width: 100%; max-width: 300px; height: auto;">
             </div>
           </ul>
         </div>
         <!-- /.sidebar-collapse -->
-      </div>
+      </aside>
       <!-- /.navbar-static-side -->
     </nav>
+    <div id="page-wrapper">
+      <router-view></router-view>
 
+    </div>
   </div>
 </template>
 
 <script>
+
 $(function() {
     $('#side-menu').metisMenu();
 });
@@ -109,6 +117,7 @@ $(function() {
     }
 });
 export default {
+
 }
 </script>
 

@@ -26,7 +26,7 @@
           <div class="form-group">
             <div class="row">
               <div class="col-md-12">
-                <input @click="login" class="form-control btn btn-login" value="Log In" style="padding: 6px 12px;">
+                <a @click="login" class="form-control btn btn-login" value="Log In" style="padding: 6px 12px;">LOGIN</a>
               </div>
             </div>
           </div>

@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import Resource from 'vue-resource';
+import VeeValidate from 'vee-validate';
+import vSelect from 'vue-select';
 import App from './App';
 import router from './router';
 
@@ -9,6 +11,8 @@ import Auth from './packages/auth/Auth.js';
 Vue.use(Vuex);
 Vue.use(Resource);
 Vue.use(Auth);
+Vue.use(VeeValidate);
+Vue.component('v-select', vSelect);
 
 
 //Vue.http.options.root = 'http://13.92.199.15:38967/WebSkillsGW7/webresources/'
