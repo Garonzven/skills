@@ -5,10 +5,9 @@
  */
 package entis.service;
 
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import javax.ws.rs.NameBinding;
 
@@ -17,8 +16,8 @@ import javax.ws.rs.NameBinding;
  * @author Lermith
  */
 @NameBinding
-@Retention(RUNTIME)
-@Target({TYPE, METHOD})
+@Target({ElementType.TYPE, ElementType.METHOD})
+@Retention(value = RetentionPolicy.RUNTIME)
 public @interface Secured {
     
 }

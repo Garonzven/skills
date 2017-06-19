@@ -20,38 +20,34 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 import utils.AuthUtils;
 import org.joda.time.DateTime;
-
 /**
  *
  * @author Lermith
  */
 
-@Secured
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter, ContainerResponseFilter{
  
     @EJB
     private PeopleFacadeREST ejbFacadePeople;
-    
     @EJB
     private RoltipoFacadeREST ejbFacadeRoltipo;
-    
     private static final String EXPIRE_ERROR_MSG = "Token has expired",
             JWT_ERROR_MSG = "Unable to parse JWT",
-            JWT_INVALID_MSG = "Invalid JWT token";
+            JWT_INVALID_MSG = "Invalid JWT token",
+            JWT_INVALID_USER = "Usuario no encontrado";
     
     @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
+    public void filter(ContainerRequestContext requestContext) throws IOException{
         SecurityContext originalContext = requestContext.getSecurityContext();
-        String authHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+        String authHeader = requestContext.getHeaderString("Authorization");
 
-        if (authHeader == null || authHeader.isEmpty() || authHeader.split(" ").length != 2) {
+        if (authHeader == null || authHeader.isEmpty()) {
             Authorizer authorizer = new Authorizer("", "",
                     originalContext.isSecure());
             requestContext.setSecurityContext(authorizer);
@@ -68,12 +64,17 @@ public class AuthenticationFilter implements ContainerRequestFilter, ContainerRe
             // ensure that the token is not expired
             if (new DateTime(claimSet.getExpirationTime()).isBefore(DateTime.now())) {
                 throw new IOException(EXPIRE_ERROR_MSG);
-            } else {
-                People user = ejbFacadePeople.find(Integer.parseInt(claimSet.getSubject()));
-                String rol = ejbFacadeRoltipo.find(user.getIdrol()).getName();
-                Authorizer authorizer = new Authorizer(rol, user.getEmail(),
-                        originalContext.isSecure());
-                requestContext.setSecurityContext(authorizer);
+            } 
+            else {
+                try {
+                    People user = ejbFacadePeople.find(Integer.parseInt(claimSet.getSubject()));
+                   // String rol = ejbFacadeRoltipo.find(user.getIdrol()).getName();
+                    Authorizer authorizer = new Authorizer(user.getIdrol().getName(), user.getEmail(),
+                            originalContext.isSecure());
+                    requestContext.setSecurityContext(authorizer);
+                }catch (Exception e) {
+                    throw new IOException(JWT_INVALID_USER);
+                }
             }
         }
 
