@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Login from '@/components/Login';
 import Home from '@/components/Home';
 import mySkills from '@/components/mySkills';
+import listUser from '@/components/listUser';
 
 Vue.use(Router);
 
@@ -37,6 +38,10 @@ export default new Router({
         {
           path: 'mySkills',
           component: mySkills
+        },
+        {
+          path: 'listUser',
+          component: listUser
         }
       ]
     },

@@ -2,8 +2,8 @@
 
 
   <div class="container" style="margin-top: 100px;" id="polina">
-  <video class="bgvideo" src="../../static/VORTEX.mp4" id="video-container" width="100%" playsinline autoplay muted loop>
-  </video>
+    <video class="bgvideo" ref="videoRef" src="" id="video-container" width="100%" playsinline autoplay muted loop>
+    </video>
 
 	  <div class="row vertical-offset-100">
 		  <div class="">
@@ -54,13 +54,18 @@
         people: {
           email: '',
           password: ''
-        }
-      };
+        },
+        apiUrl: 'https://13.92.199.15:45734/WebSkillsGW7/webresources'
+      }
+    },
+    mounted: function () {
+      this.$refs.videoRef.src = '../../static/VORTEX.mp4'
+      this.$refs.videoRef.play()
     },
     methods:{
       login () {
         var data = JSON.stringify(this.people)
-        this.$http.post("https://13.92.199.15:45734/WebSkillsGW7/webresources/entis.people/login", data)
+        this.$http.post(this.apiUrl + '/entis.people/login', data)
           .then(response => {
             console.log(response)
             this.$auth.setToken(response.body.access_token + Date.now())

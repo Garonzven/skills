@@ -32,14 +32,14 @@
               <!-- /input-group -->
             </li>
             <li>
-              <!--router-link to="/mySkills">
+              <router-link to="/listUser">
                 <span><i class="icon-icon-gz-skills pull-right icon-pt"></i></span>
                 <span class="smlr">user</span>
-              </router-link-->
-              <a href="#">
+              </router-link>
+              <!--a href="#">
                 <span><i class="icon-icon-gz-skills pull-right icon-pt"></i></span>
                 <span class="smlr">user</span>
-              </a>
+              </a-->
             </li>
             <li>
               <a href="#">
@@ -154,8 +154,10 @@ a {
 }
 
 #page-wrapper {
+  width: 100%;
+  max-width: 1105px;
   position: absolute;
-  left: 12%;
+  left: 18%;
   padding: 0 15px;
   min-height: 568px;
   background-color: white;
