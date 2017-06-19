@@ -79,7 +79,7 @@
         name: ''
       }, this.skillandlevel = '', this.indate = '', this.pasword, this.skills = []
   }
-  const localHost = 'http://localhost:8080/'
+  const localHost = 'https://13.92.199.15:45734/'
   const skillList = []
   $.get(localHost + 'WebSkillsGW7/webresources/entis.skill/', function(data) {
     for (let i = 0; i < data.length; i++) {
@@ -119,7 +119,7 @@
       const sL = this.skillList
 
       /*const preview = document.getElementById("preview")
-        
+
       if(this.newUser.fotolink) {
         preview.setAttribute('src', this.newUser.fotolink)
       }*/
@@ -166,42 +166,42 @@
     text-transform: uppercase;
     border-color: #f16521;
   }
-  
+
   .submit_buttom:hover {
     background-color: #f07020;
     border-color: #f07020;
   }
-  
+
   .user-row {
     margin-bottom: 14px;
   }
-  
+
   .user-row:last-child {
     margin-bottom: 0;
   }
-  
+
   .dropdown-user {
     margin: 13px 0;
     padding: 5px;
     height: 100%;
   }
-  
+
   .dropdown-user:hover {
     cursor: pointer;
   }
-  
+
   .table-user-information>tbody>tr {
     border-top: 1px solid rgb(221, 221, 221);
   }
-  
+
   .table-user-information>tbody>tr:first-child {
     border-top: 0;
   }
-  
+
   .table-user-information>tbody>tr>td {
     border-top: 0;
   }
-  
+
   .toppad {
     margin-top: 20px;
   }

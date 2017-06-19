@@ -20,7 +20,7 @@
           </div>
           <div class="form-group" style="text-align:center;">
             <p class="control has-icon has-icon-right">
-              <input name="password" type="password" class="form-control" placeholder="Password" v-model="people.pasword">
+              <input name="password" type="password" class="form-control" placeholder="Password" v-model="people.password">
             </p>
           </div>
           <div class="form-group">
@@ -53,14 +53,14 @@
       return {
         people: {
           email: '',
-          pasword: ''
+          password: ''
         }
       };
     },
     methods:{
       login () {
         var data = JSON.stringify(this.people)
-        this.$http.post("http://localhost:8080/WebSkillsGW7/webresources/entis.people/login", data)
+        this.$http.post("https://13.92.199.15:45734/WebSkillsGW7/webresources/entis.people/login", data)
           .then(response => {
             console.log(response)
             this.$auth.setToken(response.body.access_token, response.body.expires_in + Date.now())
