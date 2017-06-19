@@ -11,7 +11,7 @@
                     <table class="table table-user-information table form-horizontal" style="margin-top:130px">
                       <tbody>
                         <tr>
-                          <td class="form-group"><input name="name" v-model=newUser.name type="text" placeholder="NAME LASTNAME" class="form-control"></td>
+                          <td class="form-group"><input name="name" v-model='newUser.name' type="text" placeholder="NAME LASTNAME" class="form-control"></td>
                         </tr>
                         <tr>
                           <td class="form-group"><input name="job_title" v-model="newUser.jobtitle" type="text" placeholder="JOB TITLE" class="form-control">
@@ -54,7 +54,7 @@
                 </div>
               </div>
             </div>
-            <a class="btn btn-primary submit_buttom">Save</a>
+            <a class="btn btn-primary submit_buttom" @click='post'>Save</a>
           </div>
         </div>
 
@@ -97,7 +97,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:8080/WebSkillsGW7/webresources/entis.people/",
+                    url: "https://13.92.199.15:45734/WebSkillsGW7/webresources/entis.people/",
                     data: JSON.stringify(data),
                     contentType: "application/json",
                     dataType: 'json',
@@ -144,42 +144,42 @@
         text-transform: uppercase;
         border-color: #f16521;
     }
-    
+
     .submit_buttom:hover {
         background-color: #f07020;
         border-color: #f07020;
     }
-    
+
     .user-row {
         margin-bottom: 14px;
     }
-    
+
     .user-row:last-child {
         margin-bottom: 0;
     }
-    
+
     .dropdown-user {
         margin: 13px 0;
         padding: 5px;
         height: 100%;
     }
-    
+
     .dropdown-user:hover {
         cursor: pointer;
     }
-    
+
     .table-user-information>tbody>tr {
         border-top: 1px solid rgb(221, 221, 221);
     }
-    
+
     .table-user-information>tbody>tr:first-child {
         border-top: 0;
     }
-    
+
     .table-user-information>tbody>tr>td {
         border-top: 0;
     }
-    
+
     .toppad {
         margin-top: 20px;
     }

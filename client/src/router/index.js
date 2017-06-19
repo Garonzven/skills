@@ -4,6 +4,7 @@ import Login from '@/components/Login';
 import Home from '@/components/Home';
 import mySkills from '@/components/mySkills';
 import listUser from '@/components/listUser';
+import createUser from '@/components/createUser';
 
 Vue.use(Router);
 
@@ -42,6 +43,10 @@ export default new Router({
         {
           path: 'listUser',
           component: listUser
+        },
+        {
+          path: 'createUser',
+          component: createUser
         }
       ]
     },

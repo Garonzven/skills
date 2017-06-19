@@ -1,10 +1,10 @@
 <template>
     <section>
         <div class="actions">
-          <button class="btn btn-default">
-        <span class="glyphicon glyphicon-plus"></span>
-        Add User
-      </button>
+          <router-link to="/createUser" class="btn btn-default">
+            <span class="glyphicon glyphicon-plus"></span>
+            Add User
+          </router-link>
         </div>
         <div class="column is-12 form-group" id="iSearch">
           <v-select :options="skillList" :value.sync="selected" :on-change="search" :debounce="250" multiple placeholder="Search Skills"></v-select>
@@ -82,7 +82,7 @@
                     console.log('search for:', this.users)
                     this.users = []
                 }
-            }
+            },
         }
     }
 
@@ -92,62 +92,63 @@
         margin-bottom: 20Px;
         padding: 20px
     }
-    
+
     .lib-panel img {
         width: 100%;
         background-color: transparent;
     }
-    
+
     .lib-panel .row,
     .lib-panel .col-md-6 {
         padding: 0;
         background-color: #FFFFFF;
     }
-    
+
     .lib-panel .lib-row {
         padding: 0 20px 0 20px;
     }
-    
+
     .lib-panel .lib-row.lib-header {
         background-color: #FFFFFF;
         font-size: 20px;
         padding: 10px 20px 0 20px;
     }
-    
+
     .lib-panel .lib-row.lib-header .lib-header-seperator {
         height: 2px;
         width: 26px;
         background-color: #d9d9d9;
         margin: 7px 0 7px 0;
     }
-    
+
     .lib-panel .lib-row.lib-desc {
         position: relative;
         height: 100%;
         display: block;
         font-size: 13px;
     }
-    
+
     .lib-panel .lib-row.lib-desc a {
         position: absolute;
         width: 100%;
         bottom: 10px;
         left: 20px;
     }
-    
+
     .row-margin-bottom {
         margin-bottom: 20px;
     }
-    
+
     .box-shadow {
         -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .10);
         box-shadow: 0 0 10px 0 rgba(0, 0, 0, .10);
+        border-bottom: 10px solid black;
     }
-    
+
     .no-padding {
         padding: 0;
     }
-    
+
     .tagy a {
         color: #d2d2d2;
         padding: 0 2px;
