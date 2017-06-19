@@ -2,7 +2,7 @@
 
 
   <div class="container" style="margin-top: 100px;" id="polina">
-    <video class="bgvideo" ref="videoRef" src="" id="video-container" width="100%" playsinline autoplay muted loop>
+    <video class="bgvideo" ref="videoRef" id="video-container" width="100%" playsinline autoplay muted loop>
     </video>
 
 	  <div class="row vertical-offset-100">

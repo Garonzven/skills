@@ -10,7 +10,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-        <a class="navbar-brand" href="index.html">Skills Finder</a>
+        <span class="navbar-brand" href="index.html">Skills    Finder</span>
       </div>
 
       <aside class="navbar-default sidebar" role="navigation">
@@ -187,6 +187,15 @@ a {
       #1D1D1F,
       black
     );
+}
+
+.navbar-default .navbar-brand {
+    color: #E7E7E7;
+    transform: translateX(-50%);
+    left: 50%;
+    position: absolute;
+    text-transform: uppercase;
+    letter-spacing: 8px;
 }
 
 a:focus, a:hover {
