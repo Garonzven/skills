@@ -29,40 +29,30 @@ public class AuthUtils {
     
     public static Token createToken(String host, People people, String rol) throws JOSEException {
         
-        System.err.println("--------------11.......");
+
         JWTClaimsSet claim = new JWTClaimsSet();
-        System.err.println("--------------12.......");
         claim.setSubject(Integer.toString(people.getIdpeople()));
-        System.err.println("--------------13.......");
         claim.setIssueTime(DateTime.now().toDate());
-        System.err.println("--------------14.......");
         claim.setExpirationTime(DateTime.now().plusDays(1).toDate());
-        System.err.println("--------------15.......");
         claim.setCustomClaim("user", people.getName() + " " + people.getLastname());
-        System.err.println("--------------16......");
         claim.setCustomClaim("rol", rol);
-        System.err.println("--------------17.......");
+
         JWSSigner signer = new MACSigner(TOKEN_SECRET);
-        System.err.println("--------------18.......");
         SignedJWT jwt = new SignedJWT(JWT_HEADER, claim);
-        System.err.println("--------------19.......");
         jwt.sign(signer);
-        System.err.println("--------------20.......");
         return new Token(jwt.serialize());
     }
 
     public static String getSerializedToken(String authHeader) {
-        return authHeader.split(" ")[1];
+        return authHeader.split(" ")[0];
     }
     
     public static ReadOnlyJWTClaimsSet decodeToken(String authHeader) throws ParseException, JOSEException {
         SignedJWT signedJWT = SignedJWT.parse(getSerializedToken(authHeader));
-        System.err.println("--------------21.......");
         if (signedJWT.verify(new MACVerifier(TOKEN_SECRET))) {
-            System.err.println("--------------22.......");
+
             return signedJWT.getJWTClaimsSet();
         } else {
-            System.err.println("--------------23.......");
             throw new JOSEException("Signature verification failed");
         }
     }

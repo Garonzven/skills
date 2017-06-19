@@ -28,7 +28,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import utils.Utils;
-import java.util.Iterator;
 import javax.ws.rs.core.Context;
 import javax.servlet.http.HttpServletRequest;
 import com.nimbusds.jose.JOSEException;
@@ -85,66 +84,45 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response login(Credentials user , @Context final HttpServletRequest request) throws JOSEException {
         Response respuesta = null;
-        People foundUser;
+        People foundUser = null;
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        String rol;
+        String rol = "";
         Roltipo roltipo;
-        
+        String info="" ;
         Logger logger = Logger.getLogger(getClass().getName());
-        try  {            
-            
-            logger.severe("severe");
-            logger.severe("--------------1.......");
-            foundUser = findByEmail(user);
-            logger.severe("--------------2.......");
-           // roltipo = findByRolTipo(foundUser);
-            rol = foundUser.getIdrol().getName();
-            logger.severe("--------------3.......");
+        try{            
+            if (user!=null) {
+                foundUser = findByEmail(user);
+                rol = foundUser.getIdrol().getName();
+            }
+            else info = "not user input";
         }
         catch (Exception e) {
-            logger.severe("--------------4.......");
+            logger.severe("not user input");
             return Response.status(Response.Status.UNAUTHORIZED).entity(gson.toJson(LOGING_ERROR_MSG)).build();
         }
         if (foundUser == null) {
-           logger.severe("--------------5.......");
+           logger.severe("not user found");
            respuesta= Response.status(Response.Status.UNAUTHORIZED).entity(gson.toJson(NOT_FOUND_MSG)).build();
 
         } else {
-           logger.severe("--------------6.......");
            final Token token = AuthUtils.createToken(request.getRemoteHost(), foundUser, rol);          
            respuesta =  Response.ok().entity(gson.toJson(token)).build();
         }
-        logger.severe("--------------7.......");
         return respuesta;
     }
-   /* private Roltipo findByRolTipo(People p) throws Exception {
-        
-       Query query = em.createQuery(
-            "SELECT r FROM Roltipo r WHERE  r.idrol  = " + p.getIdrol().getIdrol());
-       
-       List<Roltipo> lista=query.getResultList();
-  
-       if (lista.isEmpty()) {
-           throw new Exception();
-       }
-       else return lista.get(0);
-    }   */ 
+
     private People findByEmail(Credentials user) throws Exception {
-        // Authenticate against a database, LDAP, file or whatever
-        // Throw an Exception if the credentials are invalid
         Logger logger = Logger.getLogger(getClass().getName());
-       logger.severe("--------------8.......");
        Query query = em.createQuery(
             "SELECT p FROM People p WHERE  p.email  = '"+user.getEmail()+"' AND p.pasword='"+ user.getPassword() +"'");
        
        List<People> lista=query.getResultList();
-       logger.severe("--------------9.......");
        if (lista.isEmpty()) {
            throw new Exception();
        }
        else {
-           logger.severe("--------------10.......");
            return lista.get(0); 
        }
     }
@@ -160,12 +138,7 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
        List<People> lista=query.getResultList();
  
         for (People c: lista) {
-
-       // System.out.println(e.getNombre());
             Collection<Skillpeople> skillpeopleCollection= c.getSkillpeopleCollection();
-           /* for (Skillpeople i :skillpeopleCollection) {
-                 System.out.println(i.getLevel());
-            }*/
             p=c;
             break; 
         }
@@ -216,14 +189,15 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     }
 
     @GET
-    @Secured
     @Override
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
     public List<People> findAll() {
         return super.findAll();
     }
 
     @GET
+    @Secured
     @Path("{from}/{to}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<People> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
@@ -231,6 +205,7 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     }
 
     @GET
+    @Secured
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
