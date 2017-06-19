@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
 import Resource from 'vue-resource';
+import Vuex from 'vuex';
 import VeeValidate from 'vee-validate';
 import vSelect from 'vue-select';
 import App from './App';

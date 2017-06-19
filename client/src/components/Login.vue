@@ -63,7 +63,7 @@
         this.$http.post("https://13.92.199.15:45734/WebSkillsGW7/webresources/entis.people/login", data)
           .then(response => {
             console.log(response)
-            this.$auth.setToken(response.body.access_token, response.body.expires_in + Date.now())
+            this.$auth.setToken(response.body.access_token + Date.now())
 
             this.$router.push('/')
         })

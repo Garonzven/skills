@@ -25,7 +25,7 @@
                   <div class="pull-left info">
                     <p style="width: 90px; color: #d2d2d4;">Pedro Bracho</p>
                     <p style="width: 90px; color: #d2d2d4;">Scrum Master</p>
-                    <button class="btn btn-danger" type="button" name="button">Logout</button>
+                    <button @click="logout" class="btn btn-danger" type="button" name="button">Logout</button>
                   </div>
                 </div>
               </div>
@@ -117,6 +117,13 @@ $(function() {
     }
 });
 export default {
+  methods: {
+    logout () {
+      localStorage.removeItem('token')
+      localStorage.removeItem('expiration')
+      this.$router.push('/login')
+    }
+  }
 
 }
 </script>
