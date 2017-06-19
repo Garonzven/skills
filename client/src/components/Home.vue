@@ -96,7 +96,7 @@ $(function() {
         height = height - topOffset;
         if (height < 1) height = 1;
         if (height > topOffset) {
-            $("#page-wrapper").css("min-height", (height) + "px");
+            $("#page-wrapper").css("min-height", 'auto');
         }
     });
 
@@ -147,19 +147,19 @@ a {
 }
 
 #page-wrapper {
+  position: absolute;
+  left: 12%;
   padding: 0 15px;
   min-height: 568px;
   background-color: white;
 }
 
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
   #page-wrapper {
-    position: inherit;
-    margin: 0 0 0 250px;
     padding: 0 30px;
     border-left: 1px solid #e7e7e7;
   }
-}
+}*/
 
 .nav li a {
   padding: 20px 15px;

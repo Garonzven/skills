@@ -34,7 +34,10 @@ export default new Router({
 
         // UserPosts will be rendered inside User's <router-view>
         // when /user/:id/posts is matched
-        { path: 'mySkills', component: mySkills }
+        {
+          path: 'mySkills',
+          component: mySkills
+        }
       ]
     },
   ],

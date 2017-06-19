@@ -19,21 +19,19 @@ Vue.component('v-select', vSelect);
 
 router.beforeEach(
   (to, from, next) => {
-    if(to.matched.some(record => record.meta.forVisitors)) {
-      if(Vue.auth.isAuthenticated()) {
+    if (to.matched.some(record => record.meta.forVisitors)) {
+      if (Vue.auth.isAuthenticated()) {
         next({
           path: '/'
         })
       } else next()
-    }
-    else if(to.matched.some(record => record.meta.forAuth)) {
-      if( ! Vue.auth.isAuthenticated()) {
+    } else if (to.matched.some(record => record.meta.forAuth)) {
+      if (!Vue.auth.isAuthenticated()) {
         next({
           path: '/login'
         })
       } else next()
-    }
-    else next()
+    } else next()
   }
 )
 
@@ -44,5 +42,7 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App },
+  components: {
+    App
+  },
 });
