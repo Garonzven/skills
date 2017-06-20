@@ -52,7 +52,7 @@
             }
         },
         created() {
-            this.$http.get('https://13.92.199.15:45734/WebSkillsGW7/webresources/entis.people/')
+            this.$http.get('http://13.92.199.15:38967/WebSkillsGW7/webresources/entis.people/')
                 .then(response => {
                     // JSON responses are automatically parsed.
                     this.users = response.data

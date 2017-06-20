@@ -79,7 +79,7 @@
         name: ''
       }, this.skillandlevel = '', this.indate = '', this.pasword, this.skills = []
   }
-  const localHost = 'https://13.92.199.15:45734/'
+  const localHost = 'http://13.92.199.15:38967/'
   const skillList = []
   $.get(localHost + 'WebSkillsGW7/webresources/entis.skill/', function(data) {
     for (let i = 0; i < data.length; i++) {
