@@ -1,9 +1,9 @@
 <template>
     <section>
         <div class="actions">
-          <router-link to="/createUser" class="btn btn-default">
-            <span class="glyphicon glyphicon-plus"></span>
-            Add User
+          <router-link to="/createUser" class="btn" id="addUser">
+            <span>Add New User</span>
+            <img src="../assets/plus.png" alt="">
           </router-link>
         </div>
         <div class="column is-12 form-group" id="iSearch">
@@ -13,7 +13,8 @@
           <div class="lib-panel col-lg-6" v-for="user in users">
             <div class="row box-shadow">
               <div class="col-md-4">
-                <img class="lib-img-show" src="http://lorempixel.com/850/850/?random=123">
+                <img class="lib-img-show" src="http://placehold.it/300x200?text=N/A">
+
               </div>
               <div class="col-md-6">
                 <div class="lib-row lib-header">
@@ -28,11 +29,11 @@
 
               </div>
               <div class="col-md-2 tagy">
-                <a>
-                  <i class="fa fa-pencil" value="edit"></i>
+                <a href="">
+                  <img src="../assets/edit.png" alt="">
                 </a>
                 <a href="#">
-                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  <img src="../assets/delete.png" alt="">
                 </a>
               </div>
             </div>
@@ -51,7 +52,7 @@
             }
         },
         created() {
-            this.$http.get(`https://13.92.199.15:45734/WebSkillsGW7/webresources/entis.people/`)
+            this.$http.get('https://13.92.199.15:45734/WebSkillsGW7/webresources/entis.people/')
                 .then(response => {
                     // JSON responses are automatically parsed.
                     this.users = response.data
@@ -73,7 +74,7 @@
             search() {
                 console.log('search for:', this.selected)
                 if (this.selected.length === 0) {
-                    this.$http.get(`https://13.92.199.15:45734/WebSkillsGW7/webresources/entis.people/`)
+                    this.$http.get('https://13.92.199.15:45734/WebSkillsGW7/webresources/entis.people/')
                         .then(response => {
                             // JSON responses are automatically parsed.
                             this.users = response.data
@@ -90,7 +91,7 @@
 <style>
     .lib-panel {
         margin-bottom: 20Px;
-        padding: 20px
+        padding: 20px;
     }
 
     .lib-panel img {
@@ -101,7 +102,8 @@
     .lib-panel .row,
     .lib-panel .col-md-6 {
         padding: 0;
-        background-color: #FFFFFF;
+        background-color: #ddd;
+        min-height: 160px;
     }
 
     .lib-panel .lib-row {
@@ -109,7 +111,7 @@
     }
 
     .lib-panel .lib-row.lib-header {
-        background-color: #FFFFFF;
+        background-color: #ddd;
         font-size: 20px;
         padding: 10px 20px 0 20px;
     }
@@ -150,7 +152,16 @@
     }
 
     .tagy a {
-        color: #d2d2d2;
         padding: 0 2px;
     }
+    .tagy a img {
+      width: 18px;
+    }
+
+    #addUser {
+      color: #fff;
+      background-color: #f16521;
+      border-color: #ccc;
+    }
+
 </style>
