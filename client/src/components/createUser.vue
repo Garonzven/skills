@@ -77,7 +77,7 @@
         selected: [],
         newUser: new newUser(),
         skillList: [],
-        apiUrl: 'https://13.92.199.15:45734/WebSkillsGW7/webresources'
+        apiUrl: 'http://13.92.199.15:38967/WebSkillsGW7/webresources'
       }
     },
     methods: {
