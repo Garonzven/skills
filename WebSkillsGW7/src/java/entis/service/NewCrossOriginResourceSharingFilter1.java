@@ -15,7 +15,7 @@ import javax.ws.rs.ext.Provider;
  * @author Usuario
  */
 @Provider
-public class NewCrossOriginResourceSharingFilter implements ContainerResponseFilter {
+public class NewCrossOriginResourceSharingFilter1 implements ContainerResponseFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext response) {
@@ -23,8 +23,6 @@ public class NewCrossOriginResourceSharingFilter implements ContainerResponseFil
         response.getHeaders().putSingle("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, DELETE");
         response.getHeaders().putSingle("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, X-ACCESS_TOKEN");
     
-}
+    }
     
 }
-
-

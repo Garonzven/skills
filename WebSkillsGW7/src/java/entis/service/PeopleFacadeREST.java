@@ -128,12 +128,13 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     }
     
     @POST
-    @Path("login2")
+    @Path("getuser")
+    @Secured
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public People login(People p) {
        Query query = em.createQuery(
-            "SELECT p FROM People p JOIN FETCH p.skillpeopleCollection i WHERE  p.email  = '"+p.getEmail()+"' AND p.pasword='"+p.getPasword()+"'");
+            "SELECT p FROM People p WHERE  p.email  = '"+p.getEmail()+"'");
     
        List<People> lista=query.getResultList();
  
