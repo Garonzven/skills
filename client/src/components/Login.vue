@@ -46,39 +46,58 @@
 </template>
 
 <script>
-  /* eslint linebreak-style: ["error", "windows"]*/
-
-  export default {
-    data() {
-      return {
-        people: {
-          email: '',
-          password: ''
+    /* eslint linebreak-style: ["error", "windows"]*/
+    export default {
+        data() {
+            return {
+                people: {
+                    email: '',
+                    password: ''
+                },
+            }
         },
-        apiUrl: 'https://13.92.199.15:45734/WebSkillsGW7/webresources'
-      }
-    },
-    mounted: function () {
-      this.$refs.videoRef.src = '../../static/VORTEX.mp4'
-      this.$refs.videoRef.play()
-    },
-    methods:{
-      login () {
-        var data = JSON.stringify(this.people)
-        this.$http.post(this.apiUrl + '/entis.people/login', data)
-          .then(response => {
-            console.log(response)
-            this.$auth.setToken(response.body.access_token + Date.now())
+        mounted: function() {
+            this.$refs.videoRef.src = '../../static/VORTEX.mp4'
+            this.$refs.videoRef.play()
+        },
+        methods: {
+            login() {
+                console.log(this.$apiURL);
+                var data = JSON.stringify(this.people)
+                this.$http.post(this.$apiURL.Url + '/entis.people/login', data)
+                    .then(response => {
+                        console.log(response)
 
-            this.$router.push('/')
-        })
-      }
-    }
-  };
+                        this.$auth.setToken(response.body.token)
+
+                        console.log(typeof(response.body.token))
+                        console.log('getToken',this.$auth.getToken())
+                    
+                        console.log(data)
+                        let user = {
+                            email: this.people.email
+                        }
+
+                        user = JSON.stringify(user);
+                        console.log(this.$apiURL.Url + '/entis.people/getuser');
+                        console.log(this.$auth.getToken());
+                        console.log(user);
+                        this.$http.post(this.$apiURL.Url + '/entis.people/getuser', user, {
+                            headers: {
+                                Authorization: this.$auth.getToken()
+                            }
+                        }).then(response => {
+                            console.log(response)
+                            this.$router.push('/')
+                        })
+                    })
+            }
+        }
+    };
 
 </script>
 <style>
-.bgvideo {
+    .bgvideo {
         position: fixed;
         top: 50%;
         left: 50%;
@@ -91,7 +110,7 @@
         background-size: cover;
         transition: 1s opacity;
     }
-
+    
     #polina {
         background: rgba(0, 0, 0, 0.3);
         color: white;
@@ -104,26 +123,26 @@
         border: 0.5px solid #444444;
         border-radius: 5px;
     }
-
+    
     .boxx {
         margin-top: 200px;
         max-width: 900px;
     }
-
+    
     .panel-login {
         border-color: #ccc;
         -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
         -moz-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
         box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
     }
-
+    
     .panel-login>.panel-heading {
         color: #00415d;
         background-color: #fff;
         border-color: #fff;
         text-align: center;
     }
-
+    
     .panel-login>.panel-heading a {
         text-decoration: none;
         color: #666;
@@ -133,12 +152,12 @@
         -moz-transition: all 0.1s linear;
         transition: all 0.1s linear;
     }
-
+    
     .panel-login>.panel-heading a.active {
         color: #029f5b;
         font-size: 18px;
     }
-
+    
     .panel-login>.panel-heading hr {
         margin-top: 10px;
         margin-bottom: 0px;
@@ -150,7 +169,7 @@
         background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
         background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
     }
-
+    
     .panel-login input[type="text"],
     .panel-login input[type="email"],
     .panel-login input[type="password"] {
@@ -161,7 +180,7 @@
         -moz-transition: all 0.1s linear;
         transition: all 0.1s linear;
     }
-
+    
     .panel-login input:hover,
     .panel-login input:focus {
         outline: none;
@@ -170,7 +189,7 @@
         box-shadow: none;
         border-color: #ccc;
     }
-
+    
     .btn-login {
         background-color: #f16521;
         outline: none;
@@ -182,19 +201,19 @@
         text-transform: uppercase;
         border-color: #f16521;
     }
-
+    
     .btn-login:hover,
     .btn-login:focus {
         color: #fff;
         background-color: #f07020;
         border-color: #ffb366;
     }
-
+    
     .forgot-password {
         text-decoration: underline;
         color: #888;
     }
-
+    
     .forgot-password:hover,
     .forgot-password:focus {
         text-decoration: underline;

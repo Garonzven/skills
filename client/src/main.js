@@ -5,8 +5,12 @@ import VeeValidate from 'vee-validate';
 import vSelect from 'vue-select';
 import App from './App';
 import router from './router';
-
 import Auth from './packages/auth/Auth.js';
+import apiUrl from './config/config.js';
+
+Vue.use(apiUrl);
+
+console.log(Vue.api);
 
 Vue.use(Vuex);
 Vue.use(Resource);
