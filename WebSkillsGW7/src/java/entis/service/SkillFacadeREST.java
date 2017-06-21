@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -59,6 +60,16 @@ public class SkillFacadeREST extends AbstractFacade<Skill> {
     @Produces(MediaType.APPLICATION_JSON)
     public Skill find(@PathParam("id") Integer id) {
         return super.find(id);
+    }
+    
+    public Skill findByName(Skill sk) {
+        Skill sk1 = null;
+        
+        Query query = em.createQuery(
+                "SELECT s FROM Skill s WHERE s.name = '" + sk.getName().toLowerCase()+ "'");
+        List<Skill> results = query.getResultList();
+        if (results.size()>0) sk1 = (Skill)results.get(0);
+        return sk1;
     }
     
     @GET

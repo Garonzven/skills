@@ -14,11 +14,11 @@ import entis.SkillpeoplePK;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -39,7 +39,10 @@ import javax.ws.rs.core.PathSegment;
 public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
 
     @PersistenceContext(unitName = "WebSkillsGW7PU")
-    private EntityManager em;
+    private EntityManager em;   
+        
+    @EJB
+    private SkillFacadeREST ejbSkill;
 
     private SkillpeoplePK getPrimaryKey(PathSegment pathSegment) {
         /*
@@ -78,46 +81,26 @@ public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(Skillpeople entity) {
-      try {
-        /*  
-          UserTransaction transaction = (UserTransaction)new InitialContext().lookup("java:comp/UserTransaction");
-            transaction.begin();
-            EntityManager em = getEntityManager();
-            Employee employee = em.find(Employee.class, id);
-            employee.setSalary(employee.getSalary() + 1000);
-            transaction.commit();
-        */
-        //em.getTransaction().begin();
-        int idp = entity.getSkill().getIdskill();
-        if (idp == 0){
-            Skill skill = new Skill();
-            skill.setName(entity.getSkill().getName());
+    
+        Skill skill = ejbSkill.findByName(entity.getSkill());
+        if (skill==null){
+            skill = new Skill();
+            skill.setName(entity.getSkill().getName().toLowerCase());
             skill.setUpdatedate(entity.getSkill().getUpdatedate());
             skill.setCreatedate(entity.getSkill().getCreatedate());
             skill.setLevel(entity.getSkill().getLevel());
             em.persist(skill); 
-            Query query = em.createQuery(
-                "SELECT s FROM Skill s WHERE s.name = '" + skill.getName()+ "'");
-            List<Skill> results = query.getResultList();
-            for (Skill c : results) {
-                 skill = c;
-                break; 
-            }
-            entity.getSkillpeoplePK().setIdskill(skill.getIdskill());
-            entity.setSkill(skill);
-            em.persist(entity); 
         }
-       } catch (Exception e) {
-             e.printStackTrace();
-       }
+        entity.getSkillpeoplePK().setIdskill(skill.getIdskill());
+        entity.setSkill(skill);
+        em.persist(entity); 
     }
-
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void edit(Skillpeople entity) {
         entity.getSkill().setUpdatedate(new Date(System.currentTimeMillis()));
         super.edit(entity);
-        //registrar(entity.getPeople(), "Update Skills-People user: "+ entity.getPeople().getName()+ " " + entity.getPeople().getLastname()+ " skill: "+ entity.getSkill().getName() + " level: "+ entity.getSkill().getLevel() );
     }
 
     @DELETE
@@ -143,9 +126,9 @@ public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
     }
 
     @GET
-    @Path("findall/{idp}/{ids}")
+    @Path("findallbypeople/{idp}")
     @Produces({ MediaType.APPLICATION_JSON})
-    public List<Skillpeople> findAll(@PathParam("idp") PathSegment idp,@PathParam("ids") PathSegment ids) {
+    public List<Skillpeople> findAllByPeople(@PathParam("idp") PathSegment idp) {
         Skillpeople p=null;
         List<Skillpeople> results = null;
         
@@ -155,19 +138,45 @@ public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
             "SELECT p FROM Skillpeople p WHERE  p.skillpeoplePK.idpeople  = "+idp+"");
             results= query.getResultList();
         }
+       return results;
+    }
+   
+    @GET
+    @Path("findallbyskill/{ids}")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public List<Skillpeople> findAllBySkill(@PathParam("ids") PathSegment ids) {
+        Skillpeople p=null;
+        List<Skillpeople> results = null;
+        Query query;
+        
         if (!ids.toString().equals(String.valueOf(0))) {       
             query   = em.createQuery(
-            "SELECT p FROM Skillpeople p WHERE  p.skillpeoplePK.idskill  = "+ids+"");
+            "SELECT p FROM Skillpeople p WHERE p.skillpeoplePK.idskill  = "+ids+"");
             results= query.getResultList();
             
         }
        return results;
     }
+    @POST
+    @Path("findallbyskillname")
+    @Secured
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<People> findAllBySkillName(Skill s) {
+        Skillpeople p=null;
+        List<People> results = null;
+        Query query;
+        
+       query   = em.createQuery(
+            "SELECT p.people FROM Skillpeople p WHERE p.skill.name  = '"+s.getName().toString().toLowerCase()+"'");
+       results= query.getResultList();
+       return results;
+    }
     
     @GET
-    @Path("listfindBy")
+    @Path("list")
     @Produces({ MediaType.APPLICATION_JSON})
-    public List<Listado> findBy() {
+    public List<Listado> list() {
         Skillpeople p=null;
         List rs = null;
         Object[] ale;

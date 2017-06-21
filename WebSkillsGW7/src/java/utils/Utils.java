@@ -119,5 +119,9 @@ public class Utils {
      }
     return cadenaAleatoria;
   }
-
+  public static String capitalize(String sString){
+       sString = sString.toLowerCase();
+       sString = Character.toString(sString.charAt(0)).toUpperCase()+sString.substring(1);
+       return sString;
+  }
 }
