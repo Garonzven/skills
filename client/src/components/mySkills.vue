@@ -14,7 +14,7 @@
                     <table class="table table-user-information table form-horizontal" style="margin-top:130px">
                       <tbody>
                         <tr>
-                          <td class="form-group"><input name="name" v-model=newUser.name type="text" placeholder="NAME LASTNAME" class="form-control"></td>
+                          <td class="form-group"><input name="name" v-model="newUser.name" type="text" placeholder="NAME LASTNAME" class="form-control"></td>
                         </tr>
                         <tr>
                           <td class="form-group"><input name="job_title" v-model="newUser.jobtitle" type="text" placeholder="JOB TITLE" class="form-control">

@@ -26,7 +26,7 @@ router.beforeEach(
     if (to.matched.some(record => record.meta.forVisitors)) {
       if (Vue.auth.isAuthenticated()) {
         next({
-          path: '/'
+          path: '/mySkills'
         })
       } else next()
     } else if (to.matched.some(record => record.meta.forAuth)) {

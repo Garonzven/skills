@@ -10,7 +10,7 @@
           <v-select :options="skillList" :value.sync="selected" :on-change="search" :debounce="250" multiple placeholder="Search Skills"></v-select>
         </div>
         <div class="no-padding lib-item" data-category="view">
-          <div class="lib-panel col-lg-6" v-for="user in users">
+          <div class="container lib-panel col-lg-6" v-for="user in users">
             <div class="row box-shadow">
               <div class="col-md-4">
                 <img class="lib-img-show" src="http://placehold.it/300x200?text=N/A">

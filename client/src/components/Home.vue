@@ -68,7 +68,7 @@
       </aside>
       <!-- /.navbar-static-side -->
     </nav>
-    <div id="page-wrapper">
+    <div class="container" id="page-wrapper">
       <router-view></router-view>
 
     </div>
