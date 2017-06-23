@@ -6,7 +6,7 @@ import mySkills from '@/components/mySkills';
 import listUser from '@/components/listUser';
 import createUser from '@/components/createUser';
 import changePassword from '@/components/changePassword';
-import Reset from '@/components/reset';
+import Reset from '@/components/Reset';
 
 Vue.use(Router);
 

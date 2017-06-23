@@ -20,8 +20,6 @@ Vue.use(VeeValidate);
 Vue.component('v-select', vSelect);
 
 
-//Vue.http.options.root = 'http://13.92.199.15:38967/WebSkillsGW7/webresources/'
-
 router.beforeEach(
   (to, from, next) => {
     if (to.matched.some(record => record.meta.forVisitors)) {
