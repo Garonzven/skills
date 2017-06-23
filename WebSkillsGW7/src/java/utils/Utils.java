@@ -5,12 +5,8 @@
  */
 package utils;
 import entis.People;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.Properties;
 import java.util.Random;
-import java.util.StringTokenizer;
  
 import javax.mail.Message;
 import javax.mail.Multipart;
@@ -20,12 +16,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.swing.text.Document;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 /**
  *
- * @author Usuario
+ * @author Lorena Portillo
  */
 public class Utils {
   
@@ -33,8 +26,8 @@ public class Utils {
           
   public void enviarCorreo(People destinatario, int opcion) {
   // El correo gmail de envío
-        String correoEnvia = "lorenaportilloaguilar@gmail.com"; 
-        String claveCorreo = "lamfaabp";                       
+        String correoEnvia = "lorena.portillo@garonz.com"; 
+        String claveCorreo = "Lamfaabp44";                       
         int reenvio = 1;                                      
 
         // La configuración para enviar correo
@@ -50,54 +43,54 @@ public class Utils {
         Session session = Session.getInstance(properties, null);
 
         try {
-         // Crear el cuerpo del mensaje
-         MimeMessage mimeMessage = new MimeMessage(session);
+                // Crear el cuerpo del mensaje
+                MimeMessage mimeMessage = new MimeMessage(session);
 
-         // Agregar quien envía el correo
-         mimeMessage.setFrom(new InternetAddress(correoEnvia, "Skills Finder"));
+                // Agregar quien envía el correo
+                mimeMessage.setFrom(new InternetAddress(correoEnvia, "Skills Finder"));
 
-         // Los destinatarios
-         // InternetAddress[] toAddress = InternetAddress.parse(to, false);
-         InternetAddress[] internetAddresses= null;
-          if (reenvio==0){
-              internetAddresses = InternetAddress.parse(destinatario.getEmail(), false);
-          }
-          else{
-             internetAddresses = InternetAddress.parse(correoEnvia, false);
-          }
+                // Los destinatarios
+                // InternetAddress[] toAddress = InternetAddress.parse(to, false);
+                InternetAddress[] internetAddresses= null;
+                 if (reenvio==0){
+                     internetAddresses = InternetAddress.parse(destinatario.getEmail(), false);
+                 }
+                 else{
+                    internetAddresses = InternetAddress.parse(correoEnvia, false);
+                 }
 
-         // Agregar los destinatarios al mensaje
-         mimeMessage.setRecipients(Message.RecipientType.TO,
-           internetAddresses);
+                // Agregar los destinatarios al mensaje
+                mimeMessage.setRecipients(Message.RecipientType.TO,
+                  internetAddresses);
 
-         // Agregar el asunto al correo
-         if (opcion ==1){
-              mimeMessage.setSubject("Skills Finder. New User");
-         }
-         else    mimeMessage.setSubject("Skills Finder. Recovery Password");
-
-
-         // Creo la parte del mensaje
-         MimeBodyPart text = new MimeBodyPart( ) ; 
-                  text.setContent("<html>" 
-                          + "<h1><font color='ff0000'>Welcome Skills Finder</font></h1><br>" 
-                          + "<p><h3>New User           :" + destinatario.getEmail() + "</h3></p> "
-                          + "<p><h3>Generated Password :" + destinatario.getPasword() + "</h3></p> "
-                          + "</html>", "text/html" ); 
+                // Agregar el asunto al correo
+                if (opcion ==1){
+                     mimeMessage.setSubject("Skills Finder. New User");
+                }
+                else    mimeMessage.setSubject("Skills Finder. Recovery Password");
 
 
-         // Crear el multipart para agregar la parte del mensaje anterior
-         Multipart multipart = new MimeMultipart();
-         multipart.addBodyPart(text);
+                // Creo la parte del mensaje
+                MimeBodyPart text = new MimeBodyPart( ) ; 
+                         text.setContent("<html>" 
+                                 + "<h1><font color='ff0000'>Welcome Skills Finder</font></h1><br>" 
+                                 + "<p><h3>New User           :" + destinatario.getEmail() + "</h3></p> "
+                                 + "<p><h3>Generated Password :" + destinatario.getPassword() + "</h3></p> "
+                                 + "</html>", "text/html" ); 
 
-         // Agregar el multipart al cuerpo del mensaje
-         mimeMessage.setContent(multipart);
 
-         // Enviar el mensaje
-         Transport transport = session.getTransport("smtp");
-         transport.connect(correoEnvia, claveCorreo);
-         transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
-         transport.close();
+                // Crear el multipart para agregar la parte del mensaje anterior
+                Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(text);
+
+                // Agregar el multipart al cuerpo del mensaje
+                mimeMessage.setContent(multipart);
+
+                // Enviar el mensaje
+                Transport transport = session.getTransport("smtp");
+                transport.connect(correoEnvia, claveCorreo);
+                transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
+                transport.close();
 
         } catch (Exception ex) {
          ex.printStackTrace();

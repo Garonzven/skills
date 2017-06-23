@@ -7,7 +7,7 @@ package utils;
 
 /**
  *
- * @author Usuario
+ * @author Lorena Portillo
  */
 class Configuracion {
     private String correoenvia;

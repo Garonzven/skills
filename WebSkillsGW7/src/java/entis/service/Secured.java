@@ -13,7 +13,7 @@ import javax.ws.rs.NameBinding;
 
 /**
  *
- * @author Lermith
+ * @author Lorena Portillo
  */
 @NameBinding
 @Target({ElementType.TYPE, ElementType.METHOD})

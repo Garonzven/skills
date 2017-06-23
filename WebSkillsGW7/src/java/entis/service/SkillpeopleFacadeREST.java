@@ -32,7 +32,7 @@ import javax.ws.rs.core.PathSegment;
 
 /**
  *
- * @author Usuario
+ * @author Lorena Portillo
  */
 @Stateless
 @Path("entis.skillpeople")

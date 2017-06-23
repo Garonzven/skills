@@ -7,7 +7,7 @@ package utils;
 
 /**
  *
- * @author Usuario
+ * @author Lorena Portillo
  */
 import com.fasterxml.jackson.annotation.JsonProperty;
 

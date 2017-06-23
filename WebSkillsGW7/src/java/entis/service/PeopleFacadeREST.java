@@ -10,7 +10,6 @@ import entis.Log;
 import entis.People;
 import entis.Roltipo;
 import entis.Skillpeople;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -40,7 +39,7 @@ import utils.Utils;
 
 /**
  *
- * @author Usuario
+ * @author Lorena Portillo
  */
 @Stateless
 @Path("entis.people")
@@ -78,7 +77,7 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
         entity.setLocation(Utils.capitalize(entity.getLocation()));
         entity.setSkillandlevel(entity.getSkillandlevel().toLowerCase());
         entity.setJobtitle(Utils.capitalize(entity.getJobtitle()));
-        
+        entity.setIschangepassword('T');
         super.create(entity);
         registrar(entity, "Create User "+ entity.getName()+ " " + entity.getLastname()+ " by SuperAdmin");
         Utils util = new Utils();
@@ -91,7 +90,7 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response login(Credentials user , @Context final HttpServletRequest request) throws JOSEException {
-        Response respuesta = null;
+        Response respuesta;
         People foundUser = null;
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
@@ -126,7 +125,7 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     private People findByEmail(Credentials user) throws Exception {
         Logger logger = Logger.getLogger(getClass().getName());
        Query query = em.createQuery(
-            "SELECT p FROM People p WHERE  p.email  = '"+user.getEmail()+"' AND p.pasword='"+ user.getPassword() +"'");
+            "SELECT p FROM People p WHERE  p.email  = '"+user.getEmail().toLowerCase()+"' AND p.password='"+ user.getPassword() +"'");
        
        List<People> lista=query.getResultList();
        if (lista.isEmpty()) {
@@ -140,7 +139,7 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     private People findByEmail(String email) {
        Logger logger = Logger.getLogger(getClass().getName());
        Query query = em.createQuery(
-            "SELECT p FROM People p WHERE  p.email  = '"+email+"'");
+            "SELECT p FROM People p WHERE  p.email  = '"+email.toLowerCase()+"'");
        
        List<People> lista=query.getResultList();
        if (!lista.isEmpty()) {
@@ -175,13 +174,35 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     public void recovery(People entity) {
         People user = findByEmail(entity.getEmail());
         if (user != null){
-              user.setPasword(Utils.getCadenaAlfanumAleatoria(6));
+              user.setIschangepassword('T');
+              user.setPassword(Utils.getCadenaAlfanumAleatoria(6));
               edit(user);
               Utils util = new Utils();
               util.enviarCorreo(entity, 2);
         }
+    }
+    
+    @PUT
+    @Secured
+    @Path("reset")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void reset(Credentials user) throws Exception { 
+        People foundUser;
+        try{            
+            if (user!=null) {
+                user.setEmail(user.getEmail().toLowerCase());
+                foundUser = findByEmail(user);
+                foundUser.setPassword(user.getPassword());
+                foundUser.setIschangepassword('F');
+                edit(foundUser);
+            }
+        }
+        catch (Exception e) {
+            throw new Exception();
+        }
         
     }
+    
     @Secured
     @DELETE
     public void remove(People entity) {

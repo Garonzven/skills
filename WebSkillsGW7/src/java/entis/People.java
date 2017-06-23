@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Usuario
+ * @author Lorena Portillo
  */
 @Entity
 @Table(name = "people")
@@ -46,7 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "People.findByLocation", query = "SELECT p FROM People p WHERE p.location = :location")
     , @NamedQuery(name = "People.findBySkillAndLevel", query = "SELECT p FROM People p WHERE p.skillandlevel = :skillandlevel")
     , @NamedQuery(name = "People.findByIndate", query = "SELECT p FROM People p WHERE p.indate = :indate")
-    , @NamedQuery(name = "People.findByPasword", query = "SELECT p FROM People p WHERE p.pasword = :pasword")
+    , @NamedQuery(name = "People.findByPassword", query = "SELECT p FROM People p WHERE p.password = :password")
     , @NamedQuery(name = "People.findByJobtitle", query = "SELECT p FROM People p WHERE p.jobtitle = :jobtitle")
     , @NamedQuery(name = "People.findByFotolink", query = "SELECT p FROM People p WHERE p.fotolink = :fotolink")
     , @NamedQuery(name = "People.findByIschangepassword", query = "SELECT p FROM People p WHERE p.ischangepassword = :ischangepassword")})
@@ -82,7 +82,7 @@ public class People implements Serializable {
     private Date indate;
     @Size(max = 2147483647)
     @Column(name = "pasword")
-    private String pasword;
+    private String password;
     @Size(max = 2147483647)
     @Column(name = "jobtitle")
     private String jobtitle;
@@ -173,12 +173,12 @@ public class People implements Serializable {
         this.indate = indate;
     }
 
-    public String getPasword() {
-        return pasword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasword(String pasword) {
-        this.pasword = pasword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getJobtitle() {

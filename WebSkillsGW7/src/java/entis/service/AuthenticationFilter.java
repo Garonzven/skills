@@ -24,7 +24,7 @@ import utils.AuthUtils;
 import org.joda.time.DateTime;
 /**
  *
- * @author Lermith
+ * @author Lorena Portillo
  */
 
 @Provider

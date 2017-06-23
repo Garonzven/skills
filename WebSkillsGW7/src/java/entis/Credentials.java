@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /**
  *
- * @author Usuario
+ * @author Lorena Portillo
  */
 public class Credentials {
     private String email;

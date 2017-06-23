@@ -23,7 +23,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author Usuario
+ * @author Lorena Portillo
  */
 @Stateless
 @Path("entis.skill")

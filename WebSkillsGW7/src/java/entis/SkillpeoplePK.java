@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Usuario
+ * @author Lorena Portillo
  */
 @Embeddable
 public class SkillpeoplePK implements Serializable {

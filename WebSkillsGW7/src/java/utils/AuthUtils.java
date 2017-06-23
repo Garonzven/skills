@@ -20,7 +20,7 @@ import java.util.Arrays;
 import org.joda.time.DateTime;
 /**
  *
- * @author Usuario
+ * @author Lorena Portillo
  */
 public class AuthUtils {
     private static final JWSHeader JWT_HEADER = new JWSHeader(JWSAlgorithm.HS256);
