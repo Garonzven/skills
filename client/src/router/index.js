@@ -5,6 +5,8 @@ import Home from '@/components/Home';
 import mySkills from '@/components/mySkills';
 import listUser from '@/components/listUser';
 import createUser from '@/components/createUser';
+import changePassword from '@/components/changePassword';
+import Reset from '@/components/reset';
 
 Vue.use(Router);
 
@@ -16,6 +18,22 @@ export default new Router({
       component: Login,
       meta: {
         forVisitors: true
+      }
+    },
+    {
+      path: '/changePassword',
+      name: 'ChangePassword',
+      component: changePassword,
+      meta: {
+        forVisitors: true
+      }
+    },
+    {
+      path: '/reset',
+      name: 'Reset',
+      component: Reset,
+      meta: {
+        forAuth: true
       }
     },
     {

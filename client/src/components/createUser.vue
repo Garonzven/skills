@@ -97,7 +97,7 @@
         console.log(JSON.stringify(data));
 
 
-        this.$http.post(this.apiUrl + '/entis.people/', data)
+        this.$http.post(this.$apiURL.Url + '/entis.people/', data)
           .then(response => {
             console.log(response)
             //this.$auth.setToken(response.body.access_token + Date.now())

@@ -17,14 +17,14 @@
             <p class="control has-icon has-icon-right">
               <input name="email" type="text" class="form-control" style="max-width: 600px;" placeholder="email@garonz.com" v-model="people.email" v-validate="'required|email'" :class="{'input': true, 'is-danger': errors.has('email') }">
               <i v-show="errors.has('email')" class="fa fa-warning"></i>
-              <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
+              <p v-show="errors.has('email')" class="alert alert-danger">{{ errors.first('email') }}</p>
             </p>
           </div>
           <div class="form-group" style="text-align:center;">
             <p class="control has-icon has-icon-right">
               <input name="password" type="password" class="form-control" placeholder="Password" v-model="people.password" v-validate="'required|min:6'" :class="{'input': true, 'is-danger': errors.has('password') }">
               <i v-show="errors.has('password')" class="fa fa-warning"></i>
-              <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
+              <p v-show="errors.has('password')" class="alert alert-danger">{{ errors.first('password') }}</p>
             </p>
           </div>
           <div class="form-group">
@@ -38,7 +38,7 @@
             <div class="row">
               <div class="col-lg-12">
                 <div class="text-center">
-                  <a href="#" tabindex="5" class="forgot-password">Forgot Password?</a>
+                  <router-link to="/changePassword" tabindex="5" class="forgot-password">Forgot Password?</router-link>
                 </div>
               </div>
             </div>
@@ -52,6 +52,7 @@
 <script>
     /* eslint linebreak-style: ["error", "windows"]*/
     export default {
+
         data() {
             return {
                 people: {
@@ -71,29 +72,32 @@
                 var data = JSON.stringify(this.people)
                 this.$http.post(this.$apiURL.Url + '/entis.people/login', data)
                     .then(response => {
-                        //console.log(response)
-
+                        console.log(response)
                         this.$auth.setToken(response.body.token)
 
-                        //console.log(typeof(response.body.token))
-                        //console.log('getToken',this.$auth.getToken())
+                        console.log(typeof(response.body.token))
+                        console.log('getToken',this.$auth.getToken())
 
-                        //console.log(data)
+                        console.log(data)
                         let user = {
-                            email: this.people.email
+                            email: this.people.email,
                         }
 
                         user = JSON.stringify(user);
-                        //console.log(this.$apiURL.Url + '/entis.people/getuser');
-                        //console.log(this.$auth.getToken());
-                        //console.log(user);
+                        console.log(this.$apiURL.Url + '/entis.people/getuser');
+                        console.log(this.$auth.getToken());
+                        console.log(user);
                         this.$http.post(this.$apiURL.Url + '/entis.people/getuser', user, {
                             headers: {
                                 Authorization: this.$auth.getToken()
                             }
                         }).then(response => {
-                            //console.log(response)
-                            this.$router.push('/mySkills')
+                            console.log(response)
+                            if (response.body.ischangepassword == 'T') {
+                              this.$router.push('/reset')
+                            } else {
+                              this.$router.push('/mySkills')
+                            }
                         })
                     })
                 }).catch(() => {

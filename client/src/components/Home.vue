@@ -2,7 +2,7 @@
   <div id="wrapper" style="background-color: #1d1d1f;">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-static-top" id="navigation" role="navigation" style="margin-bottom: 0">
+    <nav class="navbar navbar-default navbar-fixed-top" id="navigation" role="navigation" style="margin-bottom: 0">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -68,7 +68,7 @@
       </aside>
       <!-- /.navbar-static-side -->
     </nav>
-    <div class="container" id="page-wrapper">
+    <div id="page-wrapper">
       <router-view></router-view>
 
     </div>

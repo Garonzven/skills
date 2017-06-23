@@ -8,9 +8,10 @@ import router from './router';
 import Auth from './packages/auth/Auth.js';
 import apiUrl from './config/config.js';
 
+
 Vue.use(apiUrl);
 
-console.log(Vue.api);
+//console.log(Vue.api);
 
 Vue.use(Vuex);
 Vue.use(Resource);
@@ -33,6 +34,12 @@ router.beforeEach(
       if (!Vue.auth.isAuthenticated()) {
         next({
           path: '/login'
+        })
+      } else next()
+    } else if (to.matched.some(record => record.meta.forAuth)) {
+      if (!Vue.auth.isAuthenticated()) {
+        next({
+          path: '/changePassword'
         })
       } else next()
     } else next()
