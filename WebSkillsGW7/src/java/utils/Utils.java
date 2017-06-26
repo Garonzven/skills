@@ -26,13 +26,13 @@ public class Utils {
           
   public void enviarCorreo(People destinatario, int opcion) {
   // El correo gmail de envío
-        String correoEnvia = "lorena.portillo@garonz.com"; 
-        String claveCorreo = "Lamfaabp44";                       
+        String correoEnvia = "system@garonz.com"; 
+        String claveCorreo = "Gatu2232";                       
         int reenvio = 1;                                      
 
         // La configuración para enviar correo
         Properties properties = new Properties();
-        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.host", "smtp.office365.com");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");

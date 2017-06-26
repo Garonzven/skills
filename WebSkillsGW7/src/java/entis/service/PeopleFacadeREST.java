@@ -206,7 +206,8 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     @Secured
     @DELETE
     public void remove(People entity) {
-        super.remove(find(entity));
+       entity.setIschangepassword('D');
+       edit(entity);
     }
 
     @POST
@@ -222,7 +223,15 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
     public List<People> findAll() {
-        return super.findAll();
+        List<People> lista;
+        lista = super.findAll();
+        for (People p : lista){
+            if ((p.getIschangepassword() != null) && (p.getIschangepassword().compareTo('D')==0)){
+                lista.remove(p);
+            }
+        }
+        int count = lista.size();
+        return lista;
     }
 
     @GET
@@ -238,7 +247,7 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
-        return String.valueOf(super.count());
+        return String.valueOf(findAll().size());
     }
 
     @Override
