@@ -120,7 +120,6 @@ export default {
   methods: {
     logout () {
       localStorage.removeItem('token')
-      localStorage.removeItem('expiration')
       this.$router.push('/login')
     }
   }

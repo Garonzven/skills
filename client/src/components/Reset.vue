@@ -36,12 +36,12 @@
 </template>
 
 <script>
+
 export default {
   data() {
       return {
           people: {
-              pasword: '',
-              ischangepassword: 'F'
+              pasword: ''
           }
       }
   },
@@ -52,11 +52,14 @@ export default {
             //console.log(this.$apiURL);
             var data = JSON.stringify(this.people)
             console.log(data)
-            this.$http.put(this.$apiURL.Url + '/entis.people/', data)
-                .then(response => {
+            this.$http.put(this.$apiURL.Url + '/entis.people/', data, {
+              headers: {
+                  Authorization: this.$auth.getToken()
+              }
+            }).then(response => {
                     console.log(response)
 
-                    this.$router.push('/mySkills')
+                    this.$router.push('/login')
                 })
             }).catch(() => {
               console.log('No bebe');

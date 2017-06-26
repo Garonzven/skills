@@ -51,22 +51,23 @@
 
 <script>
     /* eslint linebreak-style: ["error", "windows"]*/
+
     export default {
 
         data() {
             return {
-                people: {
-                    email: '',
-                    password: ''
-                },
+              people: {
+                  email: '',
+                  password: ''
+              },
             }
         },
         mounted: function() {
             this.$refs.videoRef.src = '../../static/VORTEX.mp4'
             this.$refs.videoRef.play()
         },
-        methods: {
-            login() {
+        computed: {
+            login () {
               this.$validator.validateAll().then(() => {
                 //console.log(this.$apiURL);
                 var data = JSON.stringify(this.people)
@@ -93,10 +94,14 @@
                             }
                         }).then(response => {
                             console.log(response)
-                            if (response.body.ischangepassword == 'T') {
+
+                            if (response.body.ischangepassword === 'T') {
                               this.$router.push('/reset')
+
+                              //localStorage.removeItem('token')
                             } else {
                               this.$router.push('/mySkills')
+
                             }
                         })
                     })

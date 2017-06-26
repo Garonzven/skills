@@ -8,6 +8,7 @@ import createUser from '@/components/createUser';
 import changePassword from '@/components/changePassword';
 import Reset from '@/components/Reset';
 
+
 Vue.use(Router);
 
 export default new Router({

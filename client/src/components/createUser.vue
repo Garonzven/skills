@@ -76,8 +76,8 @@
       return {
         selected: [],
         newUser: new newUser(),
-        skillList: [],
-        apiUrl: 'http://13.92.199.15:38967/WebSkillsGW7/webresources'
+        skillList: []
+        //apiUrl: 'http://13.92.199.15:38967/WebSkillsGW7/webresources'
       }
     },
     methods: {
@@ -100,6 +100,7 @@
         this.$http.post(this.$apiURL.Url + '/entis.people/', data)
           .then(response => {
             console.log(response)
+            toastr.success('User Created Successfully.', 'Success Alert', {timeOut: 5000});
             //this.$auth.setToken(response.body.access_token + Date.now())
 
             this.$router.push('/listUser')
