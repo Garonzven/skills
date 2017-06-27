@@ -5,7 +5,10 @@
  */
 package entis.service;
 
+import entis.Listado;
 import entis.Skill;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -86,6 +89,24 @@ public class SkillFacadeREST extends AbstractFacade<Skill> {
         return super.findRange(new int[]{from, to});
     }
 
+    @GET
+    @Path("list")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public List<Listado> list() {
+        Skill p=null;
+        List rs = null;
+        Object[] ale;
+        List<Listado> result = new ArrayList();
+        String consulta = "SELECT s.idpeople.name, s.name, s.updatedate FROM Skill s ";
+        Query query = em.createQuery(consulta , Listado.class);
+        rs = query.getResultList(); 
+        for (Object obj : rs) {
+            ale = (Object[])obj; 
+            result.add(new Listado((String)ale[0], (String)ale[1], (Date)ale[2]));
+        }
+        return result;
+     }
+    
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)

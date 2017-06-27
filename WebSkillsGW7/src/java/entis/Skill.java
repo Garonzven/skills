@@ -16,6 +16,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -38,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Skill.findByIdskill", query = "SELECT s FROM Skill s WHERE s.idskill = :idskill")
     , @NamedQuery(name = "Skill.findByName", query = "SELECT s FROM Skill s WHERE s.name = :name")
     , @NamedQuery(name = "Skill.findByLevel", query = "SELECT s FROM Skill s WHERE s.level = :level")
+    , @NamedQuery(name = "Skill.findByIdpeople", query = "SELECT s FROM Skill s WHERE s.idpeople = :idpeople")
     , @NamedQuery(name = "Skill.findByCreatedate", query = "SELECT s FROM Skill s WHERE s.createdate = :createdate")
     , @NamedQuery(name = "Skill.findByUpdatedate", query = "SELECT s FROM Skill s WHERE s.updatedate = :updatedate")
         
@@ -63,6 +66,10 @@ public class Skill implements Serializable {
     private Date updatedate;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "skill", fetch = FetchType.LAZY)
     private Collection<Skillpeople> skillpeopleCollection;
+    
+    @JoinColumn(name = "idpeople", referencedColumnName = "idpeople")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private People idpeople;
 
     public Skill() {
     }
@@ -95,6 +102,13 @@ public class Skill implements Serializable {
         this.level = level;
     }
     
+    public People getIdpeople() {
+        return idpeople;
+    }
+
+    public void setIdpeople(People idpeople) {
+        this.idpeople = idpeople;
+    }
     public Date getCreatedate() {
         return createdate;
     }
