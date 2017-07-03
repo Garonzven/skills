@@ -13,6 +13,7 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import entis.People;
 import java.security.Principal;
 import java.text.ParseException;
+import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -26,7 +27,7 @@ import org.joda.time.DateTime;
  *
  * @author Lorena Portillo
  */
-
+@Secured
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter, ContainerResponseFilter{
@@ -46,10 +47,11 @@ public class AuthenticationFilter implements ContainerRequestFilter, ContainerRe
         String authHeader = requestContext.getHeaderString("Authorization");
 
         if (authHeader == null || authHeader.isEmpty()) {
-            Authorizer authorizer = new Authorizer("", "",
+           Authorizer authorizer = new Authorizer("", "",
                     originalContext.isSecure());
             requestContext.setSecurityContext(authorizer);
-        } else {
+           //throw new IOException(JWT_INVALID_MSG);
+        } else { 
             JWTClaimsSet claimSet;
             try {
                 claimSet = (JWTClaimsSet) AuthUtils.decodeToken(authHeader);

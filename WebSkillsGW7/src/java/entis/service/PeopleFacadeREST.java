@@ -32,6 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import com.nimbusds.jose.JOSEException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.logging.Logger;
 import utils.AuthUtils;
 import utils.Token;
@@ -47,7 +49,8 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
 
     public static final String CLIENT_ID_KEY = "client_id", REDIRECT_URI_KEY = "redirect_uri",
             CLIENT_SECRET = "client_secret", CODE_KEY = "code", GRANT_TYPE_KEY = "grant_type",
-            AUTH_CODE = "authorization_code";
+            AUTH_CODE = "authorization_code",
+            JWT_INVALID_MSG = "Invalid JWT token";
 
     public static final String NOT_FOUND_MSG = "User not found", LOGING_ERROR_MSG = "Wrong email and/or password";
     
@@ -99,7 +102,8 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
         String info="" ;
        
         Logger logger = Logger.getLogger(getClass().getName());
-        try{            
+        try{  //requestContext.setSecurityContext(authorizer)
+            
             if (user!=null) {
                 user.setEmail(user.getEmail().toLowerCase());
                 foundUser = findByEmail(user);
@@ -123,6 +127,7 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     }
 
     private People findByEmail(Credentials user) throws Exception {
+        People p;
         Logger logger = Logger.getLogger(getClass().getName());
        Query query = em.createQuery(
             "SELECT p FROM People p WHERE  p.email  = '"+user.getEmail().toLowerCase()+"' AND p.password='"+ user.getPassword() +"'");
@@ -132,8 +137,13 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
            throw new Exception();
        }
        else {
-           return lista.get(0); 
+           p = lista.get(0);
+           if (p.getIschangepassword() != null && p.getIschangepassword().compareTo('D')==0){
+                p= null; 
+           } 
+           return p;
        }
+       
     }
     
     private People findByEmail(String email) {
@@ -153,8 +163,16 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     @Secured
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public People login(People p) {
-        People user = findByEmail(p.getEmail().toLowerCase());
+    public People login(People p, @Context final HttpServletRequest request) throws IOException {
+     People user = null;
+       try {
+        Integer id = Integer.parseInt(AuthUtils.getSubject(request.getHeader(AuthUtils.AUTH_HEADER_KEY)));
+        user = findByEmail(p.getEmail().toLowerCase());
+
+       } catch (Exception ex) {
+            throw new IOException(JWT_INVALID_MSG);
+           // return Response.Status.UNAUTHORIZED;
+        }
         return user;
     }
     
@@ -191,7 +209,7 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
         try{            
             if (user!=null) {
                 user.setEmail(user.getEmail().toLowerCase());
-                foundUser = findByEmail(user);
+                foundUser = findByEmail(user.getEmail());
                 foundUser.setPassword(user.getPassword());
                 foundUser.setIschangepassword('F');
                 edit(foundUser);

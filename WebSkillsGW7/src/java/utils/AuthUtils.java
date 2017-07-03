@@ -33,16 +33,18 @@ public class AuthUtils {
         JWTClaimsSet claim = new JWTClaimsSet();
         claim.setSubject(Integer.toString(people.getIdpeople()));
         claim.setIssueTime(DateTime.now().toDate());
-        claim.setExpirationTime(DateTime.now().plusDays(1).toDate());
+        claim.setExpirationTime(DateTime.now().plusHours(24).toDate());
         claim.setCustomClaim("user", people.getName() + " " + people.getLastname());
         claim.setCustomClaim("rol", rol);
 
         JWSSigner signer = new MACSigner(TOKEN_SECRET);
         SignedJWT jwt = new SignedJWT(JWT_HEADER, claim);
         jwt.sign(signer);
-        return new Token(jwt.serialize());
+        return new Token(jwt.serialize(), DateTime.now().plusHours(24).toDate());
     }
-
+    public static String getSubject(String authHeader) throws ParseException, JOSEException {
+        return decodeToken(authHeader).getSubject();
+    }
     public static String getSerializedToken(String authHeader) {
         return authHeader.split(" ")[0];
     }

@@ -32,7 +32,6 @@ public class ApplicationConfig extends Application {
         resources.add(entis.service.AuthenticationFilter.class);
         resources.add(entis.service.LogFacadeREST.class);
         resources.add(entis.service.NewCrossOriginResourceSharingFilter.class);
-        resources.add(entis.service.NewCrossOriginResourceSharingFilter1.class);
         resources.add(entis.service.PeopleFacadeREST.class);
         resources.add(entis.service.RoltipoFacadeREST.class);
         resources.add(entis.service.SkillFacadeREST.class);

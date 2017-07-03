@@ -43,6 +43,9 @@ public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
         
     @EJB
     private SkillFacadeREST ejbSkill;
+    
+    @EJB
+    private PeopleFacadeREST ejbFacadePeople;
 
     private SkillpeoplePK getPrimaryKey(PathSegment pathSegment) {
         /*
@@ -89,6 +92,8 @@ public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
             skill.setUpdatedate(entity.getSkill().getUpdatedate());
             skill.setCreatedate(entity.getSkill().getCreatedate());
             skill.setLevel(entity.getSkill().getLevel());
+            People p = ejbFacadePeople.find(entity.getSkillpeoplePK().getIdpeople());
+            skill.setIdpeople(p);
             em.persist(skill); 
         }
         entity.getSkillpeoplePK().setIdskill(skill.getIdskill());
