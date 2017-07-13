@@ -5,7 +5,9 @@
  */
 package entis;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -28,6 +30,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  *
@@ -49,7 +53,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "People.findByPassword", query = "SELECT p FROM People p WHERE p.password = :password")
     , @NamedQuery(name = "People.findByJobtitle", query = "SELECT p FROM People p WHERE p.jobtitle = :jobtitle")
     , @NamedQuery(name = "People.findByFotolink", query = "SELECT p FROM People p WHERE p.fotolink = :fotolink")
-    , @NamedQuery(name = "People.findByIschangepassword", query = "SELECT p FROM People p WHERE p.ischangepassword = :ischangepassword")})
+    , @NamedQuery(name = "People.findByIschangepassword", query = "SELECT p FROM People p WHERE p.ischangepassword = :ischangepassword")
+    , @NamedQuery(name = "People.findByStatusflag", query = "SELECT p FROM People p WHERE p.statusflag = :statusflag")
+    , @NamedQuery(name = "People.findBySocialaddrs", query = "SELECT p FROM People p WHERE p.socialaddrs = :socialaddrs")
+})
+
 public class People implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -77,9 +85,12 @@ public class People implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "skillandlevel")
     private String skillandlevel;
+    
     @Column(name = "indate")
     @Temporal(TemporalType.TIMESTAMP)
+    //@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd,HH:00", timezone="CET")
     private Date indate;
+    
     @Size(max = 2147483647)
     @Column(name = "pasword")
     private String password;
@@ -89,11 +100,19 @@ public class People implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "fotolink")
     private String fotolink;
+    @Size(max = 2147483647)
+    @Column(name = "socialaddrs")
+    private String socialaddrs;
+    
     @Lob
     @Column(name = "foto")
     private byte[] foto;
+    @Column(name = "statusflag") 
+    private Character statusflag;
     @Column(name = "ischangepassword") 
     private Character ischangepassword;
+
+    
 
     @OneToMany(cascade=CascadeType.PERSIST, mappedBy = "people", fetch = FetchType.EAGER)
    
@@ -151,6 +170,7 @@ public class People implements Serializable {
     public void setPhone(String phone) {
         this.phone =phone ;
     }
+    
     public String getLocation() {
         return location;
     }
@@ -158,6 +178,7 @@ public class People implements Serializable {
     public void setLocation(String location) {
         this.location =location ;
     } //skillandlevel
+    
     public String getSkillandlevel() {
         return skillandlevel;
     }
@@ -165,8 +186,49 @@ public class People implements Serializable {
     public void setSkillandlevel(String skillandlevel) {
         this.skillandlevel =skillandlevel ;
     }
+    
     public Date getIndate() {
-        return indate;
+        Date fdate;
+        try{
+            /*
+        String input = "Thu Jun 18 20:56:02 EDT 2009";
+        SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+        Date date = parser.parse(input);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = formatter.format(date);
+            
+
+        String strDate = indate.toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = formatter.format(dateStr);
+        System.out.println("yyyy-MM-dd date is ==>"+formattedDate);
+        Date date1 = formatter.parse(formattedDate);
+
+        formatter = new SimpleDateFormat("dd-MMM-yyyy");
+        formattedDate = formatter.format(date1);
+        System.out.println("dd-MMM-yyyy date is ==>"+formattedDate); 
+            
+          
+          String fecha = indate.toString();
+          SimpleDateFormat parser = new SimpleDateFormat("Eee Mmm dd HH:mm:ss ZZZ yyyy");
+          Date date = parser.parse(fecha);
+          SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
+          String formattedDate = formatter.format(date);
+          fdate = formatter.parse(formattedDate);
+            
+            http://jpdevelopment.blogspot.com/2014/03/resteasy-format-timestamps-as-date.html
+        */
+            SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
+
+            Calendar cal=Calendar.getInstance();
+            cal.setTime(indate);
+            String formattedDate = formatter.format(cal.getTime());
+            fdate = formatter.parse(formattedDate);
+        }
+        catch (Exception e) {
+            return indate;
+        }
+        return fdate;
     }
 
     public void setIndate(Date indate) {
@@ -197,6 +259,21 @@ public class People implements Serializable {
         this.fotolink = fotolink;
     }
 
+    public String getSocialaddrs() {
+        return socialaddrs;
+    }
+
+    public void setSocialaddrs(String socialaddrs) {
+        this.socialaddrs = socialaddrs;
+    }
+
+    public void setStatusflag(Character statusflag) {
+        this.statusflag = statusflag;
+    }
+
+    public Character getStatusflag() {
+        return statusflag;
+    }
     public byte[] getFoto() {
         return foto;
     }

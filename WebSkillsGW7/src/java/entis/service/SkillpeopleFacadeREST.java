@@ -5,6 +5,9 @@
  */
 package entis.service;
 
+import com.google.gson.Gson;
+import java.lang.reflect.Type;
+import com.google.gson.reflect.TypeToken;
 import entis.Listado;
 import entis.Log;
 import entis.People;
@@ -29,6 +32,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import net.minidev.json.JSONObject;
 
 /**
  *
@@ -84,7 +90,6 @@ public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(Skillpeople entity) {
-    
         Skill skill = ejbSkill.findByName(entity.getSkill());
         if (skill==null){
             skill = new Skill();
@@ -101,8 +106,93 @@ public class SkillpeopleFacadeREST extends AbstractFacade<Skillpeople> {
         em.persist(entity); 
     }
     
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("application/json")
+    @Path("create")
+    public Response create(Skills skills){
+        String results = "";
+        JSONObject json = new JSONObject();
+        try {
+            results = String.valueOf(skills.getIdpeople());           
+            for (int k = 0; k < skills.getSkills().length; k++) {
+                People p;
+                p = ejbFacadePeople.find(skills.getIdpeople());
+                results+="\n\r Person Found -->"+p.toString();
+                Skill skill = ejbSkill.findByName(skills.getSkills()[k]);//buscar skill por nombre
+                if (skill == null) {// si el skill no existe agregarlo.
+                    results+="\n\r Skill Not Found ";
+                    skill = new Skill();
+                    skill.setName(skills.getSkills()[k].getName().toLowerCase());
+                    skill.setUpdatedate(new Date());
+                    skill.setCreatedate(new Date());
+                    skill.setLevel(skills.getSkills()[k].getLevel());
+                    skill.setIdpeople(p);
+                    em.persist(skill);   
+                    skill = ejbSkill.findByName(skills.getSkills()[k]);
+                }else results+="\n\r Skill Found -->"+skill.toString();
+                
+                results+="\n\r idSkill -->"+skill.getIdskill();
+                
+                Skillpeople entity = new Skillpeople();
+                entity.setLevel(Integer.valueOf(skills.getSkills()[k].getLevel()));
+                entity.setPeople(p);
+                entity.setSkill(skill);
+                SkillpeoplePK pk = new SkillpeoplePK();
+                pk.setIdpeople(p.getIdpeople());
+                pk.setIdskill(skill.getIdskill());
+                entity.setSkillpeoplePK(pk);
+                entity.setUpdatedate(new Date());
+                em.persist(entity);
+                results += "persists --> "+skills.getSkills()[k].getName() + "\n";
+            }
+        } catch (Exception e) {
+            results +="\n\rException = "+e.getMessage();
+            json.put("status", "error");
+            json.put("code", Response.Status.BAD_REQUEST.getStatusCode());
+            json.put("message", e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(json.toString()).build();
+        }
+        json.put("status", "success");
+        return Response.ok(json.toString()).build();
+    }
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("update")
+    public Response update(Skills skills){
+        JSONObject json = new JSONObject();
+        try {          
+            for (int k = 0; k < skills.getSkills().length; k++) {
+                People p;
+                p = ejbFacadePeople.find(skills.getIdpeople());
+                Skill skill = skills.getSkills()[k];
+                Skillpeople entity = new Skillpeople();
+                entity.setLevel(Integer.valueOf(skills.getSkills()[k].getLevel()));
+                entity.setPeople(p);
+                entity.setSkill(skill);
+                SkillpeoplePK pk = new SkillpeoplePK();
+                pk.setIdpeople(p.getIdpeople());
+                pk.setIdskill(skill.getIdskill());
+                entity.setSkillpeoplePK(pk);
+                entity.setUpdatedate(new Date());
+                em.merge(entity);
+            }
+        } catch (Exception e) {
+            json.put("status", "error");
+            json.put("code", Response.Status.BAD_REQUEST.getStatusCode());
+            json.put("message", e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(json.toString()).build();
+        }
+        json.put("status", "success");
+        return Response.ok(json.toString()).build();
+    }
+    
+    
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Override
     public void edit(Skillpeople entity) {
         entity.getSkill().setUpdatedate(new Date(System.currentTimeMillis()));
         super.edit(entity);

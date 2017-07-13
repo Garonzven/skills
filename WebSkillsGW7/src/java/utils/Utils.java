@@ -16,6 +16,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.text.SimpleDateFormat;
 /**
  *
  * @author Lorena Portillo
@@ -88,9 +89,9 @@ public class Utils {
 
                 // Enviar el mensaje
                 Transport transport = session.getTransport("smtp");
-                transport.connect(correoEnvia, claveCorreo);
-                transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
-                transport.close();
+               // transport.connect(correoEnvia, claveCorreo);
+               // transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
+               // transport.close();
 
         } catch (Exception ex) {
          ex.printStackTrace();
@@ -117,4 +118,5 @@ public class Utils {
        sString = Character.toString(sString.charAt(0)).toUpperCase()+sString.substring(1);
        return sString;
   }
+  
 }

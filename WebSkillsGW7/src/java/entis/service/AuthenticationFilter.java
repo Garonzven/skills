@@ -10,6 +10,7 @@ import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.JWTClaimsSet;
+//import com.sun.servicetag.UnauthorizedAccessException;
 import entis.People;
 import java.security.Principal;
 import java.text.ParseException;
@@ -19,8 +20,13 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
+import javax.servlet.Filter;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
+import net.minidev.json.JSONObject;
 import utils.AuthUtils;
 import org.joda.time.DateTime;
 /**
@@ -41,16 +47,18 @@ public class AuthenticationFilter implements ContainerRequestFilter, ContainerRe
             JWT_INVALID_MSG = "Invalid JWT token",
             JWT_INVALID_USER = "Usuario no encontrado";
     
+    
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException{
         SecurityContext originalContext = requestContext.getSecurityContext();
         String authHeader = requestContext.getHeaderString("Authorization");
-
+        ResponseBuilder responseBuilder = null;
+        Response response = null;
         if (authHeader == null || authHeader.isEmpty()) {
            Authorizer authorizer = new Authorizer("", "",
                     originalContext.isSecure());
             requestContext.setSecurityContext(authorizer);
-           //throw new IOException(JWT_INVALID_MSG);
+            throw new IOException(JWT_INVALID_MSG);
         } else { 
             JWTClaimsSet claimSet;
             try {
@@ -63,7 +71,12 @@ public class AuthenticationFilter implements ContainerRequestFilter, ContainerRe
 
             // ensure that the token is not expired
             if (new DateTime(claimSet.getExpirationTime()).isBefore(DateTime.now())) {
-                throw new IOException(EXPIRE_ERROR_MSG);
+                JSONObject json = new JSONObject();
+                json.put("status", "user is not authorized");
+                json.put("code", Response.Status.UNAUTHORIZED.getStatusCode());
+                responseBuilder = Response.ok(this, MediaType.APPLICATION_JSON);
+                response = responseBuilder.status(Response.Status.UNAUTHORIZED).build();
+                requestContext.abortWith(response);
             } 
             else {
                 try {
@@ -136,4 +149,5 @@ public class AuthenticationFilter implements ContainerRequestFilter, ContainerRe
             return name;
         }
     }
+
 }

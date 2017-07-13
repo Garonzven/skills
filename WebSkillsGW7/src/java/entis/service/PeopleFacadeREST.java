@@ -35,6 +35,7 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.logging.Logger;
+import javax.ws.rs.QueryParam;
 import utils.AuthUtils;
 import utils.Token;
 import utils.Utils;
@@ -56,6 +57,9 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     
     @PersistenceContext(unitName = "WebSkillsGW7PU")
     private EntityManager em;
+    
+    @Context
+    private HttpServletRequest request;
 
     public PeopleFacadeREST() {
         super(People.class);
@@ -80,6 +84,7 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
         entity.setLocation(Utils.capitalize(entity.getLocation()));
         entity.setSkillandlevel(entity.getSkillandlevel().toLowerCase());
         entity.setJobtitle(Utils.capitalize(entity.getJobtitle()));
+        entity.setStatusflag('A');
         entity.setIschangepassword('T');
         super.create(entity);
         registrar(entity, "Create User "+ entity.getName()+ " " + entity.getLastname()+ " by SuperAdmin");
@@ -130,26 +135,34 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
         People p;
         Logger logger = Logger.getLogger(getClass().getName());
        Query query = em.createQuery(
-            "SELECT p FROM People p WHERE  p.email  = '"+user.getEmail().toLowerCase()+"' AND p.password='"+ user.getPassword() +"'");
+            "SELECT p FROM People p WHERE (p.statusflag  != 'D' OR p.statusflag  = NULL ) AND p.email  = '"+user.getEmail().toLowerCase()+"' AND p.password='"+ user.getPassword() +"'");
        
        List<People> lista=query.getResultList();
        if (lista.isEmpty()) {
            throw new Exception();
        }
        else {
-           p = lista.get(0);
-           if (p.getIschangepassword() != null && p.getIschangepassword().compareTo('D')==0){
-                p= null; 
-           } 
-           return p;
+           return lista.get(0);
        }
        
     }
     
+    private People find(Integer idpeople) {
+
+       Query query = em.createQuery(
+            "SELECT p FROM People p WHERE (p.statusflag  != 'D' OR p.statusflag  = NULL ) AND p.idpeople = "+idpeople);
+     
+       List<People> lista=query.getResultList();
+       if (!lista.isEmpty()) {
+           return lista.get(0); 
+       }
+       else return null;
+    }    
+    
     private People findByEmail(String email) {
        Logger logger = Logger.getLogger(getClass().getName());
        Query query = em.createQuery(
-            "SELECT p FROM People p WHERE  p.email  = '"+email.toLowerCase()+"'");
+            "SELECT p FROM People p WHERE (p.statusflag  != 'D' OR p.statusflag  = NULL ) AND p.email  = '"+email.toLowerCase()+"'");
        
        List<People> lista=query.getResultList();
        if (!lista.isEmpty()) {
@@ -164,14 +177,16 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public People login(People p, @Context final HttpServletRequest request) throws IOException {
-     People user = null;
+       People user = null;
        try {
-        Integer id = Integer.parseInt(AuthUtils.getSubject(request.getHeader(AuthUtils.AUTH_HEADER_KEY)));
-        user = findByEmail(p.getEmail().toLowerCase());
-
+           if (p.getIdpeople()!= null && p.getIdpeople()!=0)
+               user= find(p.getIdpeople());
+           else
+               user = findByEmail(p.getEmail().toLowerCase());
+          
        } catch (Exception ex) {
-            throw new IOException(JWT_INVALID_MSG);
-           // return Response.Status.UNAUTHORIZED;
+                  throw new IOException(JWT_INVALID_MSG);
+           
         }
         return user;
     }
@@ -198,35 +213,67 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
               Utils util = new Utils();
               util.enviarCorreo(entity, 2);
         }
+        //respuesta =  Response.ok().entity(gson.toJson(token)).build();
     }
     
     @PUT
     @Secured
     @Path("reset")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void reset(Credentials user) throws Exception { 
-        People foundUser;
+    @Produces(MediaType.APPLICATION_JSON)
+    public void reset(Credentials user) { 
+        Response respuesta;
+        People foundUser = null;
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
         try{            
-            if (user!=null) {
+                int i = Integer.parseInt(AuthUtils.getSubject(request.getHeader(AuthUtils.AUTH_HEADER_KEY)));
                 user.setEmail(user.getEmail().toLowerCase());
                 foundUser = findByEmail(user.getEmail());
                 foundUser.setPassword(user.getPassword());
                 foundUser.setIschangepassword('F');
                 edit(foundUser);
-            }
+                respuesta= Response.status(Response.Status.UNAUTHORIZED).entity(gson.toJson(foundUser)).build();
         }
         catch (Exception e) {
-            throw new Exception();
+           respuesta= Response.status(Response.Status.UNAUTHORIZED).entity(gson.toJson(NOT_FOUND_MSG)).build();
+           //respuesta =  Response.ok().entity(gson.toJson(token)).build();
         }
         
     }
     
+    
+    @PUT
     @Secured
-    @DELETE
-    public void remove(People entity) {
-       entity.setIschangepassword('D');
-       edit(entity);
+    @Path("delete")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void delete(People entity) {
+        
+       People user = find(entity.getIdpeople());
+       if (user != null){
+            user.setStatusflag('D');
+            em.persist(user);
+       }
     }
+
+    @GET
+    @Path("order")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<People> findOrder(@QueryParam("orderBy") String orderBy) {
+       Query query = em.createQuery(
+            "SELECT p FROM People p WHERE  (p.statusflag  != 'D' OR p.statusflag  = NULL) ORDER BY p."+orderBy);
+        List<People> lista = query.getResultList();
+        return lista;
+    }    
+    
+    @GET
+    @Path("formatDate")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Date getDate() {
+        People p = find(Integer.parseInt("1"));
+        return p.getIndate();
+    }
+    
 
     @POST
     @Secured
@@ -235,20 +282,27 @@ public class PeopleFacadeREST extends AbstractFacade<People> {
     public People find(People entity) {
         return super.find(entity.getIdpeople());
     }
-
+    
+    @GET
+    @Secured
+    @Path("search")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<People> search(@QueryParam("searchBy") String searchBy) {
+        Query query = em.createQuery(
+            "SELECT p FROM People p WHERE (p.statusflag  != 'D' OR p.statusflag  = NULL ) AND (LOWER(p.name) LIKE '"+searchBy.toLowerCase()+"%' or LOWER(p.lastname) LIKE '"+searchBy.toLowerCase()+"%' or LOWER(p.jobtitle) LIKE '"+searchBy.toLowerCase()+"%' or LOWER(p.location) LIKE '"+searchBy.toLowerCase()+"%')");
+        List<People> lista = query.getResultList();
+        return lista;
+    }
+    
     @GET
     @Override
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
     public List<People> findAll() {
-        List<People> lista;
-        lista = super.findAll();
-        for (People p : lista){
-            if ((p.getIschangepassword() != null) && (p.getIschangepassword().compareTo('D')==0)){
-                lista.remove(p);
-            }
-        }
-        int count = lista.size();
+
+        Query query = em.createQuery(
+            "SELECT p FROM People p WHERE  (p.statusflag  != 'D' OR p.statusflag  = NULL ) ");
+        List<People> lista = query.getResultList();
         return lista;
     }
 
