@@ -188,47 +188,7 @@ public class People implements Serializable {
     }
     
     public Date getIndate() {
-        Date fdate;
-        try{
-            /*
-        String input = "Thu Jun 18 20:56:02 EDT 2009";
-        SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
-        Date date = parser.parse(input);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = formatter.format(date);
-            
-
-        String strDate = indate.toString();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = formatter.format(dateStr);
-        System.out.println("yyyy-MM-dd date is ==>"+formattedDate);
-        Date date1 = formatter.parse(formattedDate);
-
-        formatter = new SimpleDateFormat("dd-MMM-yyyy");
-        formattedDate = formatter.format(date1);
-        System.out.println("dd-MMM-yyyy date is ==>"+formattedDate); 
-            
-          
-          String fecha = indate.toString();
-          SimpleDateFormat parser = new SimpleDateFormat("Eee Mmm dd HH:mm:ss ZZZ yyyy");
-          Date date = parser.parse(fecha);
-          SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
-          String formattedDate = formatter.format(date);
-          fdate = formatter.parse(formattedDate);
-            
-            http://jpdevelopment.blogspot.com/2014/03/resteasy-format-timestamps-as-date.html
-        */
-            SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
-
-            Calendar cal=Calendar.getInstance();
-            cal.setTime(indate);
-            String formattedDate = formatter.format(cal.getTime());
-            fdate = formatter.parse(formattedDate);
-        }
-        catch (Exception e) {
-            return indate;
-        }
-        return fdate;
+        return indate;
     }
 
     public void setIndate(Date indate) {
